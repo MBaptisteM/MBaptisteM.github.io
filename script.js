@@ -153,3 +153,9 @@ function closePopUpPb5() {
     document.getElementById("pb5").style.display = "none";
     document.getElementById("popUpPb5").style.display = "none";
 }
+
+function showMessage() {
+    var toto = document.getElementById("message");
+    toto.className = "show";
+    setTimeout(function () { toto.className = toto.className.replace("show", ""); }, 3000);
+}

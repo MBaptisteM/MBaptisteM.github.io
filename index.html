@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Vindicta.html</title>
+	<title>Vindicta</title>
 	<link rel="stylesheet" href="style.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,9 +13,10 @@
 </head>
 
 <body>
+	<div id="message">Merci pour le soutien que vous apportez à Vindicta et BANCAL !</div>
 
 	<header>
-		<div class="toto">
+		<div style="position: relative;">
 			<div class="menu">
 				<img src="menu.png" alt="Menu" onclick="openMenu()" align="left"
 					style="cursor: pointer; width: 40px; height: 40px;" />
@@ -23,7 +24,6 @@
 					<img src="close.png" alt="Fermer" class="closeMenu" onclick="closeMenu()"
 						style="width: 40px; height: 40px;" />
 					<br><br><br><br><br><br><br><br><br>
-					<!--lien telecharger le jeu-->
 					<a href="equipe.html">L'équipe</a>
 					<a href="ressources.html">Ressources</a>
 					<a href="realisation.html">Réalisation</a>
@@ -35,20 +35,23 @@
 				</div>
 			</div>
 			<div class="titi">
-				<img src="logo_vindicta.png" alt="Vindicta logo" style="width: 300px;height: 70px;"
-					id="logo_vindicta" />
+				<a href="index.html">
+					<img src="logo_vindicta.png" alt="Vindicta logo" style="width: 300px;height: 70px;"
+						id="logo_vindicta" />
+				</a>
 			</div>
-			<a href="https://github.com/MBaptisteM/VindictaB2"><img src="download.png" alt="Download icon"
-					style="width: 50px; height: 50px;" class="tutu" /></a>
+			<a href="Vindicta Setup.exe"><img src="download.png" alt="Download icon" style="width: 50px; height: 50px;"
+					class="tutu" onclick="showMessage()" /></a>
 		</div>
 	</header>
 
 	<div class="tata" id="tata">
 		<div class="slide slide1">
-			<h1 align="center" class="title" id="title" style="padding-top: 1%; letter-spacing: 2px;">Embarquez dans une
+			<h1 align="center" class="title" id="title" style="padding-top: 1%; letter-spacing: 2px; font-size: 500%;">
+				Embarquez dans une
 				aventure épique !</h1>
 			<div style="margin: auto; width: 95%;">
-				<section id="grid2_sp">
+				<section id="grid2">
 					<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;"
 						align="center">
 						<h2 class="title" style="padding-top: 1%; letter-spacing: 2px;" id="title"><u>Une histoire
@@ -58,159 +61,168 @@
 							Vindicta, nous incarnons un jeune homme vivant avec ses proches et autres villageois en
 							pleine nature. Un beau jour, alors que notre protagoniste
 							revient de chasse, il aperçoit au loin une lumière irradier au-dessus de son village. Il
-							accourt donc jusqu’à chez lui mais il arrive trop tard. Tous
+							accourt donc jusqu’à chez lui, mais il arrive trop tard. Tous
 							les habitants ont disparu en même temps que cette étrange lumière. Que reste-t-il ? Un
 							esprit, qui deviendra son futur compagnon, lui indiquant la route
 							pour parvenir à une tour dont l’entrée est justement plongée dans un rayonnement semblable à
-							celui qui a causé la disparition de ses compères. A l’intérieur
+							celui qui a causé la disparition de ses compères. À l’intérieur
 							de celle-ci, une multitude de monstres s’en prennent à lui. Mais d’où proviennent-ils ? Quel
 							lien existe-t-il entre ces chimères et les habitants de son
 							village ? Notre personnage tentera d’élucider ces mystères en s’élevant au sein de cette
 							tour, acquérant des compétences supplémentaires au cours de
 							combats qui se compliquent d’ennemis en ennemis.</p>
 					</div>
-					<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;"
+					<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat; position: relative;"
 						align="center">
-						<img src="presentation.png" alt="Image du jeu" class="elt title"
-							style="width: 1000px; height: 500px; padding: 3%;">
+						<img src="presentation.png" alt="Image du jeu" class="title"
+							style="width: 900px; height: auto; padding: 3%; position: relative; top: 0; left: 0;">
+						<img src="bordure_metal.png" alt="bordure en métal"
+							style="width: 900px; height: 495px; position: absolute; top: 0; left: 0;">
 					</div>
 				</section><br><br>
 				<div align="center">
-					<button class="download" style="letter-spacing: 3px;">
-						<h2>TÉLÉCHERGEZ DÈS MAINTENANT !</h2>
-					</button>
-				</div>
-				<div>
-					<img src="feuilles_angle_gauche.png" alt="dessin de feuilles en angle"
-						style="width: 20%; height: auto; position: absolute; left: 0.5%; bottom: 12%;">
-					<img src="feuilles_angle_droite.png" alt="dessin de feuilles en angle"
-						style="width: 20%; height: auto; position: absolute; bottom: 12%; left: 79.5%;">
-					<img src="feuilles_verticales.png" alt="dessin de feuilles"
-						style="width: auto; height: 55%; position: absolute; left: 43%; bottom: 27%;">
+					<a href="Vindicta Setup.exe">
+						<button class="download" style="letter-spacing: 3px;" onclick="showMessage()">
+							<h2>TÉLÉCHARGEZ DÈS MAINTENANT !</h2>
+						</button>
+					</a>
 				</div>
 			</div>
 		</div>
 
 		<div class="slide slide3">
-			<div class="title" style="padding-left: 2%; color: #41142e; letter-spacing: 1px;">
+			<div style="padding-left: 2%; color: #41142e; letter-spacing: 1px;">
 				<h2><u>Présentation du personnage principal</u></h2><br><br>
 			</div>
-			<div style="margin: auto; width: 95%;" class="center">
-				<section id="grid3">
-					<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;"
-						align="center">
-						<h3 style="font-size: x-large; padding-top: 1%; letter-spacing: 1px;"><u>Héros :</u></h3>
-						<p style="font-size: larger; padding-bottom: 1%; padding-left: 3%; padding-right: 3%;">Notre
-							personnage principal, celui que vous jouerez tout au long du jeu. Ce jeune homme destiné à
-							devenir bûcheron au sein de son village va
-							être bouleversé par un évènement singulier qui l'obligera à sortir de son mode de vie
-							habituel pour partir explorer et combattre malgré lui des mystérieux ennemis. Son périple
-							pour
-							retrouver les membres de son village bien aimé va se tranformer au et à mesure de la
-							progression de l'histoire et des découvertes qui fera en une quête bien plus sombre.</p>
-					</div>
+			<div style="margin: auto; width: 95%;" class="center" id="corner_purple">
+				<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat; width: 30%; margin: auto;"
+					align="center">
+					<h3 style="font-size: x-large; padding-top: 3%; letter-spacing: 1px;"><u>Héros :</u></h3>
+					<p style="font-size: larger; padding-bottom: 3%; padding-left: 3%; padding-right: 3%;">Notre
+						personnage principal, celui que vous jouerez tout au long du jeu. Ce jeune homme destiné à
+						devenir bûcheron au sein de son village va
+						être bouleversé par un évènement singulier qui l'obligera à sortir de son mode de vie
+						habituel pour partir explorer et combattre malgré lui des mystérieux ennemis. Son périple
+						pour retrouver les membres de son village bien aimé va se transformer au fur et à mesure de la
+						progression de l'histoire et des découvertes qu'il fera en une quête bien plus sombre.</p>
+				</div>
+				<section id="grid3" align="center">
 					<div>
 						<img src="personnage.png" alt="Croquis du personnage principal"
-							style="width: 400px; height: 600px ;">
+							style="width: auto; height: 400px; padding-bottom: 2%; background-image: url(bordure_verticale.png); background-size: 100% 100%; background-repeat: no-repeat; padding: 6%;">
+					</div>
+					<div style="position: relative;">
+						<img src="personnage2.png" alt="Personnage principal dans le jeu"
+							style="height: 400px; width: auto; position: relative; top: 0; left: 0; background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat; padding: 3%;">
+						<img src="bordure_metal.png" alt="bordure en métal"
+							style="width: 730px; height: 400px; position: absolute; top: 0; left: 125px;">
 					</div>
 					<div>
-						<img src="personnage2.png" alt="Personnage principal dans le jeu" class="title"
-							style="height: 450px; width: 925px;">
+						<img src="personnage_3d.png" alt="Modèle 3D du personnage principal"
+							style="width: auto; height: 400px; background-image: url(bordure_verticale.png); background-size: 100% 100%; background-repeat: no-repeat; padding: 9%;">
 					</div>
 				</section>
 			</div>
 		</div>
 
 		<div class="slide slide5">
-			<div class="title" style="padding-left: 2%;; padding-top: 1%; color: #184434; letter-spacing: 1px;">
-				<h2><u>Présentation de la fée</u></h2><br><br>
+			<div style="padding-left: 2%;; padding-top: 1%; color: #184434; letter-spacing: 1px;">
+				<h2><u>Présentation de l'esprit</u></h2>
 			</div>
-			<div style="margin: auto; width: 95%;" class="center">
-				<section id="grid3">
+			<div style="margin: auto; width: 95%;" class="center" id="corner_green">
+				<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25%; margin: auto;"
+					align="center">
+					<h3 style="font-size: x-large; padding-top: 3%; letter-spacing: 1px;"><u>Esprit :</u></h3>
+					<p style="font-size: larger; padding-bottom: 3%; padding-left: 3%; padding-right: 3%;">Il s'agit
+						du personnage secondaire de Vindicta; celui que le deuxième joueur peut contrôler en mode
+						multijoueurs. Ce mystérieux esprit va proposer son aide et son soutien à notre héros pour
+						des raisons qui sont encore inconnues du joueur. Cependant, au fur et à mesure de la
+						progression de l'histoire, on en apprendra davantage sur cette mystérieuse entité.</p>
+				</div>
+				<section id="grid3" align="center">
 					<div>
-						<img src="fee.png" alt="Croquis de la fée" style="width: 400px; height: 400px ;">
+						<img src="esprit.png" alt="Croquis de l'esprit"
+							style="width: 400px; height: 400px; background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;">
 					</div>
-					<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;"
-						align="center">
-						<h3 style="font-size: x-large; padding-top: 1%; letter-spacing: 1px;"><u>Fée :</u></h3>
-						<p style="font-size: larger; padding-bottom: 1%; padding-left: 3%; padding-right: 3%;">Notre
-							personnage principal, celui que vous jouerez tout au long du jeu. Ce jeune homme destiné à
-							devenir bûcheron au sein de son village va
-							être bouleversé par un évènement singulier qui l'obligera à sortir de son mode de vie
-							habituel pour partir explorer et combattre malgré lui des mystérieux ennemis. Son périple
-							pour
-							retrouver les membres de son village bien aimé va se tranformer au et à mesure de la
-							progression de l'histoire et des découvertes qui fera en une quête bien plus sombre.</p>
+					<div style="position: relative;">
+						<img src="esprit2.png" alt="Esprit dans le jeu"
+							style="height: 400px; width: auto; padding-bottom: 2%; background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat; padding: 3%;  position: relative; top: 0; left: 0;">
+						<img src="bordure_metal.png" alt="bordure en métal"
+							style="width: 825px; height: 400px; position: absolute; top: 0; left: 63px;">
 					</div>
 					<div>
-						<img src="personnage2.png" alt="Personnage principal dans le jeu" class="title"
-							style="height: 450px; width: 925px;">
+						<img src="esprit_3d.png" alt="Modèle 3D de l'esprit"
+							style="width: 325px; height: auto; background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat; padding: 6%;">
 					</div>
-				</section>
+				</section><br>
 			</div>
 		</div>
 
 		<div class="slide slide2">
 			<div style="padding-left: 2%; padding-top: 1%; color: #41142e; letter-spacing: 1px;">
-				<h2><u>Des mécaniques variées</u></h2><br><br>
+				<h2><u>Un contenu varié</u></h2><br><br>
 			</div>
 			<div style="margin: auto; width: 95%; padding: 2%;" id="corner_purple" class="center">
-				<section id="grid2">
-					<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;"
+				<section id="grid3">
+					<div style="background-image: url(bordure2.png); background-size: 100% 100%; background-repeat: no-repeat; width: 70%; margin: auto;"
 						align="center">
-						<h3 style="font-size: x-large; padding-top: 1%; letter-spacing: 1px;"><u>Solo :</u></h3>
-						<p style="font-size: larger; padding-bottom: 1%; padding-left: 3%; padding-right: 3%;">
-							Le mode solo propose un large contenu. Au delà des phases de combat et de boss typiques d'un
-							jeu
-							vidéo, Vindicta offre également un système d'atouts, éléments clés du jeu.
-							Les atouts sont des améliorations pour le personnage principal qui lui permettent
-							d'augmenter divers
-							aspects de son gameplay tels que ses statistiques ou encore ses
-							attaques, selon vos choix. De nombreux coffres se trouvent également sur les cartes à
-							explorer et
-							donnent des objets plus ou moins rares selon votre chance afin d'améliorer
-							l'expérience en jeu. Un marchand peut également apparaître de manière aléatoire sur la carte
-							afin de
-							vous vendre des objets et vous aider dans la progression de l'histoire.
+						<h3 style="font-size: x-large; letter-spacing: 1px; padding-top: 2%;"><u>Solo :</u></h3>
+						<p style="font-size: larger; padding-bottom: 1%; padding-left: 10%; padding-right: 10%;">
+							Le mode solo propose un large contenu. Au-delà des phases de combat et de boss typiques d'un
+							jeu vidéo, Vindicta offre également un système d'atouts, éléments clés du jeu.
+							Les atouts sont des améliorations pour le personnage principal ou l'esprit qui l'accompagne
+							et qui leur permettent
+							d'augmenter divers aspects de leur gameplay tels que leurs statistiques ou encore leurs
+							attaques, selon vos choix. Pour les obtenir, de nombreux coffres se trouvent sur les cartes
+							à
+							explorer. N'oublions pas que Vindicta est un rogue-like et que donc toute
+							défaite face aux monstres entraînera un retour à la case départ.
 						</p>
 					</div>
-					<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;"
+					<div style="background-image: url(bordure2.png); background-size: 100% 100%; background-repeat: no-repeat; width: 70%; margin: auto;"
 						align="center">
-						<h3 style="font-size: x-large; padding-top: 1%; letter-spacing: 1px;"><u>Multijoueur :</u></h3>
-						<p style="font-size: larger; padding-bottom: 1%; padding-left: 3%; padding-right: 3%;">
-							Le multijoueurs propose les même mécaniques diverses et variées que propose le mode solo.
-							Cependant,
-							ce mode est basé sur la coopération entre deux joueurs afin de progressser
-							ensemble et de vaincre tous les ennemis. En effet, dans ce mode l'un des joueur contrôle le
-							personnage principal grâce au clavier et à la souris tandis qu'un autre joue
-							la mystèrieuse fée grâce à une manette.
+						<h3 style="font-size: x-large; letter-spacing: 1px; padding-top: 3.5%;"><u>Multijoueur :</u>
+						</h3>
+						<p
+							style="font-size: larger; padding-bottom: 4%; padding-left: 10%; padding-right: 10%; padding-top: 2%;">
+							Le mode multijoueurs propose les mêmes mécaniques diverses et variées que le mode solo.
+							Cependant, ce mode est basé sur la coopération entre deux joueurs afin de progresser
+							ensemble et de vaincre tous les ennemis. En effet, dans ce mode, l'un des joueurs contrôle
+							le
+							personnage principal grâce au clavier et à la souris, tandis qu'un autre joue
+							le mystérieux esprit grâce à une manette. Chaque personnage a ses caractéristiques propres,
+							puisque le personnage principal se bat au corps à corps avec des enchaînements de coups,
+							tandis que l'esprit joue davantage un rôle de support en attaquant à distance grâce à des
+							projectiles. Ainsi, chaque joueur peut trouver son bonheur grâce aux différents gameplays
+							proposés.
 						</p>
-						<!-- Rajouter le fait qu'ils ont des styles de combat différents? -->
+					</div>
+					<div style="background-image: url(bordure2.png); background-size: 100% 100%; background-repeat: no-repeat; width: 70%; margin: auto;"
+						align="center">
+						<h3 style="font-size: x-large; letter-spacing: 1px; padding-top: 3%;"><u>Réseau ou local :</u>
+						</h3>
+						<p
+							style="font-size: larger; padding-bottom: 4%; padding-left: 10%; padding-right: 10%; padding-top: 2%;">
+							En plus d'être jouable seul ou à plusieurs, Vindicta propose une ouverture encore plus
+							grande
+							avec un mode online. Ainsi, deux joueurs possédant chacun un exemplaire du jeu pourront se
+							connecter au réseau et jouer ensemble, même si des milliers de kilomètres les séparent. Pour
+							ce faire, il suffit qu'un des joueurs lance une partie multijoueurs online. Son adresse IP
+							est alors
+							affichée et il peut facilement la partager à la personne avec laquelle il souhaite jouer.
+							Une fois l'adresse IP de l'host connue, il ne reste plus qu'au deuxième joueur à l'inscrire
+							dans le
+							menu prévu à cet effet. Cela
+							offre ainsi la garantie de pouvoir profiter du jeu n'importe où et avec n'importe qui.
+						</p>
 					</div>
 				</section>
-				<div style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat; width: 50%; margin: auto;"
-					align="center">
-					<h3 style="font-size: x-large; padding-top: 4%; letter-spacing: 1px;"><u>Réseau ou local :</u></h3>
-					<p style="font-size: larger; padding-bottom: 4%; padding-left: 3%; padding-right: 3%;">
-						Le mode solo propose un large contenu. Au delà des phases de combat et de boss typiques d'un jeu
-						vidéo,
-						Vindicta offre également un système d'atouts, éléments clés du jeu.
-						Les atouts sont des améliorations pour le personnage principal qui lui permettent d'augmenter
-						divers
-						aspects de son gameplay tels que ses statistiques ou encore ses
-						attaques, selon vos choix. De nombreux coffres se trouvent également sur les cartes à explorer
-						et
-						donnent des objets plus ou moins rares selon votre chance afin d'améliorer
-						l'expérience en jeu. Un marchand peut également apparaître de manière aléatoire sur la carte
-						afin de
-						vous vendre des objets et vous aider dans la progression de l'histoire.
-					</p>
-				</div>
+				<!-- rajouter les atouts??-->
 			</div>
 		</div>
 
 		<div class="slide slide4">
-			<div class="title" style="padding-left: 2%; padding-top: 1%; color: #184434; letter-spacing: 1px;">
+			<div style="padding-left: 2%; padding-top: 1%; color: #184434; letter-spacing: 1px;">
 				<h2><u>Galerie</u></h2>
 			</div>
 
@@ -237,17 +249,14 @@
 				</div>
 				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 				<a class="next" onclick="plusSlides(1)">&#10095;</a>
-			</div>
+			</div><br>
+
 			<footer>
-				<img src="logo_bancal.png" alt="B.A.N.C.A.L logo" style="width: auto; height: 75px;" />
+				<img src="logo_bancal.png" alt="B.A.N.C.A.L logo" style="width: auto; height: 90px;" />
 				<sub id="align" style="font-size: x-small;">B.A.N.C.A.L Corporation. All rights reserved</sub>
 			</footer>
 		</div>
 	</div>
-	<!-- button:hover {background-color: #4CAF50;}
-		background-image: linear-gradient(100deg,#47102f,#314c42,#168f67); 
-	background-size: 180% 180%; 
-	animation: gradient-animation 10s ease infinite;-->
 
 </body>
 

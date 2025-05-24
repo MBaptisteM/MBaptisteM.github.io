@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>L'équipe</title>
+	<title>Équipe</title>
 	<link rel="stylesheet" href="style2.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,8 +12,10 @@
 </head>
 
 <body style="overflow: hidden;">
+	<div id="message">Merci pour le soutien que vous apportez à Vindicta et BANCAL !</div>
+
 	<header>
-		<div class="toto">
+		<div style="position: relative;">
 			<div class="menu">
 				<img src="menu.png" alt="Menu" onclick="openMenu2()" align="left"
 					style="cursor: pointer; width: 40px; height: 40px;" />
@@ -27,18 +29,20 @@
 				</div>
 			</div>
 			<div class="titi">
-				<img src="logo_vindicta.png" alt="Vindicta logo" style="width: 300px;height: 70px;"
-					id="logo_vindicta" />
+				<a href="index.html">
+					<img src="logo_vindicta.png" alt="Vindicta logo" style="width: 300px;height: 70px;"
+						id="logo_vindicta" />
+				</a>
 			</div>
-			<a href="https://github.com/MBaptisteM/VindictaB2"><img src="download.png" alt="Download icon"
-					style="width: 50px; height: 50px;" class="tutu" /></a>
+			<a href="Vindicta Setup.exe"><img src="download.png" alt="Download icon" style="width: 50px; height: 50px;"
+					class="tutu" onclick="showMessage()" /></a>
 		</div>
 	</header>
 
 	<h1 align="center" style="letter-spacing: 1px;"><b><u>Qui sommes nous ?</u></b></h1><br>
 
 	<section class="center" style="padding-bottom: 27%;">
-		<div align="center" class="center_child">
+		<div align="center" style="margin: auto;">
 			<img src="logo_bancal_simple.png" alt="B.A.N.C.A.L logo" style="width: 175px;height: 175px;"
 				onclick="openPopUpBANCAL()" class="animation" /><br><br>
 			<div id="popUpBANCAL">
@@ -47,26 +51,26 @@
 					<img src="logo_bancal_simple.png" alt="B.A.N.C.A.L logo" style="width: 250px;height: 250px;" />
 					<p style="font-size: large;">Au départ, nous travaillions seuls, nous avions tous un domaine de
 						prédilection dans lequel nous
-						excellions, ces capacités que nous
-						avions étaient source d’un grand orgueil qui nous incitait à rester de notre côté. Cependant
+						excellions. Ces capacités que nous
+						avions étaient source d’un grand orgueil qui nous incitait à rester de notre côté. Cependant,
 						quand nous voulûmes construire quelque
 						chose de plus grand, nous nous rendîmes vite compte que nous étions limités du fait de notre
-						manque de polyvalence. Pourtant nous
+						manque de polyvalence. Pourtant, nous
 						aspirions à créer quelque chose de plus grand qui nous permettrait de partager nos passions
 						respectives.<br><br> C’est dans ce contexte
 						d’impasse que nous décidâmes de réprimer notre fierté et d’admettre que seuls nous étions
-						incapables d’atteindre cet objectif, nous
+						incapables d’atteindre cet objectif. Nous
 						avions besoin d’une équipe afin de mettre nos compétences au service de cette dernière et
 						d’atteindre la polyvalence que ce projet exige.<br><br>
-						Notre logo est une allégorie de cette prise de conscience, en effet une brique seule est
+						Notre logo est une allégorie de cette prise de conscience. En effet, une brique seule est
 						insignifiante, cependant si elle est couplée
 						à d’autres briques, elles peuvent former une tour et ensemble, elles deviennent capables de
-						s’élever vers d’autres sommets. Ici les
-						briques sont les initiales des prénoms des 5 fondateurs de l’entreprises aucun n’a été mis de
+						s’élever vers d’autres sommets. Ici, les
+						briques sont les initiales des prénoms des cinq fondateurs de l’entreprise. Aucun n’a été mis de
 						côté car nous pensons que nous avons
 						besoin de tout le monde afin d’aboutir aux projets que nous souhaitons créer. Il s’agit aussi de
 						la manière dont notre nom a été créé
-						: « B » de Baptiste, « A » de Alexia, « N » de Nour, « C » de Clémence, « A » et « L » de
+						: « B » de Baptiste, « A » d'Alexia, « N » de Nour, « C » de Clémence, « A » et « L » de
 						Léa-Angelina. Le tout formant le mot « Bancal
 						», un mot faisant directement référence à l’humilité, la qualité la plus importante selon nous
 						lorsqu’il s’agit de devoir avancer en
@@ -76,7 +80,7 @@
 						avons choisi pour notre logo et par
 						le mot « Fondement » dans notre slogan « L’humilité est le fondement de la réussite ».<br><br>
 						Notre entreprise est spécialisée dans l’industrie
-						du jeu vidéo où elle s’efforce de faire rêver les joueurs en leurs proposant des histoires
+						du jeu vidéo, où elle s’efforce de faire rêver les joueurs en leur proposant des histoires
 						touchantes dans lesquelles ils peuvent se
 						plonger grâce à des gameplays toujours plus travaillés. En effet, le jeu vidéo est le support le
 						plus immersif qui existe, c’est aussi
@@ -97,7 +101,8 @@
 					<p style="font-size: large;">Prise de passion pour l’informatique depuis quelques années, c’est
 						depuis l’enfance que je baigne
 						dans le milieu des jeux vidéo.
-						Aussi bien attirée par la partie programmation que la dimension visuelle et sonore de ceux-ci,
+						Aussi bien attirée par la partie programmation que par la dimension visuelle et sonore de
+						ceux-ci,
 						ce projet est pour moi une grande
 						opportunité de découvrir de nouveaux langages, outils et méthodes pour faire de ce jeu, avec
 						tout notre groupe, une (notre) véritable
@@ -116,7 +121,7 @@
 					<img src="nour.png" alt="Nour" style="width: 300px;height: 300px;" />
 					<p style="font-size: large;">Ayant grandi accompagnée des jeux vidéo, c’est avec un grand
 						enthousiasme que je me lance dans ce
-						projet de conception. Bien qu’il s’agit
+						projet de conception. Bien qu’il s’agisse
 						là de ma première expérience en développement, je suis convaincue que mon équipe et moi allons
 						réaliser un excellent travail. Très intéressée
 						par la partie scénaristique, graphique et design, cette production représente à mes yeux
@@ -154,13 +159,14 @@
 					<h1 style="letter-spacing: 2px;"><u align="center">Alexia</u></h1>
 					<img src="alexia.png" alt="Alexia" style="width: 300px;height: 300px;" />
 					<p style="font-size: large;">Fille d'un couple d'informaticiens, dès mon plus jeune âge j'ai été
-						initié à la programmation.
+						initiée à la programmation.
 						Cela a d'abord commencé avec du HTML, du
 						CSS et la création de sites très simples puis j'y ai très vite pris goût. Au fil des années j'ai
 						donc accumulé de nombreux savoirs en
 						programmation à travers des projets scolaires mais également personnels. Je me suis découvert un
 						intérêt tout particulier pour les bases
-						de données de par leur praticité mais aussi pour la programmation orientée objet qui est au cœur
+						de données de par leur praticité, mais aussi pour la programmation orientée objet qui est au
+						cœur
 						du projet que nous avons créé. De nature
 						créative, j'ai été assignée au rôle de scénariste durant le développement de Vindicta. J'ai
 						également produit le site promotionnel du jeu
@@ -177,9 +183,9 @@
 				<div id="baptiste">
 					<h1 style="letter-spacing: 2px;"><u align="center">Baptiste</u></h1>
 					<img src="baptiste.png" alt="Baptiste" style="width: 300px;height: 300px;" />
-					<p style="font-size: large;"> Passionné par l’informatique depuis longtemps il ne s’agit pas de mon
+					<p style="font-size: large;"> Passionné par l’informatique depuis longtemps, il ne s’agit pas de mon
 						premier développement de
-						jeu vidéo, les parties nécessitant des
+						jeu vidéo. Les parties nécessitant des
 						compétences techniques poussées en C# sont celles qui m’intéressent le plus. Ce projet est
 						l’occasion pour moi d’expérimenter les travaux
 						en équipes de grande ampleur. Je suis conscient des limites auxquelles une personne seule est

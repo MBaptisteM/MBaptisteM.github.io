@@ -35,7 +35,7 @@ footer {
 	left: 0;
 	bottom: 0;
 	background-color: #41142e;
-	color: #F2F2F2;
+	color: #e2e2e2;
 	padding: 10px;
 	text-align: center;
 	width: 100%;
@@ -47,7 +47,7 @@ footer {
 	left: 0;
 	bottom: 0;
 	background-color: #41142e;
-	color: #F2F2F2;
+	color: #e2e2e2;
 	padding: 10px;
 	text-align: center;
 	width: 0;
@@ -105,32 +105,6 @@ footer {
 	margin-left: 50px;
 }
 
-.animation {
-	transition: transform .2s;
-	margin: 10px;
-}
-
-.animation:hover {
-	transform: scale(1.5);
-}
-
-.animation2 {
-	transition: transform .1s;
-	margin: 20px;
-}
-
-.animation2:hover {
-	transform: scale(1.25);
-}
-
-.show {
-	display: block;
-}
-
-.toto {
-	position: relative;
-}
-
 .titi {
 	position: absolute;
 	top: 50%;
@@ -159,10 +133,6 @@ footer {
 	width: 100%;
 	scroll-snap-align: start;
 	position: relative;
-}
-
-.slide h1 {
-	font-size: 500%;
 }
 
 .slide h2 {
@@ -194,20 +164,12 @@ footer {
 	}
 }
 
-.slide1,
-.slide2,
-.slide3,
-.slide4,
-.slide5 {
-	background-color: #575757;
-}
-
 .slide_images {
 	display: none;
 }
 
 .galerie {
-	max-width: 70%;
+	max-width: 60%;
 	position: relative;
 	margin: auto;
 }
@@ -253,8 +215,8 @@ footer {
 
 .image {
 	width: 100%;
-	height: 550px;
-	object-fit: cover;
+	height: 500px;
+	object-fit: scale-down;
 	object-position: center;
 }
 
@@ -277,14 +239,14 @@ footer {
 	}
 }
 
-#grid2 {
+#grid4 {
 	display: grid;
-	grid-template-columns: repeat(2, auto);
+	grid-template-columns: repeat(4, auto);
 	grid-gap: 15px;
 	align-items: center;
 }
 
-#grid2_sp {
+#grid2 {
 	display: grid;
 	grid-template-columns: repeat(2, auto);
 	grid-gap: 35px;
@@ -306,7 +268,6 @@ footer {
 		conic-gradient(from 180deg at top 7px right 7px, var(--_g)) 100% 0 / var(--_p),
 		conic-gradient(from 0deg at bottom 7px left 7px, var(--_g)) 0 100% / var(--_p),
 		conic-gradient(from -90deg at bottom 7px right 7px, var(--_g)) 100% 100% / var(--_p);
-	;
 }
 
 #corner_green {
@@ -317,7 +278,6 @@ footer {
 		conic-gradient(from 180deg at top 7px right 7px, var(--_g)) 100% 0 / var(--_p),
 		conic-gradient(from 0deg at bottom 7px left 7px, var(--_g)) 0 100% / var(--_p),
 		conic-gradient(from -90deg at bottom 7px right 7px, var(--_g)) 100% 100% / var(--_p);
-	;
 }
 
 .download {
@@ -380,4 +340,47 @@ footer {
 	left: 50%;
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
+}
+
+#message {
+	visibility: hidden;
+	text-align: center;
+	border-radius: 5px;
+	padding: 1%;
+	min-width: 250px;
+	margin: auto;
+	position: fixed;
+	background-color: #41142e;
+	z-index: 99;
+	left: 40%;
+	bottom: 40%;
+}
+
+#message.show {
+	visibility: visible;
+	animation: up 1s, down 1s 2.5s;
+}
+
+@keyframes up {
+	from {
+		bottom: 0;
+		opacity: 0;
+	}
+
+	to {
+		bottom: 40%;
+		opacity: 1;
+	}
+}
+
+@keyframes down {
+	from {
+		bottom: 40%;
+		opacity: 1;
+	}
+
+	to {
+		bottom: 0;
+		opacity: 0;
+	}
 }
