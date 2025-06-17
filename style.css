@@ -1,386 +1,920 @@
-* {
-	box-sizing: border-box;
-}
-
-.jersey-10-regular {
-	font-family: "Jersey 10", sans-serif;
-	font-weight: 400;
-	font-style: normal;
-}
-
-html,
 body {
-	font-family: "Jersey 10", Arial, Helvetica, sans-serif;
-	color: #e2e2e2;
-	margin: 0;
-	height: 100%;
-	width: 100%;
-	overflow-y: hidden;
-	background-color: #575757;
+  font-family: "Roboto", serif;
+  background: linear-gradient(135deg, black, #220033);
+  background-size: cover; /* Ensures the gradient covers the entire background */
+  background-repeat: no-repeat; /* Prevents the gradient from repeating */
+  background-attachment: fixed; /* Fixes the background so it doesn't scroll with content */
+  margin: 0; /* Assurez-vous que le corps n'a pas de marge par défaut */
+  cursor: none;
 }
 
-::-webkit-scrollbar {
-	display: none;
+
+.hero-section {
+  color: #fff;
+  padding: 20px 20px 80px 20px; /* réduit le padding-top à 20px (haut, droite, bas, gauche) */
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Aligne le contenu en haut */
+  align-items: center;
 }
 
-header {
-	background-color: #41142e;
-	color: #F2F2F2;
-	position: sticky;
-	top: 0;
-	padding: 30px;
+.hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center; /* Ajoutez ou assurez-vous que cette ligne est présente */
 }
 
-footer {
-	left: 0;
-	bottom: 0;
-	background-color: #41142e;
-	color: #e2e2e2;
-	padding: 10px;
-	text-align: center;
-	width: 100%;
+.hero-section h1 {
+  font-size: clamp(2.5em, 5vw, 4em);
+  margin-bottom: 30px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 1s ease-out 0.2s both;
 }
 
-.noInspi {
-	display: none;
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	background-color: #41142e;
-	color: #e2e2e2;
-	padding: 10px;
-	text-align: center;
-	width: 0;
-	transition: 0.3s;
+
+.hero-section h1 {
+  position: relative;
+  color: #fff;
+  text-shadow: 
+    0 0 5px rgba(255,255,255,0.1),
+    0 0 10px rgba(255,255,255,0.1),
+    0 0 20px rgba(255,255,255,0.3);
+  animation: flicker 3s linear infinite alternate;
 }
 
-#align {
-	display: flex;
-	padding: 3px;
-	justify-content: center;
-	align-items: center;
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 
+      0 0 5px rgba(255,255,255,0.1),
+      0 0 10px rgba(255,255,255,0.1),
+      0 0 20px rgba(255,255,255,0.3),
+      0 0 40px rgba(255,255,255,0.2);
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
 }
 
-.menu {
-	position: relative;
-	display: inline-block;
+
+.hero-section p {
+  position:absolute;
+  font-size: clamp(1em, 1.8vw, 1.2em);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  top: 72%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 60%;
+  animation: fadeInUp 1s ease-out 0.6s both;
 }
 
-.sousMenu {
-	height: 100%;
-	width: 0;
-	overflow: hidden;
-	position: fixed;
-	z-index: 2;
-	top: 0;
-	left: 0;
-	background-color: #575757;
-	overflow-x: hidden;
-	transition: 0.5s;
-	padding-top: 60px;
+.hero-section p {
+  position: absolute;
+  animation: paragraphGlow 1.5s ease-out 0.5s forwards;
+  opacity: 0;
+  padding: 20px;
 }
 
-.sousMenu a {
-	padding: 8px 8px 8px 32px;
-	position: relative;
-	text-decoration: none;
-	text-align: center;
-	font-size: 300%;
-	padding: 1%;
-	color: #F2F2F2;
-	display: block;
-	transition: 0.3s;
+.hero-section p {
+  position: absolute;
+  color: #fff;
+  text-shadow: 
+    0 0 2px #fff,
+    0 0 5px rgba(255,255,255,0.3);
+  animation: gentlePulse 4s ease-in-out infinite;
 }
 
-.sousMenu a:hover {
-	background-color: #f2f2f268;
+
+@keyframes gentlePulse {
+  0%, 100% {
+    opacity: 0.9;
+    text-shadow: 
+      0 0 2px #fff,
+      0 0 5px rgba(255,255,255,0.3);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 
+      0 0 5px #fff,
+      0 0 10px rgba(255,255,255,0.5),
+      0 0 15px rgba(255,255,255,0.2);
+  }
 }
 
-.sousMenu .closeMenu {
-	margin-top: 10px;
-	position: absolute;
-	top: 0;
-	right: 25px;
-	font-size: 36px;
-	margin-left: 50px;
+@supports not (background-clip: text) {
+  .hero-section h1,
+  .hero-section p {
+    color: #fff !important;
+    background: none !important;
+    animation: none !important;
+    text-shadow: 0 0 10px rgba(255,255,255,0.7);
+  }
 }
 
-.titi {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+@keyframes subtleShine {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
-.tutu {
-	top: 50%;
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
-	position: absolute;
-	right: 0px;
+@keyframes paragraphGlow {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.tata {
-	width: 100%;
-	height: 100%;
-	overflow: scroll;
-	scroll-behavior: smooth;
-	scroll-snap-type: y mandatory;
+
+
+.hero-section p::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.1) 0%,
+    rgba(255,255,255,0) 50%,
+    rgba(255,255,255,0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  border-radius: 5px;
 }
 
-.slide {
-	height: 100%;
-	width: 100%;
-	scroll-snap-align: start;
-	position: relative;
+.hero-section p:hover::after {
+  opacity: 1;
+  animation: shine 2s infinite;
 }
 
-.slide h2 {
-	font-size: 350%;
+@keyframes shine {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
-.slide4 h2,
-.slide1 h2,
-.slide2 h2,
-.slide3 h2,
-.slide5 h2 {
-	margin: auto;
+
+/* NOUVEAU: Conteneur Flexbox pour la photo et les icônes sociales */
+.profile-and-social-row {
+  display: flex; /* Active Flexbox */
+  justify-content: center; /* Centre les éléments horizontalement */
+  align-items: center; /* Aligne les éléments verticalement au centre */
+  gap: 30px; /* Ajoute un espace entre les éléments */
+  margin-bottom: 50px; /* Diminué pour remonter l'image et le texte */
+  width: 100%;
+  max-width: 900px;
+  animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s both;
 }
 
-.title {
-	animation: fadeslideUp ease 1s;
-	animation-iteration-count: 1;
-	animation-fill-mode: forwards;
+/* Styles pour le conteneur de la photo de profil */
+.profile-picture-wrapper {
+  width: 15vw; /* Ajustez cette valeur selon la taille souhaitée */
+  padding-bottom: 15vw; /* Doit être la même valeur que 'width' pour un carré parfait */
+  position: relative; /* Essentiel pour positionner l'image à l'intérieur */
+  border-radius: 50%; /* Rend le conteneur rond */
+  overflow: hidden; /* Masque toute partie de l'image qui dépasse du cercle */
+  margin: 0; /* Important: supprime les marges automatiques précédentes qui pourraient interférer avec Flexbox */
+  flex-shrink: 0; /* Empêche l'image de rétrécir */
+  transform: translateY(-50px); /* NOUVEAU: Déplace l'élément de 50px vers le haut */
+  transition: all 0.3s ease-out;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
-@keyframes fadeslideUp {
-	0% {
-		opacity: 0;
-		transform: translateY(50%);
-	}
-
-	100% {
-		opacity: 1;
-	}
+/* Styles pour l'image à l'intérieur du conteneur */
+.hero-round {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease-out;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
-.slide_images {
-	display: none;
+/* Styles pour les icônes sociales lorsqu'elles sont dans la nouvelle rangée */
+.social-icon-in-row {
+  position: relative; /* Change de 'absolute' pour permettre le positionnement dans le flux Flexbox */
+  display: flex; /* Active Flexbox pour centrer le contenu de l'icône */
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* Taille de l'icône / du cercle d'arrière-plan */
+  height: 50px;
+  border-radius: 50%; /* Rend le fond de l'icône rond */
+  background: rgba(255, 255, 255, 0.1); /* Léger fond transparent */
+  transition: background 0.3s ease; /* Transition douce au survol */
+  text-decoration: none; /* Supprime le soulignement du lien */
+  overflow: hidden; /* Important pour les spans qui animent */
 }
 
-.galerie {
-	max-width: 60%;
-	position: relative;
-	margin: auto;
+.social-icon-in-row:hover {
+  background: rgba(255, 255, 255, 0.2); /* Changement de fond au survol */
 }
 
-.prev,
-.next {
-	cursor: pointer;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 60px;
-	height: 60px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 50%;
-	color: white;
-	font-size: 30px;
-	background-color: rgba(0, 0, 0, 0);
-	transition: background-color 0.6s ease;
+.social-icon-in-row i {
+  color: #fff; /* Couleur de l'icône */
+  font-size: 1.8em; /* Taille de l'icône */
+  z-index: 1; /* S'assure que l'icône est au-dessus des spans d'animation */
+  position: relative; /* Nécessaire pour le z-index par rapport aux spans absolus */
 }
 
-.prev {
-	left: 15px;
+/* Adaptation des styles des spans pour les effets de survol */
+/* Ces styles doivent être définis par rapport à .social-icon-in-row */
+.social-icon-in-row span {
+  position: absolute;
+  display: block; /* S'assure que les spans sont des blocs pour la transformation */
+  background: #404040; /* Couleur des bandes d'animation */
+  transition: transform .5s ease; /* Transition par défaut */
+  z-index: 0; /* Assurez-vous qu'ils sont derrière l'icône */
 }
 
-.next {
-	right: 15px;
+.social-icon-in-row span:nth-child(1) {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px; /* Épaisseur de la bande */
+  transform-origin: right;
+  transform: scaleX(1);
+}
+.social-icon-in-row:hover span:nth-child(1) {
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
-.prev:hover,
-.next:hover {
-	background-color: rgba(0, 0, 0, 0.5);
+.social-icon-in-row span:nth-child(2) {
+  top: 0;
+  left: 0;
+  width: 3px; /* Épaisseur de la bande */
+  height: 100%;
+  transform-origin: bottom;
+  transform: scaleY(0); /* Commencer à 0 pour l'animation */
+}
+.social-icon-in-row:hover span:nth-child(2) {
+  transform: scaleY(1);
+  transform-origin: top;
 }
 
-.index {
-	color: #ffffff;
-	font-size: 13px;
-	padding: 15px;
-	position: absolute;
-	top: 0;
+.social-icon-in-row span:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px; /* Épaisseur de la bande */
+  transform-origin: left;
+  transform: scaleX(1);
+}
+.social-icon-in-row:hover span:nth-child(3) {
+  transform: scaleX(0);
+  transform-origin: right;
 }
 
-.image {
-	width: 100%;
-	height: 500px;
-	object-fit: scale-down;
-	object-position: center;
+.social-icon-in-row span:nth-child(4) {
+  top: 0;
+  right: 0;
+  width: 3px; /* Épaisseur de la bande */
+  height: 100%;
+  transform-origin: top;
+  transform: scaleY(0); /* Commencer à 0 pour l'animation */
+}
+.social-icon-in-row:hover span:nth-child(4) {
+  transform: scaleY(1);
+  transform-origin: bottom;
 }
 
-.active {
-	background-color: #111111;
+
+
+.carousel {
+  overflow: hidden;
+  position: relative;
+  /* Retirez z-index: 1; ou mettez-le plus bas si le contenu du hero-section doit chevaucher */
+  /* Si le carrousel doit toujours être visible et prendre le relais, laissez-le ainsi */
+  z-index: 1; /* Laissez ceci si le carrousel doit apparaître "au-dessus" du fond */
+  height: 100vh; /* Le carrousel occupe toujours 100% de la hauteur de la fenêtre */
+  pointer-events: none;
 }
 
-.fade {
-	animation-name: fade;
-	animation-duration: 1s;
+/* Le reste de votre CSS pour le carrousel et les autres éléments reste inchangé */
+.carousel-item {
+  overflow: hidden;
+  --items: 10;
+  --width: clamp(150px, 30vw, 300px);
+  --height: clamp(200px, 40vw, 400px);
+  --x: calc(var(--active) * 800%);
+  --y: calc(var(--active) * 200%);
+  --rot: calc(var(--active) * 120deg);
+  --opacity: calc(var(--zIndex) / var(--items) * 3 - 2);
+  position: absolute;
+  z-index: var(--zIndex);
+  width: var(--width);
+  height: var(--height);
+  margin: calc(var(--height) * -0.5) 0 0 calc(var(--width) * -0.5);
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transform-origin: 0% 100%;
+  box-shadow: 0 10px 50px 10px rgba(0, 0, 0, 0.5);
+  background: black;
+  pointer-events: all;
+  transform: translate(var(--x), var(--y)) rotate(var(--rot));
+  transition: transform 0.8s cubic-bezier(0, 0.02, 0, 1);
+}
+.carousel-item .carousel-box {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.8s cubic-bezier(0, 0.02, 0, 1);
+  opacity: var(--opacity);
+  font-family: "Orelo-sw-db", serif;
+}
+.carousel-item .carousel-box:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5));
+}
+.carousel-item .title {
+  position: absolute;
+  z-index: 1;
+  color: #fff;
+  bottom: 20px;
+  left: 20px;
+  transition: opacity 0.8s cubic-bezier(0, 0.02, 0, 1);
+  font-size: clamp(20px, 3vw, 30px);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+}
+.carousel-item .num {
+  position: absolute;
+  z-index: 1;
+  color: #fff;
+  top: 10px;
+  left: 20px;
+  transition: opacity 0.8s cubic-bezier(0, 0.02, 0, 1);
+  font-size: clamp(20px, 10vw, 80px);
+}
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  pointer-events: none;
 }
 
-@keyframes fade {
-	from {
-		opacity: 0
-	}
-
-	to {
-		opacity: 1
-	}
+.layout {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.layout:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 90px;
+  width: 10px;
+  height: 100%;
+  border: 1px solid #fff;
+  border-top: none;
+  border-bottom: none;
+  opacity: 0.15;
+}
+.layout .box {
+  position: absolute;
+  bottom: 0;
+  left: 30px;
+  color: #fff;
+  transform-origin: 0% 10%;
+  transform: rotate(-90deg);
+  font-size: 9px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  opacity: 0.4;
 }
 
-#grid4 {
-	display: grid;
-	grid-template-columns: repeat(4, auto);
-	grid-gap: 15px;
-	align-items: center;
+.logo {
+  overflow: hidden;
+  position: absolute;
+  z-index: 2;
+  top: 28px;
+  right: 28px;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Orelo-sw-db", serif;
+  pointer-events: all;
+  color: black;
+  text-decoration: none;
+  font-size: 20px;
+  padding-bottom: 0.1em;
 }
 
-#grid2 {
-	display: grid;
-	grid-template-columns: repeat(2, auto);
-	grid-gap: 35px;
-	align-items: center;
+
+.cursor {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  --size: 40px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  margin: calc(var(--size) * -0.5) 0 0 calc(var(--size) * -0.5);
+  transition: transform 0.5s cubic-bezier(0, 0.02, 0, 1);
+  display: none;
+  pointer-events: none;
+}
+@media (pointer: fine) {
+  .cursor {
+    display: block;
+  }
 }
 
-#grid3 {
-	display: grid;
-	grid-template-columns: repeat(3, auto);
-	grid-gap: 15px;
-	align-items: center;
+.cursor2 {
+  --size: 2px;
+  transition-duration: 0.1s;
 }
 
-#corner_purple {
-	border: #41142e solid #0000;
-	--_g: #0000 90deg, #41142e 0;
-	--_p: 50px 50px border-box no-repeat;
-	background: conic-gradient(from 90deg at top 7px left 7px, var(--_g)) 0 0 / var(--_p),
-		conic-gradient(from 180deg at top 7px right 7px, var(--_g)) 100% 0 / var(--_p),
-		conic-gradient(from 0deg at bottom 7px left 7px, var(--_g)) 0 100% / var(--_p),
-		conic-gradient(from -90deg at bottom 7px right 7px, var(--_g)) 100% 100% / var(--_p);
+
+
+
+
+
+
+
+/* Styles pour les icônes à l'intérieur des liens */
+ul li a i {
+  position: relative;
+  top:40px;
+  z-index: 1;
+  color: #404040;
+  font-size: 3em; /* MODIFIÉ: Augmenter la taille des icônes */
 }
 
-#corner_green {
-	border: #184434 solid #0000;
-	--_g: #0000 90deg, #184434 0;
-	--_p: 50px 50px border-box no-repeat;
-	background: conic-gradient(from 90deg at top 7px left 7px, var(--_g)) 0 0 / var(--_p),
-		conic-gradient(from 180deg at top 7px right 7px, var(--_g)) 100% 0 / var(--_p),
-		conic-gradient(from 0deg at bottom 7px left 7px, var(--_g)) 0 100% / var(--_p),
-		conic-gradient(from -90deg at bottom 7px right 7px, var(--_g)) 100% 100% / var(--_p);
+
+ul {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  margin:0;
+  padding:0;
+  display:flex;
+}
+ul li {
+  list-style:none;
+}
+ul li a {
+  display:block;
+  position:relative;
+  width:200px;
+  height:200px;
+  line-height:100px;
+  font-size:40px;
+  text-align:center;
+  text-decoration:none;
+  color:#404040;
+  margin: 0 30px;
+  transition:.5s;
+}
+ul li a span {
+  position:absolute;
+  transition: transform .5s;
+}
+ul li a span:nth-child(1),
+ul li a span:nth-child(3){
+  width:100%;
+  height:3px;
+  background:#404040;
+}
+ul li a span:nth-child(1) {
+  top:0;
+  left:0;
+  transform-origin: right;
+}
+ul li a:hover span:nth-child(1) {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition:transform .5s;
 }
 
-.download {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.09), 0 6px 15px 0 rgba(0, 0, 0, 0.09);
-	padding: 10px 17px 10px 17px;
-	color: white;
-	border-radius: 7px;
-	background-color: #41142e;
-	border: 1px solid #41142e;
+ul li a span:nth-child(3) {
+  bottom:0;
+  left:0;
+  transform-origin: left;
+}
+ul li a:hover span:nth-child(3) {
+  transform: scaleX(0);
+  transform-origin: right;
+  transition:transform .5s;
 }
 
-.download h2 {
-	font-family: "Jersey 10";
-	cursor: pointer;
-	display: inline-block;
-	position: relative;
-	transition: 0.5s;
+ul li a span:nth-child(2),
+ul li a span:nth-child(4){
+  width:3px;
+  height:100%;
+  background:#404040;
+}
+ul li a span:nth-child(2) {
+  top:0;
+  left:0;
+  transform:scale(0);
+  transform-origin: bottom;
+}
+ul li a:hover span:nth-child(2) {
+  transform: scale(1);
+  transform-origin: top;
+  transition:transform .5s;
+}
+ul li a span:nth-child(4) {
+  top:0;
+  right:0;
+  transform:scale(0);
+  transform-origin: top;
+}
+ul li a:hover span:nth-child(4) {
+  transform: scale(1);
+  transform-origin: bottom;
+  transition:transform .5s;
 }
 
-.download h2:after {
-	position: absolute;
-	opacity: 0;
-	top: 0;
-	right: -20px;
-	transition: 0.5s;
-	font-size: 95%;
-	content: "⭳";
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
+.linkedin:hover {
+  color: #0A66C2;
+}
+.linkedin:hover span { 
+  background: #0A66C2;
+}
+.github:hover {
+  color: #c0bfbf;
+}
+.github:hover span { 
+  background: #c0bfbf;
 }
 
-.download:hover h2 {
-	padding-right: 40px;
+ul li a.linkedin:hover .fa-linkedin {
+  color: #0A66C2;
 }
 
-.download:hover h2:after {
-	opacity: 1;
-	right: 0;
+ul li a.github:hover .fa-github {
+  color: #c0bfbf;
 }
 
-.bas_gauche {
-	position: absolute;
-	bottom: 10%;
-	left: 1%
+.linkedin{
+  left :-40%;
+}
+.github{
+  left :40%;
 }
 
-.bas_droite {
-	position: absolute;
-	bottom: 10%;
-	left: 50%;
+
+
+
+
+
+/* Animation d'apparition */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.center {
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+
+
+
+
+/* Animation d'apparition 3D */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-#message {
-	visibility: hidden;
-	text-align: center;
-	border-radius: 5px;
-	padding: 1%;
-	min-width: 250px;
-	margin: auto;
-	position: fixed;
-	background-color: #41142e;
-	z-index: 99;
-	left: 40%;
-	bottom: 40%;
+
+.profile-3d-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease-out;
 }
 
-#message.show {
-	visibility: visible;
-	animation: up 1s, down 1s 2.5s;
+
+
+
+
+
+
+
+
+.carousel-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
 }
 
-@keyframes up {
-	from {
-		bottom: 0;
-		opacity: 0;
-	}
-
-	to {
-		bottom: 40%;
-		opacity: 1;
-	}
+.carousel-box {
+  transition: all 0.5s ease;
 }
 
-@keyframes down {
-	from {
-		bottom: 40%;
-		opacity: 1;
-	}
 
-	to {
-		bottom: 0;
-		opacity: 0;
-	}
+.carousel-item:hover .carousel-box {
+  transform: scale(1.05);
+}
+
+/* Effet de brillance animé */
+.carousel-item::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 55%
+  );
+  transform: rotate(30deg);
+  animation: shine2 4s infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@keyframes shine2 {
+  0% {
+    transform: rotate(30deg) translate(-30%, -30%);
+  }
+  100% {
+    transform: rotate(30deg) translate(30%, 30%);
+  }
+}
+
+/* Effet sur le texte des cartes */
+.carousel-item .title,
+.carousel-item .num {
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  z-index: 4;
+}
+
+.carousel-item:hover .title {
+  transform: translateY(-5px);
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+}
+
+.carousel-item:hover .num {
+  transform: scale(1.1);
+}
+
+
+
+
+
+/* Ajoutez ces règles à votre CSS existant */
+.carousel-item {
+  transition: 
+    transform 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67),
+    box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.carousel-box {
+  transition: transform 0.3s ease-out;
+  transform-style: preserve-3d;
+}
+
+
+.carousel {
+  transform-style: preserve-3d;
+}
+
+.carousel-item {
+  backface-visibility: hidden;
+  transform-origin: center center;
+}
+
+
+
+
+
+.carousel-item {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.carousel-item.active-center {
+  z-index: 10;
+  transition: transform 0.3s ease-out;
+}
+
+.carousel-box {
+  backface-visibility: hidden;
+}
+
+
+
+
+
+
+.carousel-item.active-center {
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+}
+
+.carousel-item.active-center .carousel-box {
+  transform: translateZ(20px);
+}
+
+
+
+
+
+
+
+
+
+/* Effet 3D unifié pour photo ET carte centrale */
+.profile-picture-wrapper, 
+.carousel-item.active-center {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-style: preserve-3d;
+}
+
+/* Effet de perspective amélioré */
+.hero-round,
+.carousel-item.active-center .carousel-box {
+  transition: transform 0.4s ease-out;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Ombre portée pour la carte centrale */
+.carousel-item.active-center {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+
+
+
+
+
+
+
+
+/* Styles pour le lien */
+.carousel-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  z-index: 5; /* Au-dessus des effets */
+}
+
+/* Réinitialisation des effets sur le lien */
+.carousel-link:hover,
+.carousel-link:focus {
+  transform: none !important;
+}
+
+/* Empêche les enfants de bloquer les événements */
+.carousel-box, 
+.carousel-box * {
+  pointer-events: none;
+}
+
+/* Correction pour la carte active */
+.carousel-item[style*="--active: 0"] .carousel-link {
+  pointer-events: auto;
+}
+
+
+
+
+
+
+
+.carousel-box {
+  opacity: 1 !important;
+}
+
+
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(135deg, #000000 0%, #220033 100%);
+}
+
+.glow-effect {
+  position: absolute;
+  width: 60vw;
+  height: 60vh;
+  background: radial-gradient(
+    circle at center,
+    rgba(102, 0, 204, 0.4) 0%,
+    transparent 70%
+  );
+  filter: blur(60px);
+  animation: glow-move 15s infinite alternate ease-in-out;
+}
+
+@keyframes glow-move {
+  0% {
+    transform: translate(-20%, -20%);
+  }
+  25% {
+    transform: translate(20%, 10%);
+  }
+  50% {
+    transform: translate(10%, 20%);
+  }
+  75% {
+    transform: translate(-10%, -10%);
+  }
+  100% {
+    transform: translate(-15%, 15%);
+  }
+}
+
+.particles-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(138, 43, 226, 0.6); /* Violet */
+  border-radius: 50%;
+  filter: blur(1px);
+  animation: float-up linear infinite;
+}
+
+@keyframes float-up {
+  to {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
 }

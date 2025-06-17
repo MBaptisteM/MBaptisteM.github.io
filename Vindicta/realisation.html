@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Vindicta.html</title>
+	<link rel="stylesheet" href="style2.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Jersey+10&display=swap"
+		rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<div class="toto">
+			<div class="menu">
+				<img src="menu.png" alt="Menu" onclick="openMenu2()" align="left"
+					style="cursor: pointer; width: 40px; height: 40px;" />
+				<div id="sousMenu" class="sousMenu">
+					<img src="close.png" alt="Fermer" class="closeMenu" onclick="closeMenu2()"
+						style="width: 40px; height: 40px;" />
+					<br><br><br><br><br><br><br><br><br>
+					<a href="index.html">Page d'accueil</a>
+					<a href="equipe.html">L'équipe</a>
+					<a href="ressources.html">Ressources</a>
+				</div>
+			</div>
+			<div class="titi">
+				<img src="logo_vindicta.png" alt="Vindicta logo" style="width: 300px;height: 70px;"
+					id="logo_vindicta" />
+			</div>
+			<a href="https://github.com/MBaptisteM/VindictaB2"><img src="download.png" alt="Download icon"
+					style="width: 50px; height: 50px;" class="tutu" /></a>
+		</div>
+	</header>
+
+	<h1 align="center" style="letter-spacing: 2px;"><b><u>Réalisation</u></b></h1>
+
+	<section class="timeline">
+		<ul>
+			<li>
+				<div class="content">
+					<h2>
+						<time>19 septembre 2024</time>
+					</h2>
+					<p>Création de l'entreprise BANCAL ainsi que du projet Vindicta</p>
+				</div>
+			</li>
+			<li>
+				<div class="content">
+					<h2>
+						<time>Fin septembre</time>
+					</h2>
+					<p>Réflexion autour de la définition du jeu dans sa globalité : le type de gameplay, de graphisme,
+						de réseau, comment se déroulera le mode multijoueurs, le thème et l'ambiance du jeu, la
+						possibilité de mécaniques uniques comme un système d'atout ou encore la fusion de personnages.
+						Distribution des tâches.</p>
+				</div>
+			</li>
+			<li>
+				<div class="content">
+					<h2>
+						<time>Octobre - Novembre</time>
+					</h2>
+					<p>Création du logo du jeu ainsi que de celui de l'entreprise. Mise en place du squelette du site.
+						....
+					</p>
+				</div>
+			</li>
+			<li>
+				<div class="content">
+					<h2>
+						<time>2010</time>
+					</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis voluptas voluptatum dolorum,
+						quibusdam dignissimos animi pariatur laboriosam quis explicabo similique aperiam debitis quam
+						velit quod, reprehenderit harum ratione. Iste, unde?</p>
+				</div>
+			</li>
+			<li>
+				<div class="content">
+					<h2>
+						<time>15 janvier 2025</time>
+					</h2>
+					<p>Première soutenance technique</p>
+				</div>
+			</li>
+			<li>
+				<div class="content">
+					<h2>
+						<time>13 mars 2025</time>
+					</h2>
+					<p>Deuxième soutenance technique</p>
+				</div>
+			</li>
+			<li>
+				<div class="content">
+					<h2>
+						<time>24 mai 2025</time>
+					</h2>
+					<p>Rendu final du projet</p>
+				</div>
+			</li>
+		</ul>
+	</section>
+
+	<div style="position: relative;">
+		<h2 style="font-size: 350%; padding-left: 2%; color: #41142e; letter-spacing: 1px;"><u>Problèmes rencontrés et
+				solutions</u></h2>
+		<div style="margin: auto; width: 95%;">
+			<div style="display: flex;">
+				<img src="feuilles_horizontales.png" alt="dessin de feuilles"
+					style="width: 35%; height: auto; position: absolute; top: 4%;">
+				<img src="feuilles_horizontales_flip.png" alt="dessin de feuilles"
+					style="width: 35%; height: auto; position: absolute; left: 36%; top: 4%;">
+				<div style="width: fit-content; flex: 1; padding-top: 7%; " align="center">
+					<div
+						style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;">
+						<img src="personnage.png" alt="à trouver plus tard"
+							style="width: auto; height: 600px; padding: 4%;" onclick="openPopUpPb1()">
+					</div>
+					<h2 style="letter-spacing: 1px;"><u>Problème 1</u>
+						<h2>
+							<div id="popUpPb1">
+								<div><br><br><br><br><br><br><br></div>
+								<div id="pb1">
+									<h2 style="letter-spacing: 2px;"><u>Problème 1</u></h2>
+									<img src="personnage.png" alt="à trouver plus tard"
+										style="width: auto;height: 300px;" />
+									<p style="font-size: large; letter-spacing: 1px; font-weight: 100;">toto
+									</p>
+									<button onclick="closePopUpPb1()" id="green">Fermer</button>
+								</div>
+							</div>
+				</div>
+				<div style="width: fit-content; flex: 1; padding-top: 12%; padding-left: 2%; padding-right: 2%;"
+					align="center">
+					<h2 style="letter-spacing: 1px; padding-bottom: 3%;"><u>Problème 2</u>
+						<h2>
+							<div
+								style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;">
+								<img src="presentation.png" alt="à trouver plus tard"
+									style="width: 800px; height: auto; padding: 3%;" onclick="openPopUpPb2()">
+							</div>
+							<div id="popUpPb2">
+								<div><br><br><br><br><br><br><br></div>
+								<div id="pb2">
+									<h2 style="letter-spacing: 2px;"><u>Problème 2</u></h2>
+									<img src="presentation.png" alt="à trouver plus tard"
+										style="width: 400px;height: auto;" />
+									<p style="font-size: large; letter-spacing: 1px; font-weight: 100;">titi
+									</p>
+									<button onclick="closePopUpPb2()" id="green">Fermer</button>
+								</div>
+							</div>
+				</div>
+				<div style="width: fit-content; flex: 1; padding-bottom: 10%;" align="center">
+					<div
+						style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;">
+						<img src="fee.png" alt="à trouver plus tard" style="width: 500px; height: auto; padding: 5%;"
+							onclick="openPopUpPb3()">
+					</div>
+					<h2 style="letter-spacing: 1px;"><u>Problème 3</u>
+						<h2>
+							<div id="popUpPb3">
+								<div><br><br><br><br><br><br><br></div>
+								<div id="pb3">
+									<h2 style="letter-spacing: 2px;"><u>Problème 3</u></h2>
+									<img src="fee.png" alt="à trouver plus tard" style="width: 250px;height: auto;" />
+									<p style="font-size: large; letter-spacing: 1px; font-weight: 100;">tutu
+									</p>
+									<button onclick="closePopUpPb3()" id="green">Fermer</button>
+								</div>
+							</div>
+				</div>
+			</div>
+
+			<div style="display: flex;">
+				<div style="width: fit-content; flex: 1; padding-top: 2%; padding-left: 10%;" align="center">
+					<div
+						style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat; width: fit-content;">
+						<img src="fee.png" alt="à trouver plus tard" style="width: 500px; height: auto; padding: 5%;"
+							onclick="openPopUpPb4()">
+					</div>
+					<h2 style="letter-spacing: 1px;"><u>Problème 4</u>
+						<h2>
+							<div id="popUpPb4">
+								<div><br><br><br><br><br><br><br></div>
+								<div id="pb4">
+									<h2 style="letter-spacing: 2px;"><u>Problème 4</u></h2>
+									<img src="fee.png" alt="à trouver plus tard" style="width: 200px;height: auto;" />
+									<p style="font-size: large; letter-spacing: 1px; font-weight: 100;">whelp
+									</p>
+									<button onclick="closePopUpPb4()" id="green">Fermer</button>
+								</div>
+							</div>
+				</div>
+				<div style="width: fit-content; flex: 1;" align="center">
+					<h2 style="letter-spacing: 1px; padding-bottom: 3%;"><u>Problème 5</u>
+						<h2>
+							<div
+								style="background-image: url(bordure.png); background-size: 100% 100%; background-repeat: no-repeat;">
+								<img src="presentation.png" alt="à trouver plus tard"
+									style="width: 800px; height: auto; padding: 3%;" onclick="openPopUpPb5()">
+							</div>
+							<div id="popUpPb5">
+								<div><br><br><br><br><br><br><br></div>
+								<div id="pb5">
+									<h2 style="letter-spacing: 2px;"><u>Problème 5</u></h2>
+									<img src="presentation.png" alt="à trouver plus tard"
+										style="width: 400px;height: auto;" />
+									<p style="font-size: large; letter-spacing: 1px; font-weight: 100;">aaa
+									</p>
+									<button onclick="closePopUpPb5()" id="green">Fermer</button>
+								</div>
+							</div>
+				</div>
+				<img src="feuilles_angle_gauche.png" alt="dessin de feuilles en angle"
+					style="width: 20%; height: auto; position: absolute; left: 0.5%; bottom: 1%;">
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<img src="logo_bancal.png" alt="B.A.N.C.A.L logo" style="width: auto; height: 125px;" />
+		<sub id="align">B.A.N.C.A.L Corporation. All rights reserved</sub>
+	</footer>
+
+</body>
+
+<script src="script.js"></script>
+
+</html>
