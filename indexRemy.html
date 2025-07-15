@@ -106,8 +106,46 @@
             padding: 0 5%;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
             color: white;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+            z-index: 1;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .hero-bg.active {
+            opacity: 1;
+        }
+
+        .hero-bg:nth-child(2) {
+            background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        }
+
+        .hero-bg:nth-child(3) {
+            background-image: url('https://images.unsplash.com/photo-1600566752225-3f2fe3f8f4c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        }
+
+        .hero-bg:nth-child(4) {
+            background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
         }
 
         .hero-content {
@@ -122,11 +160,13 @@
             font-size: 3.5rem;
             margin-bottom: 20px;
             line-height: 1.2;
+            animation: floatTitle 6s ease-in-out infinite;
         }
 
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 30px;
+            animation: floatText 6s ease-in-out infinite 0.5s;
         }
 
         .btn {
@@ -139,11 +179,14 @@
             font-weight: 600;
             transition: var(--transition);
             border: 2px solid var(--primary-color);
+            animation: floatBtn 4s ease-in-out infinite;
         }
 
         .btn:hover {
             background: transparent;
             color: var(--primary-color);
+            animation: none;
+            transform: translateY(-5px);
         }
 
         .btn-outline {
@@ -151,11 +194,14 @@
             color: white;
             border: 2px solid white;
             margin-left: 15px;
+            animation: floatBtn 4s ease-in-out infinite 0.5s;
         }
 
         .btn-outline:hover {
             background: white;
             color: var(--primary-color);
+            animation: none;
+            transform: translateY(-5px);
         }
 
         /* About Section */
@@ -175,17 +221,23 @@
             font-size: 2.5rem;
             color: var(--primary-color);
             display: inline-block;
+            animation: floatTitle 6s ease-in-out infinite;
         }
 
         .section-title h2:after {
             content: '';
             position: absolute;
-            width: 70px;
+            width: 0;
             height: 3px;
             background: var(--secondary-color);
             bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
+            transition: width 0.8s ease-out;
+        }
+
+        .section-title.animate h2:after {
+            width: 70px;
         }
 
         .about-content {
@@ -202,6 +254,7 @@
             font-size: 1.8rem;
             margin-bottom: 20px;
             color: var(--dark-color);
+            animation: floatTitle 6s ease-in-out infinite 0.3s;
         }
 
         .about-text p {
@@ -259,6 +312,7 @@
         .profile-text h3 {
             font-size: 1.8rem;
             margin-bottom: 20px;
+            animation: floatTitle 6s ease-in-out infinite 0.2s;
         }
 
         .profile-text p {
@@ -282,6 +336,7 @@
             transition: transform 0.1s ease;
             position: relative;
             z-index: 2;
+            animation: floatProfile 6s ease-in-out infinite;
         }
 
         .profile-bg {
@@ -292,12 +347,6 @@
             background: rgba(255, 255, 255, 0.1);
             z-index: 1;
             animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.05); opacity: 0.4; }
-            100% { transform: scale(1); opacity: 0.7; }
         }
 
         /* Projects Section */
@@ -621,6 +670,37 @@
             }
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        /* Nouvelles animations */
+        @keyframes floatProfile {
+            0% { transform: translateY(0) rotateY(0) rotateX(0); }
+            50% { transform: translateY(-15px) rotateY(5deg) rotateX(5deg); }
+            100% { transform: translateY(0) rotateY(0) rotateX(0); }
+        }
+
+        @keyframes floatTitle {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes floatText {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes floatBtn {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+        }
+
         /* Responsive */
         @media (max-width: 1200px) {
             .modal-images {
@@ -766,6 +846,9 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <div class="hero-bg active" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1600566752225-3f2fe3f8f4c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
         <div class="hero-content">
             <h1>Création de paysages harmonieux et durables</h1>
             <p>Je conçois des espaces extérieurs qui marient esthétique, fonctionnalité et respect de l'environnement.</p>
@@ -999,6 +1082,34 @@
         ];
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Animation des barres sous les titres
+            const sectionTitles = document.querySelectorAll('.section-title');
+            
+            const titleObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            sectionTitles.forEach(title => {
+                titleObserver.observe(title);
+            });
+
+            // Carrousel d'images pour la section hero
+            const heroBgs = document.querySelectorAll('.hero-bg');
+            let currentBg = 0;
+            
+            function changeHeroBg() {
+                heroBgs[currentBg].classList.remove('active');
+                currentBg = (currentBg + 1) % heroBgs.length;
+                heroBgs[currentBg].classList.add('active');
+            }
+            
+            // Changer d'image toutes les 5 secondes
+            setInterval(changeHeroBg, 5000);
+
             // Générer les cartes de projet
             const projectsContainer = document.getElementById('projects-container');
             
