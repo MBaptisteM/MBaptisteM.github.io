@@ -1627,34 +1627,39 @@
             renderer.setSize(container.clientWidth, container.clientHeight);
         }
         
-        // Initialisation 3D
-        init3DModel();
-        
-        // Gestion des boutons de caractéristiques (FONCTIONNEL)
-        const features = document.querySelectorAll('.feature');
-        const progress = document.querySelector('.progress');
-        
-        features.forEach(feature => {
-            feature.addEventListener('click', function() {
-                // 1. Mettre à jour l'interface
-                features.forEach(f => f.classList.remove('active'));
-                this.classList.add('active');
-                progress.style.width = `${this.dataset.step * 25}%`;
-                
-                // 2. Mettre à jour le texte
-                updateDescription(this.dataset.step);
-                
-                // 3. (Optionnel) Faire une rotation spécifique
-                if(model) {
-                    // Exemple: rotation vers une position spécifique
-                    gsap.to(controls.target, {
-                        duration: 1,
-                        x: this.dataset.step * 0.5,
-                        y: this.dataset.step * 0.2
-                    });
-                }
+        loader.load('./scene.glb', (gltf) => {
+            console.log("Modèle chargé :", gltf);
+            
+            // 1. Ajustement automatique de la position
+            const box = new THREE.Box3().setFromObject(gltf.scene);
+            const center = box.getCenter(new THREE.Vector3());
+            gltf.scene.position.sub(center);
+            
+            // 2. Ajustement de l'échelle si nécessaire
+            gltf.scene.scale.set(1, 1, 1);
+            
+            // 3. Positionnement de la caméra
+            camera.position.z = box.getSize(new THREE.Vector3()).length() * 1.5;
+            
+            scene.add(gltf.scene);
+            
+            // 4. Vérification visuelle
+            console.log("Position du modèle :", gltf.scene.position);
+            console.log("Échelle du modèle :", gltf.scene.scale);
             });
-        });
+        
+        // 1. Lumière ambiante (obligatoire)
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        // 2. Lumière directionnelle
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+        // 3. Activation des ombres si nécessaire
+        renderer.shadowMap.enabled = true;
+        directionalLight.castShadow = true;
         
         function updateDescription(step) {
             const texts = {
