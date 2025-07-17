@@ -824,7 +824,193 @@
                 height: 220px;
             }
         }
+
+        /* Header - Augmenter le z-index */
+        header {
+            z-index: 1001; /* Augmenté de 1000 à 1001 */
+        }
+
+        /* Photo de profil - S'assurer qu'elle est sous le header */
+        .profile-photo {
+            z-index: 1; /* Réduit de 2 à 1 */
+        }
+
+        /* Modal - S'assurer qu'il est au-dessus de tout */
+        .modal {
+            z-index: 2001; /* Augmenté de 2000 à 2001 */
+        }
+
+        /* Animation du fond */
+        body {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                        rgba(74, 111, 40, 0.05) 0%, 
+                        rgba(139, 168, 136, 0.05) 50%, 
+                        rgba(245, 249, 245, 0.05) 100%);
+            background-size: 300% 300%;
+            z-index: -1;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Section titre - S'assurer qu'elle est sous le modal */
+        .section-title h2 {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* Special Project Section */
+        .special-project {
+            background-color: var(--light-color);
+            padding-bottom: 50px;
+        }
+
+        .special-project-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .model-container {
+            flex: 1;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            height: 500px;
+            background: #f5f9f5;
+        }
+
+        .model-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            transition: all 0.5s ease;
+        }
+
+        .model-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .project-description {
+            flex: 1;
+            position: relative;
+        }
+
+        .description-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #e0e0e0;
+            margin: 20px 0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 25%;
+            background: var(--primary-color);
+            transition: width 0.5s ease;
+        }
+
+        .features-list {
+            margin-top: 30px;
+        }
+
+        .feature {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(139, 168, 136, 0.1);
+        }
+
+        .feature i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .feature.active {
+            background: rgba(74, 111, 40, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .feature:hover {
+            transform: translateX(10px);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .special-project-container {
+                flex-direction: column;
+            }
+            
+            .model-container {
+                width: 100%;
+            }
+        }
     </style>
+    <!-- ... autres balises ... -->
+    <!-- Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <!-- GSAP pour les animations (optionnel mais recommandé) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -927,6 +1113,49 @@
             </div>
         </div>
     </div>
+
+    <!-- Special Project Section -->
+    <section class="section special-project" id="special">
+        <div class="section-title">
+            <h2>Projet Spécial</h2>
+        </div>
+        
+        <div class="special-project-container">
+            <!-- Modèle 3D -->
+            <div class="model-container">
+                <div id="3d-model-container"></div>
+            </div>
+            
+            <!-- Description interactive -->
+            <div class="project-description">
+                <div class="description-content">
+                    <h3 id="project-title">Jardin Vertical Intelligent</h3>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                    <p id="project-text">Un écosystème vertical autonome intégrant des capteurs IoT pour optimiser la croissance des plantes en milieu urbain.</p>
+                    <div class="features-list">
+                        <div class="feature active" data-step="1">
+                            <i class="fas fa-leaf"></i>
+                            <span>Structure modulaire</span>
+                        </div>
+                        <div class="feature" data-step="2">
+                            <i class="fas fa-tint"></i>
+                            <span>Système d'irrigation intelligent</span>
+                        </div>
+                        <div class="feature" data-step="3">
+                            <i class="fas fa-solar-panel"></i>
+                            <span>Énergie solaire</span>
+                        </div>
+                        <div class="feature" data-step="4">
+                            <i class="fas fa-microchip"></i>
+                            <span>Capteurs environnementaux</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Section -->
     <section class="section contact" id="contact">
@@ -1328,6 +1557,136 @@
                 profilePhoto.style.transform = 'rotateY(0) rotateX(0)';
             });
         });
+
+        // Special Project 3D Model with Three.js
+    document.addEventListener('DOMContentLoaded', function() {
+        // Variables pour la scène 3D
+        let scene, camera, renderer, model, controls;
+        
+        function init3DModel() {
+            // Initialisation de la scène 3D (identique à précédemment)
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf5f9f5);
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            const container = document.getElementById('3d-model-container');
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Éclairage
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            const loader = new THREE.GLTFLoader();
+
+            // Chemin relatif depuis la racine du serveur
+            loader.load(
+            './scene.glb',
+            (gltf) => {
+                console.log("Modèle chargé !");
+                scene.add(gltf.scene);
+            },
+            undefined,
+            (error) => {
+                console.error("ERREUR:", error);
+                // Solution de repli
+                const fallbackModel = document.createElement('p');
+                fallbackModel.textContent = "Modèle 3D non disponible - Erreur CORS résolue";
+                fallbackModel.style.color = 'red';
+                document.getElementById('3d-model-container').appendChild(fallbackModel);
+            }
+            );
+            
+            // Rotation automatique SEULEMENT
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableZoom = false; // Désactive le zoom manuel
+            controls.enablePan = false; // Désactive le déplacement manuel
+            controls.autoRotate = true; // Active la rotation auto
+            controls.autoRotateSpeed = 1.5; // Vitesse de rotation
+            
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        function onWindowResize() {
+            const container = document.getElementById('3d-model-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        // Initialisation 3D
+        init3DModel();
+        
+        // Gestion des boutons de caractéristiques (FONCTIONNEL)
+        const features = document.querySelectorAll('.feature');
+        const progress = document.querySelector('.progress');
+        
+        features.forEach(feature => {
+            feature.addEventListener('click', function() {
+                // 1. Mettre à jour l'interface
+                features.forEach(f => f.classList.remove('active'));
+                this.classList.add('active');
+                progress.style.width = `${this.dataset.step * 25}%`;
+                
+                // 2. Mettre à jour le texte
+                updateDescription(this.dataset.step);
+                
+                // 3. (Optionnel) Faire une rotation spécifique
+                if(model) {
+                    // Exemple: rotation vers une position spécifique
+                    gsap.to(controls.target, {
+                        duration: 1,
+                        x: this.dataset.step * 0.5,
+                        y: this.dataset.step * 0.2
+                    });
+                }
+            });
+        });
+        
+        function updateDescription(step) {
+            const texts = {
+                "1": {
+                    title: "Structure Modulaire",
+                    text: "Des modules interchangeables permettent une configuration adaptable à tous les espaces urbains."
+                },
+                "2": {
+                    title: "Irrigation Intelligente", 
+                    text: "Un système automatisé ajuste l'apport en eau selon les besoins réels des plantes."
+                },
+                "3": {
+                    title: "Énergie Solaire",
+                    text: "Des panneaux solaires intégrés assurent une autonomie énergétique complète."
+                },
+                "4": {
+                    title: "Capteurs Environnementaux",
+                    text: "Surveillance en temps réel de la température, humidité et qualité de l'air."
+                }
+            };
+            
+            document.getElementById('project-title').textContent = texts[step].title;
+            document.getElementById('project-text').textContent = texts[step].text;
+        }
+        
+        // Rotation automatique des caractéristiques
+        let currentStep = 1;
+        setInterval(() => {
+            currentStep = currentStep % 4 + 1;
+            document.querySelector(`.feature[data-step="${currentStep}"]`).click();
+        }, 5000);
+    });
     </script>
 </body>
 </html>
