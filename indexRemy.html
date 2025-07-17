@@ -1626,6 +1626,28 @@
             camera.updateProjectionMatrix();
             renderer.setSize(container.clientWidth, container.clientHeight);
         }
+
+
+
+        const loader = new THREE.GLTFLoader();
+
+        // Chemin relatif depuis la racine du serveur
+        loader.load(
+        './scene.glb',
+        (gltf) => {
+            console.log("Modèle chargé !");
+            scene.add(gltf.scene);
+        },
+        undefined,
+        (error) => {
+            console.error("ERREUR:", error);
+            // Solution de repli
+            const fallbackModel = document.createElement('p');
+            fallbackModel.textContent = "Modèle 3D non disponible - Erreur CORS résolue";
+            fallbackModel.style.color = 'red';
+            document.getElementById('3d-model-container').appendChild(fallbackModel);
+        }
+        );
         
         loader.load('./scene.glb', (gltf) => {
             console.log("Modèle chargé :", gltf);
