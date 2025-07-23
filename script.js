@@ -1,3 +1,4 @@
+
 /*--------------------
 Vars
 --------------------*/
@@ -102,7 +103,7 @@ const handleWheel = e => {
 
 function toggleClassicScroll(allow) {
     if (allow) {
-        document.body.style.overflow = 'auto'; // Permet le défilement par défaut
+        document.body.style.overflow = 'hidden'; // Permet le défilement par défaut
         document.documentElement.style.overflow = 'auto'; // Pour une meilleure compatibilité
     } else {
         document.body.style.overflow = 'hidden'; // Désactive le défilement par défaut
@@ -157,7 +158,8 @@ window.addEventListener('load', () => {
 
 
 
-
+let mouseMoveTimeout;
+const resetDelay = 1500; // 1.5 secondes
 
 document.addEventListener('DOMContentLoaded', function() {
   const profileWrapper = document.querySelector('.profile-picture-wrapper');
@@ -168,6 +170,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const maxPerspective = 8; // Effet de perspective maximum (px)
 
   document.addEventListener('mousemove', function(e) {
+    clearTimeout(mouseMoveTimeout);
+
     const mouseX = e.clientX;
     const mouseY = e.clientY;
     
@@ -194,6 +198,9 @@ document.addEventListener('DOMContentLoaded', function() {
       translateY(${perspectiveY}px)
       scale(1.05)
     `;
+    
+    // Programme la réinitialisation après 3 secondes
+    mouseMoveTimeout = setTimeout(resetProfilePicture, resetDelay);
   });
 
   // Reset au survol
@@ -345,4 +352,472 @@ window.addEventListener('load', () => {
     document.querySelector('.particles-container').innerHTML = '';
     createParticles();
   }, 20000);
+});
+
+
+
+
+// Système d'onglets
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const tabId = button.getAttribute('data-tab');
+    
+    // Reset all
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+    
+    // Activate clicked
+    button.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+    
+    // Reset auto rotation
+    resetAutoRotation();
+  });
+});
+// Rotation automatique
+let rotationInterval;
+let rotationTimeout; // Nouvelle variable pour le délai
+const tabs = ['about', 'project', 'contact'];
+let currentTabIndex = 0;
+const ROTATION_DELAY = 5000; // 5 secondes
+
+function rotateTabs() {
+  currentTabIndex = (currentTabIndex + 1) % tabs.length;
+  const nextTab = tabs[currentTabIndex];
+  
+  changeTab(nextTab);
+  
+  // Déclenchement avec vérification
+  setTimeout(() => {
+    try {
+      triggerShockwave();
+    } catch (error) {
+      console.warn("Animation non déclenchée:", error);
+      // Solution de repli
+      document.querySelectorAll('.social-icon').forEach(icon => {
+        icon.classList.add('pulse');
+        setTimeout(() => icon.classList.remove('pulse'), 1000);
+      });
+    }
+  }, 100);
+}
+
+// Modifiez votre fonction changeTab
+function changeTab(tabId) {
+  // Désactivez tous les onglets
+  tabContents.forEach(content => {
+    content.classList.remove('active');
+    content.style.opacity = '0';
+  });
+  
+  // Activez le nouvel onglet avec animation
+  const activeContent = document.getElementById(tabId);
+  activeContent.classList.add('active');
+  activeContent.style.opacity = '1';
+  
+  // Animez les boutons
+  tabButtons.forEach(btn => {
+    btn.classList.remove('active');
+    btn.style.transform = 'scale(1)';
+  });
+  
+  document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+}
+
+function resetRotationTimeout() {
+  // Annuler le timeout existant
+  if (rotationTimeout) {
+    clearTimeout(rotationTimeout);
+  }
+  
+  // Démarrer un nouveau timeout
+  rotationTimeout = setTimeout(() => {
+    rotateTabs();
+  }, ROTATION_DELAY);
+}
+
+function startAutoRotation() {
+  // Démarrer immédiatement le premier timeout
+  resetRotationTimeout();
+}
+
+function resetAutoRotation() {
+  // Annuler l'intervalle et le timeout
+  if (rotationInterval) {
+    clearInterval(rotationInterval);
+  }
+  if (rotationTimeout) {
+    clearTimeout(rotationTimeout);
+  }
+  
+  // Redémarrer le cycle
+  startAutoRotation();
+  
+  // Mettre à jour l'index courant
+  currentTabIndex = tabs.indexOf(
+    document.querySelector('.tab-content.active').id
+  );
+}
+
+// Modification des écouteurs d'événements des boutons
+tabButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const tabId = button.getAttribute('data-tab');
+    changeTab(tabId);
+    resetAutoRotation(); // Réinitialise complètement le timer
+    triggerShockwave();
+  });
+});
+
+// Démarrer la rotation au chargement
+document.addEventListener('DOMContentLoaded', () => {
+  startAutoRotation();
+  
+  // Pause au survol
+  const infoSection = document.querySelector('.info-section');
+  infoSection.addEventListener('mouseenter', () => {
+    if (rotationTimeout) {
+      clearTimeout(rotationTimeout);
+    }
+  });
+  
+  infoSection.addEventListener('mouseleave', () => {
+    resetAutoRotation(); // Redémarre le timer quand la souris quitte
+  });
+});
+
+
+
+// Animation au clic
+document.querySelectorAll('.custom-social').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const pulse = this.querySelector('.social-pulse');
+    
+    // Effet de clic
+    pulse.style.transition = 'none';
+    pulse.style.transform = 'scale(0)';
+    pulse.style.opacity = '1';
+    pulse.style.background = 'rgba(255, 255, 255, 0.6)';
+    
+    void pulse.offsetWidth; // Trigger reflow
+    
+    pulse.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.5)';
+    pulse.style.transform = 'scale(2)';
+    pulse.style.opacity = '0';
+    
+    // Ouvre le lien après l'animation
+    setTimeout(() => {
+      window.open(this.href, '_blank');
+    }, 300);
+  });
+});
+
+
+
+// Fonction de réinitialisation
+function resetProfilePicture() {
+  const profileWrapper = document.querySelector('.profile-picture-wrapper');
+  const profileImg = document.querySelector('.hero-round');
+  
+  profileWrapper.style.transform = 'translateY(-50px) rotateX(0) rotateY(0)';
+  profileImg.style.transform = 'translateX(0) translateY(0) scale(1)';
+}
+
+// Initialisation au chargement
+document.addEventListener('DOMContentLoaded', function() {
+  // Déclenche une première réinitialisation
+  resetProfilePicture();
+  setupProfileReset();
+});
+
+
+function setupProfileReset() {
+  let touchTimeout;
+  
+  document.addEventListener('touchmove', () => {
+    clearTimeout(touchTimeout);
+    touchTimeout = setTimeout(resetProfilePicture, resetDelay);
+  });
+}
+
+
+
+
+
+function debugSocialStructure() {
+  console.log("Structure des réseaux sociaux:");
+  document.querySelectorAll('a[href*="linkedin"], a[href*="github"]').forEach(el => {
+    console.log(el.outerHTML);
+  });
+}
+debugSocialStructure();
+
+
+
+function triggerShockwave() {
+  // Sélection plus flexible
+  const socialLinks = document.querySelectorAll('a[href*="linkedin"], a[href*="github"]');
+  
+  socialLinks.forEach(link => {
+    // Crée l'effet visuel
+    const effect = document.createElement('div');
+    effect.className = 'social-effect';
+    
+    // Style dynamique
+    if (link.href.includes('linkedin')) {
+      effect.style.borderColor = 'rgba(200, 200, 200, 0.5)';
+    } else {
+      effect.style.borderColor = 'rgba(200, 200, 200, 0.5)';
+    }
+    
+    // Insertion et nettoyage
+    link.appendChild(effect);
+    setTimeout(() => effect.remove(), 800);
+  });
+}
+
+
+
+
+
+
+// Effet de clic amélioré
+document.querySelectorAll('.tab-btn').forEach(button => {
+  button.addEventListener('click', function(e) {
+    // Création de l'effet de vague
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple-effect';
+    
+    // Positionnement
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+    ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+    
+    // Ajout au DOM
+    this.appendChild(ripple);
+    
+    // Suppression après animation
+    setTimeout(() => {
+      ripple.remove();
+    }, 600);
+    
+    // Animation du bouton parent
+    this.classList.add('active-click');
+    setTimeout(() => {
+      this.classList.remove('active-click');
+    }, 300);
+  });
+});
+
+
+
+
+
+
+
+// Création des étoiles
+function createStars() {
+  const container = document.querySelector('.particles-container');
+  const count = window.innerWidth > 768 ? 60 : 30;
+  
+  for (let i = 0; i < count; i++) {
+    const star = document.createElement('div');
+    star.className = 'particle-star';
+    
+    // Position aléatoire
+    star.style.left = `${Math.random() * 100}vw`;
+    star.style.top = `${Math.random() * 100}vh`;
+    
+    // Taille et animation aléatoire
+    const size = Math.random() * 3 + 1;
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+    star.style.animationDelay = `${Math.random() * 5}s`;
+    
+    container.appendChild(star);
+  }
+}
+
+// Animation au survol
+document.addEventListener('mousemove', (e) => {
+  const x = e.clientX / window.innerWidth;
+  const y = e.clientY / window.innerHeight;
+  
+  document.querySelector('.left-galaxy').style.background = 
+    `radial-gradient(ellipse at ${x * 50}% ${y * 50}%, 
+     rgba(138, 43, 226, 0.3) 0%, 
+     rgba(0, 0, 0, 0) 70%)`;
+  
+  document.querySelector('.right-galaxy').style.background = 
+    `radial-gradient(ellipse at ${100 - x * 50}% ${y * 50}%, 
+     rgba(75, 0, 130, 0.3) 0%, 
+     rgba(0, 0, 0, 0) 70%)`;
+});
+
+// Initialisation
+window.addEventListener('load', () => {
+  createStars();
+});
+
+
+
+
+/* Ajoutez ce JS */
+function createNebulas() {
+  const colors = ['#9c27b0', '#3f51b5', '#2196f3'];
+  const container = document.querySelector('.galaxy-edges');
+  
+  colors.forEach((color, i) => {
+    const nebula = document.createElement('div');
+    nebula.className = 'nebula';
+    nebula.style.background = color;
+    nebula.style.left = `${i * 30}%`;
+    nebula.style.top = `${Math.random() * 100}%`;
+    nebula.style.animationDuration = `${20 + Math.random() * 40}s`;
+    container.appendChild(nebula);
+  });
+}
+
+
+
+
+window.addEventListener('load', () => {
+  createStars();
+  createNebulas();
+  
+  // Interaction profonde
+  document.body.addEventListener('mousemove', (e) => {
+    const stars = document.querySelectorAll('.particle-star');
+    stars.forEach(star => {
+      const dist = distance(e, star);
+      if (dist < 100) {
+        star.style.transform = `scale(${2 - dist/100})`;
+      }
+    });
+  });
+});
+
+function distance(e, element) {
+  const rect = element.getBoundingClientRect();
+  return Math.sqrt(
+    Math.pow(e.clientX - (rect.left + rect.width/2), 2) + 
+    Math.pow(e.clientY - (rect.top + rect.height/2), 2)
+  );
+}
+
+
+
+
+
+// Configuration
+const STAR_COUNT = 150;
+const MOUSE_RADIUS = 150;
+const CENTER_AVOIDANCE = 0.8; // 0-1 (1 = pas d'étoiles au centre)
+
+// État global
+const stars = [];
+let mouseX2 = window.innerWidth / 2;
+let mouseY2 = window.innerHeight / 2;
+
+// Création des étoiles (plus denses sur les bords)
+function createStars() {
+  const container = document.querySelector('.stars-container');
+  container.innerHTML = '';
+
+  for (let i = 0; i < STAR_COUNT; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    
+    // Taille et couleur aléatoire
+    const sizes = ['tiny', 'small', 'medium'];
+    const colors = ['blue', 'purple', 'white'];
+    star.classList.add(
+      sizes[Math.floor(Math.random() * sizes.length)],
+      colors[Math.floor(Math.random() * colors.length)]
+    );
+    
+    // Position initiale - biais vers les bords
+    const edgeFactor = Math.pow(Math.random(), 2); // Valeur entre 0-1 biaisée vers 0
+    const side = Math.random() > 0.5 ? 1 : -1;
+    
+    star.baseX = window.innerWidth / 2 + side * window.innerWidth / 2 * Math.random();
+    star.baseY = window.innerHeight * Math.random();
+    
+    star.x = star.baseX;
+    star.y = star.baseY;
+    star.vx = 0;
+    star.vy = 0;
+    
+    star.style.left = `${star.x}px`;
+    star.style.top = `${star.y}px`;
+    
+    container.appendChild(star);
+    stars.push(star);
+  }
+}
+
+// Animation des étoiles avec traînée
+function animateStars() {
+  stars.forEach(star => {
+    // Calcul distance à la souris
+    const dx = mouseX2 - star.x;
+    const dy = mouseY2 - star.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    // Force de répulsion
+    if (distance < MOUSE_RADIUS) {
+      const force = (MOUSE_RADIUS - distance) / MOUSE_RADIUS;
+      const angle = Math.atan2(dy, dx);
+      
+      star.vx = -Math.cos(angle) * force * 20;
+      star.vy = -Math.sin(angle) * force * 20;
+    } else {
+      // Retour vers position de base
+      star.vx += (star.baseX - star.x) * 0.02;
+      star.vy += (star.baseY - star.y) * 0.02;
+      
+      // Limite la vitesse
+      star.vx *= 0.9;
+      star.vy *= 0.9;
+    }
+    
+    // Mise à jour position
+    star.x += star.vx;
+    star.y += star.vy;
+    
+    // Application visuelle
+    star.style.left = `${star.x}px`;
+    star.style.top = `${star.y}px`;
+    
+    // Activation traînée si mouvement
+    const isMoving = Math.abs(star.vx) > 0.1 || Math.abs(star.vy) > 0.1;
+    star.classList.toggle('moving', isMoving);
+    
+    // Ajustement opacité traînée selon vitesse
+    const speed = Math.sqrt(star.vx * star.vx + star.vy * star.vy);
+    star.style.setProperty('--trail-opacity', Math.min(speed * 0.05, 0.4));
+  });
+  
+  requestAnimationFrame(animateStars);
+}
+
+// Écouteurs
+document.addEventListener('mousemove', (e) => {
+  mouseX2 = e.clientX;
+  mouseY2 = e.clientY;
+});
+
+window.addEventListener('resize', createStars);
+
+// Initialisation
+window.addEventListener('load', () => {
+  createStars();
+  animateStars();
 });
