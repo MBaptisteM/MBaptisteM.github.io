@@ -91,14 +91,6 @@ function getScrollPercentage() {
 
 const scrollPercentageThreshold = 0.8; //1 = 100%
 const handleWheel = e => {
-  if (window.innerWidth <= 768) { // Seulement pour mobile
-    e.preventDefault();
-    const wheelProgress = e.deltaY * speedWheel * 0.5; // Réduire la sensibilité
-    progress = Math.max(0, Math.min(progress + wheelProgress, 100));
-    animate();
-    return;
-  }
-  else{
     const currentScrollPercentage = getScrollPercentage();
     console.log(currentScrollPercentage);
     if (currentScrollPercentage < scrollPercentageThreshold){
@@ -119,21 +111,8 @@ const handleWheel = e => {
       }
       
     }
-  }
+
 }
-
-
-const handleTouchMove = e => {
-  e.preventDefault();
-  if (!isDown) return;
-  
-  const touch = e.touches[0] || e.changedTouches[0];
-  const x = touch.clientX;
-  const mouseProgress = (x - startX) * speedDrag * 2; // 2x plus sensible au toucher
-  progress = Math.max(0, Math.min(progress + mouseProgress, 100));
-  startX = x;
-  animate();
-};
 
 function toggleClassicScroll(allow) {
     if (allow) {
@@ -940,47 +919,4 @@ function createActiveParticles() {
 
 // Appel régulier pour rafraîchir les particules
 setInterval(createActiveParticles, 3000)
-
-
-
-
-function setupEventListeners() {
-  // Pour desktop
-  document.addEventListener('wheel', handleWheel, { passive: false });
-  
-  // Pour mobile
-  document.addEventListener('touchstart', handleMouseDown, { passive: false });
-  document.addEventListener('touchmove', handleTouchMove, { passive: false });
-  document.addEventListener('touchend', handleMouseUp, { passive: false });
-  
-  // Événements communs
-  document.addEventListener('mousedown', handleMouseDown);
-  document.addEventListener('mousemove', handleMouseMove);
-  document.addEventListener('mouseup', handleMouseUp);
-}
-
-
-
-
-
-
-
-let resizeTimeout;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(() => {
-    // Réinitialise les positions
-    progress = Math.max(0, Math.min(progress, 100));
-    animate();
-    // Recalcule les étoiles
-    if (window.innerWidth <= 768) {
-      document.querySelector('.stars-container').innerHTML = '';
-      createStars();
-    }
-  }, 200);
-});
-
-
-
-
 
