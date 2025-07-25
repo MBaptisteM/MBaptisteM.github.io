@@ -39,10 +39,23 @@ const animate = () => {
 
   $items.forEach((item, index) => {
     displayItems(item, index, active)
-    // Reset les transformations au changement de carte active
+    
+    // Reset des classes
+    item.classList.remove('active-center')
+    
     if(index === active) {
-      item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(1)`
-      item.querySelector('.carousel-box').style.transform = 'none'
+      item.classList.add('active-center')
+      item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(1.1)`
+      item.style.zIndex = 100
+      item.style.filter = 'brightness(1.2)'
+      
+      // Effet spécial sur le contenu
+      const box = item.querySelector('.carousel-box')
+      box.style.transform = 'translateZ(30px)'
+      box.style.transition = 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
+    } else {
+      item.style.zIndex = index
+      item.style.filter = 'brightness(0.7)'
     }
   })
 }
@@ -78,6 +91,14 @@ function getScrollPercentage() {
 
 const scrollPercentageThreshold = 0.8; //1 = 100%
 const handleWheel = e => {
+  if (window.innerWidth <= 768) { // Seulement pour mobile
+    e.preventDefault();
+    const wheelProgress = e.deltaY * speedWheel * 0.5; // Réduire la sensibilité
+    progress = Math.max(0, Math.min(progress + wheelProgress, 100));
+    animate();
+    return;
+  }
+  else{
     const currentScrollPercentage = getScrollPercentage();
     console.log(currentScrollPercentage);
     if (currentScrollPercentage < scrollPercentageThreshold){
@@ -98,8 +119,21 @@ const handleWheel = e => {
       }
       
     }
-
+  }
 }
+
+
+const handleTouchMove = e => {
+  e.preventDefault();
+  if (!isDown) return;
+  
+  const touch = e.touches[0] || e.changedTouches[0];
+  const x = touch.clientX;
+  const mouseProgress = (x - startX) * speedDrag * 2; // 2x plus sensible au toucher
+  progress = Math.max(0, Math.min(progress + mouseProgress, 100));
+  startX = x;
+  animate();
+};
 
 function toggleClassicScroll(allow) {
     if (allow) {
@@ -821,3 +855,132 @@ window.addEventListener('load', () => {
   createStars();
   animateStars();
 });
+
+
+
+
+
+
+
+
+
+
+// Effet de rebond lors du clic sur une carte
+$items.forEach((item, i) => {
+  item.addEventListener('click', () => {
+    progress = (i/$items.length) * 100 + 10
+    animate()
+    
+    // Animation de rebond
+    item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(0.95)`
+    setTimeout(() => {
+      item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(1.05)`
+    }, 100)
+  })
+})
+
+// Effet de parallaxe au survol
+$items.forEach(item => {
+  item.addEventListener('mousemove', (e) => {
+    if(!item.classList.contains('active-center')) return;
+    
+    const rect = item.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const angleX = (y - centerY) / 20
+    const angleY = (centerX - x) / 20
+    
+    item.querySelector('.carousel-box').style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(20px)`
+  })
+  
+  item.addEventListener('mouseleave', () => {
+    item.querySelector('.carousel-box').style.transform = 'translateZ(20px)'
+  })
+})
+
+
+
+
+
+
+// Effet de particules sur la carte active
+function createActiveParticles() {
+  const activeItem = document.querySelector('.carousel-item.active-center')
+  if (!activeItem) return
+  
+  // Supprime les anciennes particules
+  const oldParticles = activeItem.querySelectorAll('.active-particle')
+  oldParticles.forEach(p => p.remove())
+
+  const animations = ['floatParticle1', 'floatParticle2', 'floatParticle3', 'floatParticle4'];
+  particle.style.animation = `${animations[Math.floor(Math.random() * animations.length)]} ${duration}s linear infinite`;
+  
+  // Crée de nouvelles particules
+  for (let i = 0; i < 15; i++) {
+    const particle = document.createElement('div')
+    particle.classList.add('active-particle')
+    
+    // Position aléatoire autour de la carte
+    particle.style.left = `${Math.random() * 100}%`
+    particle.style.top = `${Math.random() * 100}%`
+    
+    // Animation aléatoire
+    const size = Math.random() * 6 + 3
+    const duration = Math.random() * 3 + 2
+    particle.style.width = `${size}px`
+    particle.style.height = `${size}px`
+    particle.style.animation = `floatParticle ${duration}s linear infinite`
+    particle.style.animationDelay = `${Math.random() * 2}s`
+    
+    activeItem.appendChild(particle)
+  }
+}
+
+// Appel régulier pour rafraîchir les particules
+setInterval(createActiveParticles, 3000)
+
+
+
+
+function setupEventListeners() {
+  // Pour desktop
+  document.addEventListener('wheel', handleWheel, { passive: false });
+  
+  // Pour mobile
+  document.addEventListener('touchstart', handleMouseDown, { passive: false });
+  document.addEventListener('touchmove', handleTouchMove, { passive: false });
+  document.addEventListener('touchend', handleMouseUp, { passive: false });
+  
+  // Événements communs
+  document.addEventListener('mousedown', handleMouseDown);
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', handleMouseUp);
+}
+
+
+
+
+
+
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    // Réinitialise les positions
+    progress = Math.max(0, Math.min(progress, 100));
+    animate();
+    // Recalcule les étoiles
+    if (window.innerWidth <= 768) {
+      document.querySelector('.stars-container').innerHTML = '';
+      createStars();
+    }
+  }, 200);
+});
+
+
+
+
+
