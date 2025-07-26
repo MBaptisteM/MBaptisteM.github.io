@@ -1,3 +1,5 @@
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
 
 /*--------------------
 Vars
@@ -34,31 +36,31 @@ const displayItems = (item, index, active) => {
 Animate
 --------------------*/
 const animate = () => {
-  progress = Math.max(0, Math.min(progress, 100))
-  active = Math.floor(progress/100*($items.length-1))
+  progress = Math.max(0, Math.min(progress, 100));
+  active = Math.floor(progress/100*($items.length-1));
 
   $items.forEach((item, index) => {
-    displayItems(item, index, active)
+    displayItems(item, index, active);
     
-    // Reset des classes
-    item.classList.remove('active-center')
-    
-    if(index === active) {
-      item.classList.add('active-center')
-      item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(1.1)`
-      item.style.zIndex = 100
-      item.style.filter = 'brightness(1.2)'
-      
-      // Effet spécial sur le contenu
-      const box = item.querySelector('.carousel-box')
-      box.style.transform = 'translateZ(30px)'
-      box.style.transition = 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
-    } else {
-      item.style.zIndex = index
-      item.style.filter = 'brightness(0.7)'
+    // Désactive le mouvement des étoiles sur mobile
+    if(!isMobile) {
+      if(index === active) {
+        item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(1.1)`;
+        item.style.zIndex = 100;
+      } else {
+        item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(0.9)`;
+      }
     }
-  })
-}
+  });
+
+  // Désactive l'animation des étoiles sur mobile
+  if(!isMobile && isDown) {
+    document.querySelector('.carousel').style.transform = 'translateX(5px)';
+    setTimeout(() => {
+      document.querySelector('.carousel').style.transform = 'translateX(0)';
+    }, 100);
+  }
+};
 animate()
 
 /*--------------------
@@ -640,28 +642,29 @@ function createStars() {
   if (!container) return;
   
   container.innerHTML = '';
-  const count = window.innerWidth <= 768 ? 20 : 100; // 20 étoiles sur mobile, 100 sur desktop
-  const fragment = document.createDocumentFragment();
-
+  const count = isMobile ? 20 : 100;
+  
+  // Utilisez transform3d pour meilleures performances
   for (let i = 0; i < count; i++) {
     const star = document.createElement('div');
     star.className = 'star';
-    star.style.left = `${Math.random() * 100}vw`;
-    star.style.top = `${Math.random() * 100}vh`;
+    star.style.cssText = `
+      left: ${Math.random() * 100}vw;
+      top: ${Math.random() * 100}vh;
+      width: ${isMobile ? Math.random() * 2 + 1 : Math.random() * 3 + 1}px;
+      height: ${isMobile ? Math.random() * 2 + 1 : Math.random() * 3 + 1}px;
+      transform: translate3d(0,0,0);
+      will-change: transform;
+    `;
     
-    // Taille réduite sur mobile
-    const size = window.innerWidth <= 768 ? 
-      Math.random() * 2 + 1 : 
-      Math.random() * 3 + 1;
+    // Désactive l'animation sur mobile
+    if(!isMobile) {
+      star.style.animation = `twinkle ${5 + Math.random() * 5}s infinite alternate`;
+    }
     
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
-    
-    fragment.appendChild(star);
+    container.appendChild(star);
   }
-  container.appendChild(fragment);
 }
-
 // Animation au survol
 document.addEventListener('mousemove', (e) => {
   const x = e.clientX / window.innerWidth;
@@ -927,25 +930,24 @@ setInterval(createActiveParticles, 3000)
 
 
 
-// Au début de votre script.js
-const isMobile = window.innerWidth <= 768;
-
-if (!isMobile) {
-  // Ne garder que les effets pour desktop
-  document.addEventListener('mousemove', handleMouseMove);
-  document.querySelectorAll('.carousel-item').forEach(item => {
-    item.addEventListener('click', () => {
-      // Votre code d'effet au clic
-    });
-  });
-}
-
-
-
-
 window.addEventListener('resize', () => {
   if (window.innerWidth <= 768) {
     createStars(); // Recrée seulement 20 étoiles
     document.querySelector('.profile-picture-wrapper').style.transform = 'translateY(-50px)';
+  }
+});
+
+
+
+
+document.addEventListener('touchstart', (e) => {
+  if(isMobile) e.preventDefault(); // Empêche le défilement accidentel
+});
+
+document.addEventListener('touchmove', (e) => {
+  if(isMobile) {
+    e.preventDefault();
+    // Désactive le mouvement des étoiles
+    return false;
   }
 });

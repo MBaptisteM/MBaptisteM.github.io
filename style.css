@@ -1857,23 +1857,27 @@ body:hover .right-galaxy {
 }
 
 
+
+
+/* Dans votre section @media mobile */
 @media (max-width: 768px) {
-  /* Désactive les animations coûteuses */
-  .star, .particle {
+  .star {
+    /* Désactive toutes les animations */
     animation: none !important;
+    /* Rend les étoiles fixes */
+    position: absolute;
+    transform: translate3d(0,0,0) !important;
+    /* Style simplifié */
+    opacity: 0.8;
+    background: white;
+    border-radius: 50%;
   }
   
-  /* Fixe la photo de profil */
-  .profile-picture-wrapper {
-    transform: translateY(-50px) !important;
-  }
-  .hero-round {
-    transform: none !important;
-  }
-  
-  /* Optimise le carrousel */
+  /* Désactive les effets de mouvement */
+  .carousel-container, 
+  .carousel, 
   .carousel-item {
-    --width: clamp(120px, 50vw, 200px) !important;
-    --height: clamp(160px, 60vw, 250px) !important;
+    transform: none !important;
+    animation: none !important;
   }
 }
