@@ -12,7 +12,12 @@ Contants
 --------------------*/
 const speedWheel = 0.02
 const speedDrag = -0.1
-const IsMobile = window.innerWidth/window.innerHeight < 1;
+const IsMobile = () => {
+  // Détection basée sur la largeur ET le User-Agent
+  return window.innerWidth <= 768 || 
+         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
 
 /*--------------------
 Get Z
@@ -687,9 +692,6 @@ function createNebulas() {
 
 
 window.addEventListener('load', () => {
-  if (IsMobile) {
-    return;
-  }
   createStars();
   createNebulas();
   
@@ -914,3 +916,21 @@ function createActiveParticles() {
 // Appel régulier pour rafraîchir les particules
 setInterval(createActiveParticles, 3000)
 
+
+
+
+window.addEventListener('resize', () => {
+  const heightRatio = window.innerHeight / 100;
+  $items.forEach(item => {
+    item.style.setProperty('--width', `${heightRatio * 30}px`);
+    item.style.setProperty('--height', `${heightRatio * 40}px`);
+  });
+});
+
+
+if (IsMobile) {
+  $items.forEach(item => {
+    item.style.setProperty('--width', '80vh');
+    item.style.setProperty('--height', '60vh');
+  });
+}

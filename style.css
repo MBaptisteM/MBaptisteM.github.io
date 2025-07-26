@@ -1855,3 +1855,23 @@ body:hover .right-galaxy {
   color: #fff !important;
   text-shadow: 0 0 15px #4dfdff;
 }
+
+
+
+@media (max-aspect-ratio: 1/1) {
+  /* Styles pour les écrans en portrait (hauteur > largeur) */
+  .carousel-item {
+    --width: clamp(120px, 50vh, 200px);
+    --height: clamp(160px, 60vh, 300px);
+  }
+}
+
+
+
+.hero-section h1 {
+  font-size: clamp(2.5em, 5vh, 4em); /* Basé sur la hauteur */
+}
+
+.hero-section p {
+  font-size: clamp(1em, 1.8vh, 1.2em); /* Basé sur la hauteur */
+}
