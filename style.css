@@ -1855,3 +1855,25 @@ body:hover .right-galaxy {
   color: #fff !important;
   text-shadow: 0 0 15px #4dfdff;
 }
+
+
+@media (max-width: 768px) {
+  /* Désactive les animations coûteuses */
+  .star, .particle {
+    animation: none !important;
+  }
+  
+  /* Fixe la photo de profil */
+  .profile-picture-wrapper {
+    transform: translateY(-50px) !important;
+  }
+  .hero-round {
+    transform: none !important;
+  }
+  
+  /* Optimise le carrousel */
+  .carousel-item {
+    --width: clamp(120px, 50vw, 200px) !important;
+    --height: clamp(160px, 60vw, 250px) !important;
+  }
+}

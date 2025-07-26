@@ -635,27 +635,31 @@ document.querySelectorAll('.tab-btn').forEach(button => {
 
 
 
-// Création des étoiles
 function createStars() {
-  const container = document.querySelector('.particles-container');
-  const count = window.innerWidth > 768 ? 60 : 30;
+  const container = document.querySelector('.stars-container');
+  if (!container) return;
   
+  container.innerHTML = '';
+  const count = window.innerWidth <= 768 ? 20 : 100; // 20 étoiles sur mobile, 100 sur desktop
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < count; i++) {
     const star = document.createElement('div');
-    star.className = 'particle-star';
-    
-    // Position aléatoire
+    star.className = 'star';
     star.style.left = `${Math.random() * 100}vw`;
     star.style.top = `${Math.random() * 100}vh`;
     
-    // Taille et animation aléatoire
-    const size = Math.random() * 3 + 1;
+    // Taille réduite sur mobile
+    const size = window.innerWidth <= 768 ? 
+      Math.random() * 2 + 1 : 
+      Math.random() * 3 + 1;
+    
     star.style.width = `${size}px`;
     star.style.height = `${size}px`;
-    star.style.animationDelay = `${Math.random() * 5}s`;
     
-    container.appendChild(star);
+    fragment.appendChild(star);
   }
+  container.appendChild(fragment);
 }
 
 // Animation au survol
@@ -920,3 +924,28 @@ function createActiveParticles() {
 // Appel régulier pour rafraîchir les particules
 setInterval(createActiveParticles, 3000)
 
+
+
+
+// Au début de votre script.js
+const isMobile = window.innerWidth <= 768;
+
+if (!isMobile) {
+  // Ne garder que les effets pour desktop
+  document.addEventListener('mousemove', handleMouseMove);
+  document.querySelectorAll('.carousel-item').forEach(item => {
+    item.addEventListener('click', () => {
+      // Votre code d'effet au clic
+    });
+  });
+}
+
+
+
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth <= 768) {
+    createStars(); // Recrée seulement 20 étoiles
+    document.querySelector('.profile-picture-wrapper').style.transform = 'translateY(-50px)';
+  }
+});
