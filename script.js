@@ -12,6 +12,7 @@ Contants
 --------------------*/
 const speedWheel = 0.02
 const speedDrag = -0.1
+const IsMobile = window.innerWidth/window.innerHeight < 1;
 
 /*--------------------
 Get Z
@@ -501,14 +502,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-if (window.innerWidth <= 768) {
+if (IsMobile) {
     console.log("phone mode activated");
   }
 
 
 // Animation au clic
 document.querySelectorAll('.custom-social').forEach(link => {
-  if (window.innerWidth <= 768) {
+  if (IsMobile) {
     return; // Sortie anticipée
   }
   link.addEventListener('click', function(e) {
@@ -641,7 +642,7 @@ document.querySelectorAll('.tab-btn').forEach(button => {
 
 // Animation au survol
 document.addEventListener('mousemove', (e) => {
-  if (window.innerWidth <= 768) {
+  if (IsMobile) {
     return;
   }
   const x = e.clientX / window.innerWidth;
@@ -686,7 +687,7 @@ function createNebulas() {
 
 
 window.addEventListener('load', () => {
-  if (window.innerWidth <= 768) {
+  if (IsMobile) {
     return;
   }
   createStars();
@@ -717,7 +718,7 @@ function distance(e, element) {
 
 
 // Configuration
-const STAR_COUNT = window.innerWidth > 768 ? 150 : 50;
+const STAR_COUNT = IsMobile ? 150 : 50;
 const MOUSE_RADIUS = 150;
 const CENTER_AVOIDANCE = 0.8; // 0-1 (1 = pas d'étoiles au centre)
 
@@ -787,7 +788,7 @@ function animateStars() {
       star.vx *= 0.9;
       star.vy *= 0.9;
     }
-    if (window.innerWidth <= 768) {
+    if (IsMobile) {
       return; // Sortie anticipée
     }
     
@@ -850,7 +851,7 @@ $items.forEach((item, i) => {
 
 // Effet de parallaxe au survol
 $items.forEach(item => {
-  if (window.innerWidth <= 768) {
+    if (IsMobile) {
     return; // Sortie anticipée
   }
   item.addEventListener('mousemove', (e) => {
