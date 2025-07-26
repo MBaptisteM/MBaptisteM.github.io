@@ -1,5 +1,3 @@
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
 
 /*--------------------
 Vars
@@ -36,31 +34,31 @@ const displayItems = (item, index, active) => {
 Animate
 --------------------*/
 const animate = () => {
-  progress = Math.max(0, Math.min(progress, 100));
-  active = Math.floor(progress/100*($items.length-1));
+  progress = Math.max(0, Math.min(progress, 100))
+  active = Math.floor(progress/100*($items.length-1))
 
   $items.forEach((item, index) => {
-    displayItems(item, index, active);
+    displayItems(item, index, active)
     
-    // Désactive le mouvement des étoiles sur mobile
-    if(!isMobile) {
-      if(index === active) {
-        item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(1.1)`;
-        item.style.zIndex = 100;
-      } else {
-        item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(0.9)`;
-      }
+    // Reset des classes
+    item.classList.remove('active-center')
+    
+    if(index === active) {
+      item.classList.add('active-center')
+      item.style.transform = `translate(var(--x), var(--y)) rotate(var(--rot)) scale(1.1)`
+      item.style.zIndex = 100
+      item.style.filter = 'brightness(1.2)'
+      
+      // Effet spécial sur le contenu
+      const box = item.querySelector('.carousel-box')
+      box.style.transform = 'translateZ(30px)'
+      box.style.transition = 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
+    } else {
+      item.style.zIndex = index
+      item.style.filter = 'brightness(0.7)'
     }
-  });
-
-  // Désactive l'animation des étoiles sur mobile
-  if(!isMobile && isDown) {
-    document.querySelector('.carousel').style.transform = 'translateX(5px)';
-    setTimeout(() => {
-      document.querySelector('.carousel').style.transform = 'translateX(0)';
-    }, 100);
-  }
-};
+  })
+}
 animate()
 
 /*--------------------
@@ -420,7 +418,6 @@ function rotateTabs() {
   }, 100);
 }
 
-// Modifiez votre fonction changeTab
 function changeTab(tabId) {
   // Désactivez tous les onglets
   tabContents.forEach(content => {
@@ -504,10 +501,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+if (window.innerWidth <= 768) {
+    console.log("phone mode activated");
+  }
 
 
 // Animation au clic
 document.querySelectorAll('.custom-social').forEach(link => {
+  if (window.innerWidth <= 768) {
+    return; // Sortie anticipée
+  }
   link.addEventListener('click', function(e) {
     e.preventDefault();
     const pulse = this.querySelector('.social-pulse');
@@ -636,37 +639,11 @@ document.querySelectorAll('.tab-btn').forEach(button => {
 
 
 
-
-function createStars() {
-  const container = document.querySelector('.stars-container');
-  if (!container) return;
-  
-  container.innerHTML = '';
-  const count = isMobile ? 20 : 100;
-  
-  // Utilisez transform3d pour meilleures performances
-  for (let i = 0; i < count; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.cssText = `
-      left: ${Math.random() * 100}vw;
-      top: ${Math.random() * 100}vh;
-      width: ${isMobile ? Math.random() * 2 + 1 : Math.random() * 3 + 1}px;
-      height: ${isMobile ? Math.random() * 2 + 1 : Math.random() * 3 + 1}px;
-      transform: translate3d(0,0,0);
-      will-change: transform;
-    `;
-    
-    // Désactive l'animation sur mobile
-    if(!isMobile) {
-      star.style.animation = `twinkle ${5 + Math.random() * 5}s infinite alternate`;
-    }
-    
-    container.appendChild(star);
-  }
-}
 // Animation au survol
 document.addEventListener('mousemove', (e) => {
+  if (window.innerWidth <= 768) {
+    return;
+  }
   const x = e.clientX / window.innerWidth;
   const y = e.clientY / window.innerHeight;
   
@@ -709,6 +686,9 @@ function createNebulas() {
 
 
 window.addEventListener('load', () => {
+  if (window.innerWidth <= 768) {
+    return;
+  }
   createStars();
   createNebulas();
   
@@ -737,7 +717,7 @@ function distance(e, element) {
 
 
 // Configuration
-const STAR_COUNT = 150;
+const STAR_COUNT = window.innerWidth > 768 ? 150 : 50;
 const MOUSE_RADIUS = 150;
 const CENTER_AVOIDANCE = 0.8; // 0-1 (1 = pas d'étoiles au centre)
 
@@ -807,6 +787,9 @@ function animateStars() {
       star.vx *= 0.9;
       star.vy *= 0.9;
     }
+    if (window.innerWidth <= 768) {
+      return; // Sortie anticipée
+    }
     
     // Mise à jour position
     star.x += star.vx;
@@ -867,6 +850,9 @@ $items.forEach((item, i) => {
 
 // Effet de parallaxe au survol
 $items.forEach(item => {
+  if (window.innerWidth <= 768) {
+    return; // Sortie anticipée
+  }
   item.addEventListener('mousemove', (e) => {
     if(!item.classList.contains('active-center')) return;
     
@@ -891,6 +877,7 @@ $items.forEach(item => {
 
 
 
+// Effet de particules sur la carte active
 function createActiveParticles() {
   const activeItem = document.querySelector('.carousel-item.active-center');
   if (!activeItem) return;
@@ -924,35 +911,5 @@ function createActiveParticles() {
 }
 
 // Appel régulier pour rafraîchir les particules
-let particlesInterval;
-function startParticlesAnimation() {
-  if (window.innerWidth > 768) {
-    createActiveParticles();
-    particlesInterval = setInterval(createActiveParticles, 3000);
-  }
-}
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  startParticlesAnimation();
-});
-
-// 5. Nettoyage quand on change de vue
-window.addEventListener('resize', () => {
-  clearInterval(particlesInterval);
-  startParticlesAnimation();
-});
-
-
-
-
-window.addEventListener('resize', () => {
-  if (window.innerWidth <= 768) {
-    createStars(); // Recrée seulement 20 étoiles
-    document.querySelector('.profile-picture-wrapper').style.transform = 'translateY(-50px)';
-  }
-});
-
-
-
+setInterval(createActiveParticles, 3000)
 
