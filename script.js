@@ -12,11 +12,12 @@ Contants
 --------------------*/
 const speedWheel = 0.02
 const speedDrag = -0.1
-const IsMobile = () => {
-  // Détection basée sur la largeur ET le User-Agent
-  return window.innerWidth <= 768 || 
-         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-};
+const IsMobileView = 
+  window.innerWidth / window.innerHeight < 1 || 
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+
+if (IsMobileView) console.log("phone mode activated");
 
 
 /*--------------------
@@ -187,46 +188,47 @@ document.addEventListener('DOMContentLoaded', function() {
   const centerY = window.innerHeight / 2;
   const maxTilt = 20; // Degrés maximum d'inclinaison
   const maxPerspective = 8; // Effet de perspective maximum (px)
+  if (!IsMobileView) {
+    document.addEventListener('mousemove', function(e) {
+      clearTimeout(mouseMoveTimeout);
 
-  document.addEventListener('mousemove', function(e) {
-    clearTimeout(mouseMoveTimeout);
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      
+      // Calcul des ratios (-1 à 1)
+      const ratioX = (mouseX - centerX) / centerX;
+      const ratioY = (mouseY - centerY) / centerY;
+      
+      // Calcul des transformations
+      const tiltX = (ratioY * maxTilt).toFixed(2);
+      const tiltY = -(ratioX * maxTilt).toFixed(2);
+      const perspectiveX = (ratioX * maxPerspective).toFixed(2);
+      const perspectiveY = (ratioY * maxPerspective).toFixed(2);
+      
+      // Application des transformations
+      profileWrapper.style.transform = `
+        translateY(-50px)
+        rotateX(${tiltX}deg)
+        rotateY(${tiltY}deg)
+      `;
+      
+      // Légère déformation de l'image pour l'effet 3D
+      profileImg.style.transform = `
+        translateX(${perspectiveX}px)
+        translateY(${perspectiveY}px)
+        scale(1.05)
+      `;
+      
+      // Programme la réinitialisation après 3 secondes
+      mouseMoveTimeout = setTimeout(resetProfilePicture, resetDelay);
+    });
 
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-    
-    // Calcul des ratios (-1 à 1)
-    const ratioX = (mouseX - centerX) / centerX;
-    const ratioY = (mouseY - centerY) / centerY;
-    
-    // Calcul des transformations
-    const tiltX = (ratioY * maxTilt).toFixed(2);
-    const tiltY = -(ratioX * maxTilt).toFixed(2);
-    const perspectiveX = (ratioX * maxPerspective).toFixed(2);
-    const perspectiveY = (ratioY * maxPerspective).toFixed(2);
-    
-    // Application des transformations
-    profileWrapper.style.transform = `
-      translateY(-50px)
-      rotateX(${tiltX}deg)
-      rotateY(${tiltY}deg)
-    `;
-    
-    // Légère déformation de l'image pour l'effet 3D
-    profileImg.style.transform = `
-      translateX(${perspectiveX}px)
-      translateY(${perspectiveY}px)
-      scale(1.05)
-    `;
-    
-    // Programme la réinitialisation après 3 secondes
-    mouseMoveTimeout = setTimeout(resetProfilePicture, resetDelay);
-  });
-
-  // Reset au survol
-  profileWrapper.addEventListener('mouseleave', function() {
-    profileWrapper.style.transform = 'translateY(-50px) rotateX(0) rotateY(0)';
-    profileImg.style.transform = 'translateX(0) translateY(0) scale(1)';
-  });
+    // Reset au survol
+    profileWrapper.addEventListener('mouseleave', function() {
+      profileWrapper.style.transform = 'translateY(-50px) rotateX(0) rotateY(0)';
+      profileImg.style.transform = 'translateX(0) translateY(0) scale(1)';
+    });
+  }
 });
 
 
@@ -507,14 +509,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-if (IsMobile) {
-    console.log("phone mode activated");
-  }
 
 
 // Animation au clic
 document.querySelectorAll('.custom-social').forEach(link => {
-  if (IsMobile) {
+  if (IsMobileView) {
     return; // Sortie anticipée
   }
   link.addEventListener('click', function(e) {
@@ -647,7 +646,7 @@ document.querySelectorAll('.tab-btn').forEach(button => {
 
 // Animation au survol
 document.addEventListener('mousemove', (e) => {
-  if (IsMobile) {
+  if (IsMobileView) {
     return;
   }
   const x = e.clientX / window.innerWidth;
@@ -720,7 +719,7 @@ function distance(e, element) {
 
 
 // Configuration
-const STAR_COUNT = IsMobile ? 150 : 50;
+const STAR_COUNT = IsMobileView ? 50 : 150;
 const MOUSE_RADIUS = 150;
 const CENTER_AVOIDANCE = 0.8; // 0-1 (1 = pas d'étoiles au centre)
 
@@ -768,6 +767,7 @@ function createStars() {
 
 // Animation des étoiles avec traînée
 function animateStars() {
+  if (IsMobileView) return;
   stars.forEach(star => {
     // Calcul distance à la souris
     const dx = mouseX2 - star.x;
@@ -790,7 +790,7 @@ function animateStars() {
       star.vx *= 0.9;
       star.vy *= 0.9;
     }
-    if (IsMobile) {
+    if (IsMobileView) {
       return; // Sortie anticipée
     }
     
@@ -853,7 +853,7 @@ $items.forEach((item, i) => {
 
 // Effet de parallaxe au survol
 $items.forEach(item => {
-    if (IsMobile) {
+    if (IsMobileView) {
     return; // Sortie anticipée
   }
   item.addEventListener('mousemove', (e) => {
@@ -928,9 +928,12 @@ window.addEventListener('resize', () => {
 });
 
 
-if (IsMobile) {
+if (IsMobileView) {
   $items.forEach(item => {
     item.style.setProperty('--width', '80vh');
     item.style.setProperty('--height', '60vh');
   });
 }
+
+
+

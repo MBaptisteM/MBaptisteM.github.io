@@ -1858,14 +1858,6 @@ body:hover .right-galaxy {
 
 
 
-@media (max-aspect-ratio: 1/1) {
-  /* Styles pour les écrans en portrait (hauteur > largeur) */
-  .carousel-item {
-    --width: clamp(120px, 50vh, 200px);
-    --height: clamp(160px, 60vh, 300px);
-  }
-}
-
 
 
 .hero-section h1 {
@@ -1874,4 +1866,44 @@ body:hover .right-galaxy {
 
 .hero-section p {
   font-size: clamp(1em, 1.8vh, 1.2em); /* Basé sur la hauteur */
+}
+
+
+
+
+
+.carousel-item {
+  --items: 10;
+  --width: clamp(150px, 30vh, 300px); /* Basé sur la hauteur */
+  --height: clamp(200px, 40vh, 400px); /* Basé sur la hauteur */
+  /* ... autres propriétés ... */
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .carousel-item {
+    --width: clamp(120px, 50vh, 200px);
+    --height: clamp(160px, 60vh, 300px);
+  }
+}
+
+
+
+
+.mobile-view .carousel-item::before,
+.mobile-view .carousel-item::after {
+  display: none !important;
+}
+
+.mobile-view .hero-section h1 {
+  font-size: 2em !important;
+}
+
+
+
+
+
+
+.tap-effect {
+  transform: scale(0.95) !important;
+  transition: transform 0.3s;
 }
