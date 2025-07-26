@@ -891,41 +891,57 @@ $items.forEach(item => {
 
 
 
-// Effet de particules sur la carte active
 function createActiveParticles() {
-  const activeItem = document.querySelector('.carousel-item.active-center')
-  if (!activeItem) return
-  
-  // Supprime les anciennes particules
-  const oldParticles = activeItem.querySelectorAll('.active-particle')
-  oldParticles.forEach(p => p.remove())
+  const activeItem = document.querySelector('.carousel-item.active-center');
+  if (!activeItem) return;
 
-  const animations = ['floatParticle1', 'floatParticle2', 'floatParticle3', 'floatParticle4'];
-  particle.style.animation = `${animations[Math.floor(Math.random() * animations.length)]} ${duration}s linear infinite`;
-  
-  // Crée de nouvelles particules
-  for (let i = 0; i < 15; i++) {
-    const particle = document.createElement('div')
-    particle.classList.add('active-particle')
-    
-    // Position aléatoire autour de la carte
-    particle.style.left = `${Math.random() * 100}%`
-    particle.style.top = `${Math.random() * 100}%`
-    
-    // Animation aléatoire
-    const size = Math.random() * 6 + 3
-    const duration = Math.random() * 3 + 2
-    particle.style.width = `${size}px`
-    particle.style.height = `${size}px`
-    particle.style.animation = `floatParticle ${duration}s linear infinite`
-    particle.style.animationDelay = `${Math.random() * 2}s`
-    
-    activeItem.appendChild(particle)
+  // Supprime les anciennes particules
+  const oldParticles = activeItem.querySelectorAll('.active-particle');
+  oldParticles.forEach(p => p.remove());
+
+  // Crée de nouvelles particules (seulement sur desktop)
+  if (window.innerWidth > 768) {
+    for (let i = 0; i < 15; i++) {
+      const particle = document.createElement('div'); // Déclaré avec const
+      particle.classList.add('active-particle');
+      
+      // Configuration de la particule
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      
+      const size = Math.random() * 6 + 3;
+      const duration = Math.random() * 3 + 2;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      
+      // Utilisez une des animations prédéfinies
+      const animations = ['floatParticle1', 'floatParticle2', 'floatParticle3'];
+      particle.style.animation = `${animations[Math.floor(Math.random() * animations.length)]} ${duration}s linear infinite`;
+      
+      activeItem.appendChild(particle);
+    }
   }
 }
 
 // Appel régulier pour rafraîchir les particules
-setInterval(createActiveParticles, 3000)
+let particlesInterval;
+function startParticlesAnimation() {
+  if (window.innerWidth > 768) {
+    createActiveParticles();
+    particlesInterval = setInterval(createActiveParticles, 3000);
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  startParticlesAnimation();
+});
+
+// 5. Nettoyage quand on change de vue
+window.addEventListener('resize', () => {
+  clearInterval(particlesInterval);
+  startParticlesAnimation();
+});
 
 
 
@@ -940,14 +956,3 @@ window.addEventListener('resize', () => {
 
 
 
-document.addEventListener('touchstart', (e) => {
-  if(isMobile) e.preventDefault(); // Empêche le défilement accidentel
-});
-
-document.addEventListener('touchmove', (e) => {
-  if(isMobile) {
-    e.preventDefault();
-    // Désactive le mouvement des étoiles
-    return false;
-  }
-});
