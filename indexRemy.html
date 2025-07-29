@@ -499,20 +499,6 @@
             padding: 20px;
         }
 
-        .modal-main-image {
-            grid-column: span 2;
-            grid-row: span 2;
-            height: 400px;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-
-        .modal-main-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .modal-thumbnail {
             height: 195px;
             overflow: hidden;
@@ -531,20 +517,10 @@
             object-fit: cover;
         }
 
-        .modal-info {
-            padding: 40px;
-        }
-
         .modal-info h2 {
             font-size: 2rem;
             color: var(--primary-color);
             margin-bottom: 20px;
-        }
-
-        .modal-info h3 {
-            font-size: 1.5rem;
-            margin: 30px 0 15px;
-            color: var(--dark-color);
         }
 
         .modal-info p {
@@ -825,198 +801,154 @@
             }
         }
 
-        /* Header - Augmenter le z-index */
-        header {
-            z-index: 1001; /* Augmenté de 1000 à 1001 */
-        }
-
-        /* Photo de profil - S'assurer qu'elle est sous le header */
-        .profile-photo {
-            z-index: 1; /* Réduit de 2 à 1 */
-        }
-
-        /* Modal - S'assurer qu'il est au-dessus de tout */
-        .modal {
-            z-index: 2001; /* Augmenté de 2000 à 2001 */
-        }
-
-        /* Animation du fond */
-        body {
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, 
-                        rgba(74, 111, 40, 0.05) 0%, 
-                        rgba(139, 168, 136, 0.05) 50%, 
-                        rgba(245, 249, 245, 0.05) 100%);
-            background-size: 300% 300%;
-            z-index: -1;
-            animation: gradientBG 15s ease infinite;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Section titre - S'assurer qu'elle est sous le modal */
-        .section-title h2 {
-            position: relative;
-            z-index: 1;
-        }
-
-
-        /* Special Project Section */
-        .special-project {
-            background-color: var(--light-color);
-            padding-bottom: 50px;
-        }
-
-        .special-project-container {
-            display: flex;
-            gap: 40px;
+        .modal-download .btn {
+            display: inline-flex;
             align-items: center;
+            gap: 10px;
+            animation: none;
         }
 
-        .model-container {
-            flex: 1;
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            height: 500px;
-            background: #f5f9f5;
-        }
-
-        .model-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            transition: all 0.5s ease;
-        }
-
-        .model-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            z-index: 10;
-        }
-
-        .control-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .control-btn:hover {
-            background: var(--primary-color);
-            color: white;
+        .modal-download .btn:hover {
             transform: translateY(-3px);
         }
 
-        .project-description {
-            flex: 1;
-            position: relative;
-        }
-
-        .description-content {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background: #e0e0e0;
-            margin: 20px 0;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            width: 25%;
-            background: var(--primary-color);
-            transition: width 0.5s ease;
-        }
-
-        .features-list {
-            margin-top: 30px;
-        }
-
-        .feature {
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        #download-portfolio {
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(139, 168, 136, 0.1);
+            transition: var(--transition);
         }
 
-        .feature i {
+        #download-portfolio:hover {
             color: var(--primary-color);
-            font-size: 1.2rem;
+            text-decoration: underline;
+        }
+        .modal-info ul {
+            margin: 15px 0;
+            padding-left: 20px;
         }
 
-        .feature.active {
-            background: rgba(74, 111, 40, 0.1);
-            border-left: 4px solid var(--primary-color);
+        .modal-info ul li {
+            margin-bottom: 8px;
+            position: relative;
         }
 
-        .feature:hover {
-            transform: translateX(10px);
+        .modal-info ul li:before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+
+        .modal-header {
+            padding: 30px 40px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-gallery {
+            width: 100%;
+            padding: 0 40px;
+        }
+
+        .modal-main-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .modal-main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-info {
+            padding: 0 40px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .modal-info h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .modal-info h3:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+
+        .project-description,
+        .project-approach,
+        .project-details {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .modal-download {
+            margin-top: 20px;
+            text-align: center;
         }
 
         /* Responsive */
         @media (max-width: 992px) {
-            .special-project-container {
-                flex-direction: column;
+            .modal-main-image {
+                height: 300px;
             }
             
-            .model-container {
-                width: 100%;
+            .modal-header,
+            .modal-gallery,
+            .modal-info {
+                padding-left: 20px;
+                padding-right: 20px;
             }
         }
+
+        @media (max-width: 768px) {
+            .modal-main-image {
+                height: 250px;
+            }
+            
+            .project-description,
+            .project-approach,
+            .project-details {
+                padding: 15px;
+            }
+        }
+
     </style>
-    <!-- ... autres balises ... -->
-    <!-- Three.js -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
-    <!-- GSAP pour les animations (optionnel mais recommandé) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 </head>
 <body>
     <!-- Header -->
     <header>
         <nav>
-            <a href="#" class="logo">Paysages<span>Créatifs</span></a>
+            <a href="#" class="logo">Mahé <span>Rémy</span></a>
             <ul class="nav-links">
                 <li><a href="#home">Accueil</a></li>
                 <li><a href="#about">À propos</a></li>
@@ -1032,11 +964,14 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-bg active" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1600566752225-3f2fe3f8f4c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-        <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+        <div class="hero-bg active" style="background-image: url('Docs/VILLAGENATURE.jpg')"></div>
+        <div class="hero-bg" style="background-image: url('Docs/EGLISE.jpg')"></div>
+        <div class="hero-bg" style="background-image: url('Docs/MASSENA.jpg')"></div>
+        <div class="hero-bg" style="background-image: url('Docs/PORNIC.jpg')"></div>
+        <div class="hero-bg" style="background-image: url('Docs/TERRABOTANICA.jpg')"></div>
+        <div class="hero-bg" style="background-image: url('Docs/ATHLETES.jpg')"></div>
         <div class="hero-content">
-            <h1>Création de paysages harmonieux et durables</h1>
+            <h1>Architecte paysagiste concepteur</h1>
             <p>Je conçois des espaces extérieurs qui marient esthétique, fonctionnalité et respect de l'environnement.</p>
             <div>
                 <a href="#projects" class="btn">Voir mes projets</a>
@@ -1053,13 +988,13 @@
         <div class="about-content">
             <div class="about-text">
                 <h3>Architecte paysagiste passionné par la création d'espaces verts innovants</h3>
-                <p>Avec plus de 10 ans d'expérience dans le domaine de l'architecture paysagère, je mets mon expertise au service de projets variés, allant des jardins privés aux aménagements urbains.</p>
-                <p>Ma philosophie repose sur une approche durable et écologique, où chaque élément végétal et minéral est pensé pour créer un équilibre naturel tout en répondant aux besoins des utilisateurs.</p>
-                <p>Je collabore étroitement avec mes clients pour transformer leurs visions en espaces tangibles qui évoluent harmonieusement avec le temps.</p>
+                <p>Mon parcours m’a permis de piloter des opérations allant de l’aménagement de d’infrastructure de transport (BHNS, tramways, pistes cyclables), quartiers urbains (Massena Paris Seine rive gauche, Fieschi Vernon, Plateau Mayenne) des centres-bourgs (Pordic, Ploufragan, Pornic) à des études territoriales (Marais d’Orx), jusqu’à des Master Plans internationaux, en assumant à la fois la conception, la gestion d’équipe, le suivi de chantier, et la relation avec les maîtrises d’ouvrage. Cette vision globale me permet d’aborder chaque mission avec rigueur, créativité et une forte culture du partenariat.</p>
+                <p>Habitué à encadrer des équipes projet, je veille à maintenir un haut niveau de qualité tout en favorisant l’intelligence collective. Je maîtrise les outils de conception graphique et suis particulièrement sensible à la transition écologique, que je cherche à intégrer à toutes les échelles du projet.</p>
+                <p>Convaincu que la qualité des espaces publics naît de la concertation, de la transversalité des compétences et de l’ancrage dans les territoires, je serais heureux de mettre mon expertise au service de votre agence et de ses projets exigeants et engagés</p>
             </div>
             <div class="about-image">
-                <img src="https://images.unsplash.com/photo-1600566752225-3f2fe3f8f4c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Projet paysager" class="about-img">
-                <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Projet paysager" class="about-img">
+                <img src="docs/PAYSAGE2.jpg" alt="Projet paysager" class="about-img">
+                <img src="docs/PAYSAGE1.jpg" alt="Projet paysager" class="about-img">
             </div>
         </div>
     </section>
@@ -1072,17 +1007,17 @@
         <div class="profile-content">
             <div class="profile-text">
                 <h3>Mon Parcours</h3>
-                <p>Diplômé de l'École Nationale Supérieure de Paysage de Versailles, j'ai acquis une solide formation en conception paysagère et en écologie urbaine.</p>
+                <p>Paysagiste concepteur diplômé de l'École Gembloux Agro-Bio Tech - Université de Liège j'ai aussi suivi une formation BIM et modélisation sur Revit & Navisworks de Arsenio et été formé au management de projets chez ib Cegos.</p>
                 
                 <h3>Mes Compétences</h3>
-                <p>Spécialisé dans les jardins contemporains et les aménagements urbains durables, je maîtrise les logiciels de DAO (AutoCAD, SketchUp) ainsi que les techniques de végétalisation innovantes.</p>
+                <p>Je suis capable de gérer des gros projets et j'ai déjà été amené à assumer à la fois la conception, la gestion d’équipe, le suivi de chantier, et la relation avec les maîtrises d’ouvrage de mes projets.</p>
                 
                 <h3>Ce que je recherche</h3>
-                <p>Je souhaite rejoindre une équipe dynamique où je pourrais mettre en œuvre mes compétences en conception paysagère tout en continuant à me former aux nouvelles techniques écologiques.</p>
+                <p>A remplir...</p>
             </div>
             <div class="profile-image">
                 <div class="profile-bg"></div>
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Photo de profil" class="profile-photo" id="profile-photo">
+                <img src="Docs/REMY.jpeg" alt="Photo de profil" class="profile-photo" id="profile-photo">
             </div>
         </div>
     </section>
@@ -1104,58 +1039,44 @@
                 <i class="fas fa-times"></i>
             </div>
             <div class="modal-content">
-                <div class="modal-images" id="modal-images">
-                    <!-- Les images seront insérées ici par JavaScript -->
+                <div class="modal-header">
+                    <h2 id="modal-project-title"></h2>
+                    <div class="project-tags" id="modal-project-tags"></div>
                 </div>
-                <div class="modal-info" id="modal-info">
-                    <!-- Le contenu sera inséré ici par JavaScript -->
+                
+                <div class="modal-body">
+                    <div class="modal-gallery">
+                        <div class="modal-main-image">
+                            <img id="modal-main-img" alt="Image principale du projet">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-info">
+                        <div class="project-description">
+                            <h3>Description</h3>
+                            <p id="modal-project-description"></p>
+                        </div>
+                        
+                        <div class="project-approach">
+                            <h3>Approche</h3>
+                            <div id="modal-project-approach"></div>
+                        </div>
+                        
+                        <div class="project-details">
+                            <h3>Détails</h3>
+                            <div class="modal-details" id="modal-project-details"></div>
+                        </div>
+                        
+                        <div class="modal-download">
+                            <a href="#" class="btn" id="download-project-pdf">
+                                <i class="fas fa-download"></i> Télécharger la fiche projet
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Special Project Section -->
-    <section class="section special-project" id="special">
-        <div class="section-title">
-            <h2>Projet Spécial</h2>
-        </div>
-        
-        <div class="special-project-container">
-            <!-- Modèle 3D -->
-            <div class="model-container">
-                <div id="3d-model-container"></div>
-            </div>
-            
-            <!-- Description interactive -->
-            <div class="project-description">
-                <div class="description-content">
-                    <h3 id="project-title">Jardin Vertical Intelligent</h3>
-                    <div class="progress-bar">
-                        <div class="progress"></div>
-                    </div>
-                    <p id="project-text">Un écosystème vertical autonome intégrant des capteurs IoT pour optimiser la croissance des plantes en milieu urbain.</p>
-                    <div class="features-list">
-                        <div class="feature active" data-step="1">
-                            <i class="fas fa-leaf"></i>
-                            <span>Structure modulaire</span>
-                        </div>
-                        <div class="feature" data-step="2">
-                            <i class="fas fa-tint"></i>
-                            <span>Système d'irrigation intelligent</span>
-                        </div>
-                        <div class="feature" data-step="3">
-                            <i class="fas fa-solar-panel"></i>
-                            <span>Énergie solaire</span>
-                        </div>
-                        <div class="feature" data-step="4">
-                            <i class="fas fa-microchip"></i>
-                            <span>Capteurs environnementaux</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Contact Section -->
     <section class="section contact" id="contact">
@@ -1171,7 +1092,7 @@
                 </div>
                 <div class="contact-text">
                     <h3>Email</h3>
-                    <a href="mailto:contact@paysagiste-exemple.com">contact@paysagiste-exemple.com</a>
+                    <a href="mailto:remymahe22@gmail.com">remymahe22@gmail.com</a>
                 </div>
             </div>
             
@@ -1181,7 +1102,18 @@
                 </div>
                 <div class="contact-text">
                     <h3>LinkedIn</h3>
-                    <a href="https://linkedin.com/in/paysagiste-exemple" target="_blank">linkedin.com/in/paysagiste-exemple</a>
+                    <a href="https://www.linkedin.com/in/remymahe" target="_blank">https://www.linkedin.com/in/remymahe</a>
+                </div>
+            </div>
+        
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="contact-text">
+                    <h3>Documentation</h3>
+                    <a href="#" id="download-portfolio">Télécharger mon portfolio complet (PDF)</a>
                 </div>
             </div>
         </div>
@@ -1202,50 +1134,50 @@
         const projectsData = [
             {
                 id: 1,
-                title: "Jardin contemporain",
+                title: "Village Nature",
                 shortDescription: "Un espace minimaliste avec des lignes épurées et une sélection végétale soignée pour une résidence privée à Paris.",
                 tags: ["Design moderne", "Espaces privés"],
                 images: [
-                    "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                    "https://images.unsplash.com/photo-1600566752225-3f2fe3f8f4c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    "Docs/VILLAGENATURE.jpg",
+                    "Docs/VILLAGENATURE.jpg",
+                    "Docs/VILLAGENATURE.jpg",
+                    "Docs/VILLAGENATURE.jpg"
                 ],
                 description: "Ce projet de jardin contemporain a été réalisé pour une résidence privée dans le 16ème arrondissement de Paris. Le client souhaitait un espace extérieur épuré, facile d'entretien, qui serve à la fois d'écrin de verdure en ville et d'espace de vie supplémentaire.",
-                concept: "Le design s'articule autour de lignes géométriques nettes qui structurent l'espace. Les matériaux choisis (bois composite, béton ciré, acier corten) apportent une touche moderne tout en étant durables. La palette végétale a été sélectionnée pour son faible besoin en entretien et son intérêt visuel tout au long de l'année.",
+                concept: "Le design s'articule autour de lignes géométriques nettes qui structurent l'espace. Les Montant choisis (bois composite, béton ciré, acier corten) apportent une touche moderne tout en étant durables. La palette végétale a été sélectionnée pour son faible besoin en entretien et son intérêt visuel tout au long de l'année.",
                 details: [
                     {
                         icon: "fas fa-ruler-combined",
                         title: "Surface",
-                        value: "350 m²"
+                        value: "260 ha"
                     },
                     {
                         icon: "fas fa-calendar-alt",
-                        title: "Durée",
-                        value: "3 mois"
+                        title: "Dates",
+                        value: "2014-2020"
                     },
                     {
                         icon: "fas fa-leaf",
-                        title: "Plantes principales",
-                        value: "Graminées, buis, érables japonais"
+                        title: "Missions",
+                        value: "Diagnostic du territoireet definition des aspect surbanistiques et paysagers pour l’organisation fonctionnelle du site."
                     },
                     {
                         icon: "fas fa-tools",
-                        title: "Matériaux",
-                        value: "Bois composite, béton ciré, acier corten"
+                        title: "Montant",
+                        value: " 54.000.000 €"
                     }
                 ]
             },
             {
                 id: 2,
-                title: "Parc urbain durable",
+                title: "Quartier de l'église St Germain",
                 shortDescription: "Aménagement d'un espace vert public de 2 hectares intégrant des solutions de gestion des eaux pluviales.",
                 tags: ["Espaces publics", "Développement durable"],
                 images: [
-                    "https://images.unsplash.com/photo-1600566752225-3f2fe3f8f4c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                    "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    "Docs/EGLISE.jpg",
+                    "Docs/EGLISE.jpg",
+                    "Docs/EGLISE.jpg",
+                    "Docs/EGLISE.jpg"
                 ],
                 description: "Ce parc urbain de 2 hectares situé en périphérie de Lyon a été conçu comme un espace multifonctionnel intégrant des solutions innovantes de gestion des eaux pluviales tout en offrant aux habitants un lieu de détente et de loisirs.",
                 concept: "Le parc s'articule autour d'un système de noues végétalisées et de bassins de rétention qui permettent de gérer naturellement les eaux de pluie tout en créant des écosystèmes riches en biodiversité. Les circulations douces (chemins piétons, pistes cyclables) relient les différents quartiers adjacents.",
@@ -1257,31 +1189,31 @@
                     },
                     {
                         icon: "fas fa-calendar-alt",
-                        title: "Durée",
+                        title: "Dates",
                         value: "18 mois"
                     },
                     {
                         icon: "fas fa-leaf",
-                        title: "Plantes principales",
+                        title: "Missions",
                         value: "Espèces locales, plantes de zones humides"
                     },
                     {
-                        icon: "fas fa-tint",
-                        title: "Gestion des eaux",
+                        icon: "fas fa-tools",
+                        title: "Montant",
                         value: "Système de noues et bassins de rétention"
                     }
                 ]
             },
             {
                 id: 3,
-                title: "Toit végétalisé",
+                title: "Village Olympique des athlètes",
                 shortDescription: "Conception et réalisation d'un toit jardin pour un complexe commercial, intégrant biodiversité et isolation naturelle.",
                 tags: ["Architecture verte", "Innovation"],
                 images: [
-                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                    "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                    "https://images.unsplash.com/photo-1600566752225-3f2fe3f8f4c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                    "Docs/ATHLETES.jpg",
+                    "Docs/ATHLETES.jpg",
+                    "Docs/ATHLETES.jpg",
+                    "Docs/ATHLETES.jpg"
                 ],
                 description: "Ce projet de toiture végétalisée intensive couvre 800 m² d'un complexe commercial en centre-ville. Il sert à la fois d'espace de détente pour les employés, d'îlot de fraîcheur urbain et de refuge pour la biodiversité.",
                 concept: "Le toit-jardin est divisé en plusieurs zones thématiques : un jardin aromatique, une prairie fleurie, une zone de détente avec mobilier en bois et une mare écologique. Un système d'irrigation intelligent permet une gestion optimale de l'eau.",
@@ -1293,18 +1225,126 @@
                     },
                     {
                         icon: "fas fa-calendar-alt",
-                        title: "Durée",
+                        title: "Dates",
                         value: "6 mois"
                     },
                     {
                         icon: "fas fa-leaf",
-                        title: "Plantes principales",
+                        title: "Missions",
                         value: "Sédums, plantes aromatiques, graminées"
                     },
                     {
-                        icon: "fas fa-layer-group",
-                        title: "Structure",
+                        icon: "fas fa-tools",
+                        title: "Montant",
                         value: "Toiture intensive (substrat de 30 cm)"
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Aménagement du quartier Masséna",
+                shortDescription: "Restructuration des berges d'une rivière urbaine avec création d'un corridor écologique et d'espaces publics.",
+                tags: ["Écologie urbaine", "Espaces publics", "Biodiversité"],
+                images: [
+                    "Docs/MASSENA.jpg",
+                    "Docs/MASSENA.jpg",
+                    "Docs/MASSENA.jpg",
+                    "Docs/MASSENA.jpg"
+                ],
+                description: "Ce projet de réaménagement des berges de la Seine sur un linéaire de 1,2 km visait à concilier protection contre les crues, restauration écologique et création d'espaces publics qualitatifs. Le site, anciennement industrialisé, présentait un fort potentiel de renaturation.",
+                concept: "Notre approche a consisté à créer une trame bleue-verte connectée aux corridors écologiques existants, tout en intégrant des usages récréatifs (promenades, aires de pique-nique, belvédères). Les ouvrages hydrauliques ont été repensés pour favoriser la libre circulation des espèces aquatiques.",
+                details: [
+                    {
+                        icon: "fas fa-ruler-combined",
+                        title: "Linéaire",
+                        value: "1,2 km"
+                    },
+                    {
+                        icon: "fas fa-calendar-alt",
+                        title: "Dates",
+                        value: "2018-2021"
+                    },
+                    {
+                        icon: "fas fa-leaf",
+                        title: "Missions",
+                        value: "Saules, aulnes, plantes de berges"
+                    },
+                    {
+                        icon: "fas fa-tools",
+                        title: "Montant",
+                        value: "25 000 habitants"
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Plateau Mayenne et Parc Terra Botanica",
+                shortDescription: "Conception d'un jardin sensoriel pour un centre hospitalier, favorisant le bien-être des patients et du personnel.",
+                tags: ["Santé", "Design sensoriel", "Accessibilité"],
+                images: [
+                    "Docs/TERRABOTANICA.jpg",
+                    "Docs/TERRABOTANICA.jpg",
+                    "Docs/TERRABOTANICA.jpg",
+                    "Docs/TERRABOTANICA.jpg"
+                ],
+                description: "Ce jardin de 600 m² intégré au centre hospitalier régional a été conçu pour offrir un espace de ressourcement aux patients, visiteurs et personnel soignant. Les principes de l'hortithérapie ont guidé chaque choix de conception.",
+                concept: "Le jardin est organisé en plusieurs zones thématiques stimulant les différents sens : un jardin aromatique (odorat), un parcours tactile (toucher), des jeux d'eau (ouïe), des massifs colorés (vue). Tous les cheminements sont accessibles aux personnes à mobilité réduite et aux malvoyants.",
+                details: [
+                    {
+                        icon: "fas fa-ruler-combined",
+                        title: "Surface",
+                        value: "600 m²"
+                    },
+                    {
+                        icon: "fas fa-calendar-alt",
+                        title: "Dates",
+                        value: "9 mois"
+                    },
+                    {
+                        icon: "fas fa-leaf",
+                        title: "Missions",
+                        value: "Réduction du stress, stimulation cognitive"
+                    },
+                    {
+                        icon: "fas fa-tools",
+                        title: "Montant",
+                        value: "Normes PMR et malvoyants"
+                    }
+                ]
+            },
+            {
+                id: 6,
+                title: "La Ria, Pornic",
+                shortDescription: "Masterplan pour un grand parc périurbain de 50 hectares intégrant agriculture urbaine et loisirs.",
+                tags: ["Plan directeur", "Agriculture urbaine", "Grande échelle"],
+                images: [
+                    "Docs/PORNIC.jpg",
+                    "Docs/PORNIC.jpg",
+                    "Docs/PORNIC.jpg",
+                    "Docs/PORNIC.jpg"
+                ],
+                description: "Ce plan directeur pour un parc métropolitain de 50 hectares vise à transformer une friche périurbaine en un espace multifonctionnel combinant production agricole, loisirs et protection de la biodiversité. Le projet s'inscrit dans une stratégie territoriale à 20 ans.",
+                concept: "Le parc est structuré en trois grandes zones : une ceinture agricole productive (maraîchage, vergers), un cœur naturel préservé (zones humides, boisements) et des espaces récréatifs connectés (sentiers, aires de jeux, équipements sportifs). Des circulations douces relient ces zones entre elles et aux quartiers avoisinants.",
+                details: [
+                    {
+                        icon: "fas fa-ruler-combined",
+                        title: "Surface",
+                        value: "50 hectares"
+                    },
+                    {
+                        icon: "fas fa-calendar-alt",
+                        title: "Échéance",
+                        value: "2020-2040"
+                    },
+                    {
+                        icon: "fas fa-leaf",
+                        title: "Missions",
+                        value: "5 ha maraîchage, 8 ha vergers"
+                    },
+                    {
+                        icon: "fas fa-tools",
+                        title: "Montant",
+                        value: "10 000 arbres et arbustes"
                     }
                 ]
             }
@@ -1436,257 +1476,144 @@
                 const project = projectsData.find(p => p.id === projectId);
                 currentProject = project;
                 
-                // Charger les images
-                modalImagesContainer.innerHTML = `
-                    <div class="modal-main-image">
-                        <img src="${project.images[0]}" alt="${project.title}" id="modal-main-img">
-                    </div>
-                    ${project.images.slice(1).map((img, index) => `
-                        <div class="modal-thumbnail">
-                            <img src="${img}" alt="${project.title} - Vue ${index + 2}" data-img-index="${index + 1}">
+                // Texte d'approche générale
+                const generalApproach = `
+                    <p>Dans ce projet comme dans tous mes travaux, j'ai appliqué une méthodologie rigoureuse :</p>
+                    <ul>
+                        <li>Analyse approfondie du site et de son contexte</li>
+                        <li>Conception en harmonie avec l'environnement existant</li>
+                        <li>Sélection de matériaux durables et locaux</li>
+                        <li>Intégration des besoins des utilisateurs finaux</li>
+                        <li>Respect des principes de développement durable</li>
+                    </ul>
+                    <p>Cette approche garantit des résultats à la fois esthétiques, fonctionnels et pérennes.</p>
+                `;
+                
+                // Mettre à jour le contenu de la modal
+                document.getElementById('modal-project-title').textContent = project.title;
+                document.getElementById('modal-project-description').textContent = project.description;
+                document.getElementById('modal-project-approach').innerHTML = generalApproach;
+                
+                // Mettre à jour les tags
+                const tagsContainer = document.getElementById('modal-project-tags');
+                tagsContainer.innerHTML = project.tags.map(tag => 
+                    `<span class="tag">${tag}</span>`
+                ).join('');
+                
+                // Mettre à jour les détails
+                const detailsContainer = document.getElementById('modal-project-details');
+                detailsContainer.innerHTML = project.details.map(detail => `
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="${detail.icon}"></i>
                         </div>
-                    `).join('')}
-                `;
-                
-                // Charger les informations
-                modalInfoContainer.innerHTML = `
-                    <h2>${project.title}</h2>
-                    <p>${project.description}</p>
-                    
-                    <h3>Concept</h3>
-                    <p>${project.concept}</p>
-                    
-                    <h3>Détails techniques</h3>
-                    <div class="modal-details">
-                        ${project.details.map(detail => `
-                            <div class="detail-item">
-                                <div class="detail-icon">
-                                    <i class="${detail.icon}"></i>
-                                </div>
-                                <div class="detail-text">
-                                    <h4>${detail.title}</h4>
-                                    <p>${detail.value}</p>
-                                </div>
-                            </div>
-                        `).join('')}
+                        <div class="detail-text">
+                            <h4>${detail.title}</h4>
+                            <p>${detail.value}</p>
+                        </div>
                     </div>
-                `;
+                `).join('');
                 
-                // Ajouter les événements pour les miniatures
-                const thumbnails = modalImagesContainer.querySelectorAll('.modal-thumbnail img');
-                const mainImage = document.getElementById('modal-main-img');
+                // Mettre à jour l'image principale
+                document.getElementById('modal-main-img').src = project.images[0];
+                document.getElementById('modal-main-img').alt = project.title;
                 
-                thumbnails.forEach(thumb => {
-                    thumb.addEventListener('click', () => {
-                        // Mettre à jour l'image principale
-                        mainImage.src = thumb.src;
+                // Ouvrir la modal
+                const modal = document.getElementById('project-modal');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+                
+                // Ouvrir la modal avec les données du projet sélectionné
+                projectCards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        const projectId = parseInt(card.getAttribute('data-project'));
+                        loadProjectIntoModal(projectId);
                         
-                        // Mettre à jour le projet courant avec la nouvelle image comme première
-                        const imgIndex = parseInt(thumb.getAttribute('data-img-index'));
-                        const newImagesOrder = [
-                            project.images[imgIndex],
-                            ...project.images.slice(0, imgIndex),
-                            ...project.images.slice(imgIndex + 1)
-                        ];
-                        
-                        // Mettre à jour le projet dans les données (pour garder la cohérence si on rouvre)
-                        const projectIndex = projectsData.findIndex(p => p.id === project.id);
-                        projectsData[projectIndex].images = newImagesOrder;
-                        
-                        // Recharger le projet pour mettre à jour l'ordre des miniatures
-                        loadProjectIntoModal(project.id);
+                        // Ouvrir la modal
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
                     });
                 });
-            }
-            
-            // Ouvrir la modal avec les données du projet sélectionné
-            projectCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const projectId = parseInt(card.getAttribute('data-project'));
-                    loadProjectIntoModal(projectId);
+                
+                // Fermer la modal
+                modalClose.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+                
+                // Fermer la modal en cliquant à l'extérieur
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+                
+                // Fermer la modal avec la touche ESC
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+                
+                // Animation de la photo de profil qui suit la souris
+                const profilePhoto = document.getElementById('profile-photo');
+                
+                document.addEventListener('mousemove', (e) => {
+                    if (!profilePhoto) return;
                     
-                    // Ouvrir la modal
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
+                    // Calculer la position de la souris par rapport au centre de l'écran
+                    const x = e.clientX - window.innerWidth / 2;
+                    const y = e.clientY - window.innerHeight / 2;
+                    
+                    // Calculer l'angle de rotation (max 15 degrés)
+                    const angle = Math.atan2(y, x) * (180 / Math.PI);
+                    const rotateX = (y / window.innerHeight) * 10;
+                    const rotateY = -(x / window.innerWidth) * 10;
+                    
+                    // Appliquer la transformation
+                    profilePhoto.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+                });
+                
+                // Réinitialiser la position quand la souris quitte la photo
+                profilePhoto.addEventListener('mouseleave', () => {
+                    profilePhoto.style.transform = 'rotateY(0) rotateX(0)';
                 });
             });
+
+
+        // Fonction pour simuler le téléchargement
+        function downloadFile(filename) {
+            // Ici tu devras mettre le chemin réel vers ton fichier PDF
+            const fileUrl = `docs/${filename}`;
             
-            // Fermer la modal
-            modalClose.addEventListener('click', () => {
-                modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-            
-            // Fermer la modal en cliquant à l'extérieur
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-            
-            // Fermer la modal avec la touche ESC
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-            
-            // Animation de la photo de profil qui suit la souris
-            const profilePhoto = document.getElementById('profile-photo');
-            
-            document.addEventListener('mousemove', (e) => {
-                if (!profilePhoto) return;
-                
-                // Calculer la position de la souris par rapport au centre de l'écran
-                const x = e.clientX - window.innerWidth / 2;
-                const y = e.clientY - window.innerHeight / 2;
-                
-                // Calculer l'angle de rotation (max 15 degrés)
-                const angle = Math.atan2(y, x) * (180 / Math.PI);
-                const rotateX = (y / window.innerHeight) * 10;
-                const rotateY = -(x / window.innerWidth) * 10;
-                
-                // Appliquer la transformation
-                profilePhoto.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
-            });
-            
-            // Réinitialiser la position quand la souris quitte la photo
-            profilePhoto.addEventListener('mouseleave', () => {
-                profilePhoto.style.transform = 'rotateY(0) rotateX(0)';
-            });
+            // Créer un lien temporaire pour le téléchargement
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Téléchargement du portfolio complet
+        document.getElementById('download-portfolio').addEventListener('click', (e) => {
+            e.preventDefault();
+            downloadFile('Portfolio_Projets_Paysagistes.pdf');
         });
 
-        // Special Project 3D Model with Three.js
-    document.addEventListener('DOMContentLoaded', function() {
-        // Variables pour la scène 3D
-        let scene, camera, renderer, model, controls;
-        
-        function init3DModel() {
-            // Initialisation de la scène 3D (identique à précédemment)
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xf5f9f5);
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
-            
-            const container = document.getElementById('3d-model-container');
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            container.appendChild(renderer.domElement);
-            
-            // Éclairage
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-            
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(1, 1, 1);
-            scene.add(directionalLight);
-            
-            const loader = new THREE.GLTFLoader();
-
-            // Chemin relatif depuis la racine du serveur
-            loader.load(
-            './scene.glb',
-            (gltf) => {
-                console.log("Modèle chargé !");
-                scene.add(gltf.scene);
-            },
-            undefined,
-            (error) => {
-                console.error("ERREUR:", error);
-                // Solution de repli
-                const fallbackModel = document.createElement('p');
-                fallbackModel.textContent = "Modèle 3D non disponible - Erreur CORS résolue";
-                fallbackModel.style.color = 'red';
-                document.getElementById('3d-model-container').appendChild(fallbackModel);
+        // Téléchargement de la fiche projet spécifique
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'download-project-pdf') {
+                e.preventDefault();
+                if (currentProject) {
+                    downloadFile(`Projet_${currentProject.id}_${currentProject.title.replace(/\s+/g, '_')}.pdf`);
+                }
             }
-            );
-            
-            // Rotation automatique SEULEMENT
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableZoom = false; // Désactive le zoom manuel
-            controls.enablePan = false; // Désactive le déplacement manuel
-            controls.autoRotate = true; // Active la rotation auto
-            controls.autoRotateSpeed = 1.5; // Vitesse de rotation
-            
-            window.addEventListener('resize', onWindowResize);
-            animate();
-        }
-        
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
-        }
-        
-        function onWindowResize() {
-            const container = document.getElementById('3d-model-container');
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        }
-        
-        // Initialisation 3D
-        init3DModel();
-        
-        // Gestion des boutons de caractéristiques (FONCTIONNEL)
-        const features = document.querySelectorAll('.feature');
-        const progress = document.querySelector('.progress');
-        
-        features.forEach(feature => {
-            feature.addEventListener('click', function() {
-                // 1. Mettre à jour l'interface
-                features.forEach(f => f.classList.remove('active'));
-                this.classList.add('active');
-                progress.style.width = `${this.dataset.step * 25}%`;
-                
-                // 2. Mettre à jour le texte
-                updateDescription(this.dataset.step);
-                
-                // 3. (Optionnel) Faire une rotation spécifique
-                if(model) {
-                    // Exemple: rotation vers une position spécifique
-                    gsap.to(controls.target, {
-                        duration: 1,
-                        x: this.dataset.step * 0.5,
-                        y: this.dataset.step * 0.2
-                    });
-                }
-            });
         });
         
-        function updateDescription(step) {
-            const texts = {
-                "1": {
-                    title: "Structure Modulaire",
-                    text: "Des modules interchangeables permettent une configuration adaptable à tous les espaces urbains."
-                },
-                "2": {
-                    title: "Irrigation Intelligente", 
-                    text: "Un système automatisé ajuste l'apport en eau selon les besoins réels des plantes."
-                },
-                "3": {
-                    title: "Énergie Solaire",
-                    text: "Des panneaux solaires intégrés assurent une autonomie énergétique complète."
-                },
-                "4": {
-                    title: "Capteurs Environnementaux",
-                    text: "Surveillance en temps réel de la température, humidité et qualité de l'air."
-                }
-            };
-            
-            document.getElementById('project-title').textContent = texts[step].title;
-            document.getElementById('project-text').textContent = texts[step].text;
-        }
-        
-        // Rotation automatique des caractéristiques
-        let currentStep = 1;
-        setInterval(() => {
-            currentStep = currentStep % 4 + 1;
-            document.querySelector(`.feature[data-step="${currentStep}"]`).click();
-        }, 5000);
-    });
     </script>
 </body>
 </html>
