@@ -136,18 +136,6 @@
             opacity: 1;
         }
 
-        .hero-bg:nth-child(2) {
-            background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-        }
-
-        .hero-bg:nth-child(3) {
-            background-image: url('https://images.unsplash.com/photo-1600566752225-3f2fe3f8f4c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-        }
-
-        .hero-bg:nth-child(4) {
-            background-image: url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-        }
-
         .hero-content {
             max-width: 600px;
             z-index: 2;
@@ -492,70 +480,79 @@
             flex-direction: column;
         }
 
-        .modal-images {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding: 20px;
-        }
-
-        .modal-thumbnail {
-            height: 195px;
-            overflow: hidden;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .modal-thumbnail:hover {
-            transform: scale(1.02);
-        }
-
-        .modal-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .modal-info h2 {
-            font-size: 2rem;
-            color: var(--primary-color);
+        .modal-header {
+            padding: 30px 40px 0;
+            border-bottom: 1px solid #eee;
             margin-bottom: 20px;
         }
 
-        .modal-info p {
-            margin-bottom: 15px;
-            line-height: 1.7;
-        }
-
-        .modal-details {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .detail-item {
-            display: flex;
-            gap: 15px;
-        }
-
-        .detail-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--secondary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .detail-text h4 {
-            margin-bottom: 5px;
+        .modal-header h2 {
             color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-gallery {
+            width: 100%;
+            padding: 0 40px;
+        }
+
+        .modal-main-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .modal-main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-info {
+            padding: 0 40px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .modal-info h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .modal-info h3:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+
+        .project-description,
+        .project-approach,
+        .project-details {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .modal-download {
+            margin-top: 20px;
+            text-align: center;
         }
 
         /* Contact Section */
@@ -652,7 +649,6 @@
             100% { transform: scale(1); opacity: 0.7; }
         }
 
-        /* Nouvelles animations */
         @keyframes floatProfile {
             0% { transform: translateY(0) rotateY(0) rotateX(0); }
             50% { transform: translateY(-15px) rotateY(5deg) rotateX(5deg); }
@@ -679,18 +675,8 @@
 
         /* Responsive */
         @media (max-width: 1200px) {
-            .modal-images {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .modal-main-image {
-                grid-column: span 2;
-                grid-row: span 1;
                 height: 300px;
-            }
-            
-            .modal-thumbnail {
-                height: 145px;
             }
         }
 
@@ -712,6 +698,17 @@
             
             .modal-details {
                 grid-template-columns: 1fr;
+            }
+            
+            .modal-main-image {
+                height: 300px;
+            }
+            
+            .modal-header,
+            .modal-gallery,
+            .modal-info {
+                padding-left: 20px;
+                padding-right: 20px;
             }
         }
 
@@ -753,21 +750,14 @@
                 padding: 10px 20px;
             }
             
-            .modal-images {
-                grid-template-columns: 1fr;
-            }
-            
             .modal-main-image {
-                grid-column: span 1;
                 height: 250px;
             }
             
-            .modal-thumbnail {
-                height: 100px;
-            }
-            
-            .modal-info {
-                padding: 20px;
+            .project-description,
+            .project-approach,
+            .project-details {
+                padding: 15px;
             }
 
             .profile-photo {
@@ -840,108 +830,35 @@
             margin-left: -1em;
         }
 
-
-        .modal-header {
-            padding: 30px 40px 0;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 20px;
+        .modal-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
         }
 
-        .modal-header h2 {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-
-        .modal-body {
+        .detail-item {
             display: flex;
-            flex-direction: column;
+            gap: 15px;
         }
 
-        .modal-gallery {
-            width: 100%;
-            padding: 0 40px;
-        }
-
-        .modal-main-image {
-            width: 100%;
-            height: 400px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .modal-main-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .modal-info {
-            padding: 0 40px 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .modal-info h3 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .modal-info h3:after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 50px;
-            height: 2px;
+        .detail-icon {
+            width: 40px;
+            height: 40px;
             background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
         }
 
-        .project-description,
-        .project-approach,
-        .project-details {
-            background: #f9f9f9;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        .detail-text h4 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
         }
-
-        .modal-download {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .modal-main-image {
-                height: 300px;
-            }
-            
-            .modal-header,
-            .modal-gallery,
-            .modal-info {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .modal-main-image {
-                height: 250px;
-            }
-            
-            .project-description,
-            .project-approach,
-            .project-details {
-                padding: 15px;
-            }
-        }
-
     </style>
 </head>
 <body>
@@ -971,7 +888,7 @@
         <div class="hero-bg" style="background-image: url('docs/TERRABOTANICA.jpg')"></div>
         <div class="hero-bg" style="background-image: url('docs/ATHLETES.jpg')"></div>
         <div class="hero-content">
-            <h1>Architecte paysagiste concepteur</h1>
+            <h1>Paysagiste-concepteur, Ingéniérie VRD des Espaces Publics </h1>
             <p>Je conçois des espaces extérieurs qui marient esthétique, fonctionnalité et respect de l'environnement.</p>
             <div>
                 <a href="#projects" class="btn">Voir mes projets</a>
@@ -987,10 +904,10 @@
         </div>
         <div class="about-content">
             <div class="about-text">
-                <h3>Architecte paysagiste passionné par la création d'espaces verts innovants</h3>
-                <p>Mon parcours m’a permis de piloter des opérations allant de l’aménagement de d’infrastructure de transport (BHNS, tramways, pistes cyclables), quartiers urbains (Massena Paris Seine rive gauche, Fieschi Vernon, Plateau Mayenne) des centres-bourgs (Pordic, Ploufragan, Pornic) à des études territoriales (Marais d’Orx), jusqu’à des Master Plans internationaux, en assumant à la fois la conception, la gestion d’équipe, le suivi de chantier, et la relation avec les maîtrises d’ouvrage. Cette vision globale me permet d’aborder chaque mission avec rigueur, créativité et une forte culture du partenariat.</p>
-                <p>Habitué à encadrer des équipes projet, je veille à maintenir un haut niveau de qualité tout en favorisant l’intelligence collective. Je maîtrise les outils de conception graphique et suis particulièrement sensible à la transition écologique, que je cherche à intégrer à toutes les échelles du projet.</p>
-                <p>Convaincu que la qualité des espaces publics naît de la concertation, de la transversalité des compétences et de l’ancrage dans les territoires, je serais heureux de mettre mon expertise au service de votre agence et de ses projets exigeants et engagés</p>
+                <h3>Architecte paysagiste expérimenté, expert des espaces publics et des techniques innovantes pour une transition écologique douce et résiliente.</h3>
+                <p>Mon parcours m'a permis de piloter des opérations allant de l'aménagement d'infrastructure de transport (BHNS, tramways, pistes cyclables), quartiers urbains (Massena Paris Seine rive gauche, Fieschi Vernon, Plateau Mayenne) des centres-bourgs (Pordic, Ploufragan, Pornic) à des études territoriales (Marais d'Orx), jusqu'à des Master Plans internationaux, en assumant à la fois la conception, la gestion d'équipe, le suivi de chantier, et la relation avec les maîtrises d'ouvrage. Cette vision globale me permet d'aborder chaque mission avec rigueur, créativité et une forte culture du partenariat.</p>
+                <p>Habitué à encadrer des équipes projet, je veille à maintenir un haut niveau de qualité tout en favorisant l'intelligence collective. Je maîtrise les outils de conception graphique et suis particulièrement sensible à la transition écologique, que je cherche à intégrer à toutes les échelles du projet.</p>
+                <p>Convaincu que la qualité des espaces publics naît de la concertation, de la transversalité des compétences et de l'ancrage dans les territoires.</p>
             </div>
             <div class="about-image">
                 <img src="docs/PAYSAGE2.jpg" alt="Projet paysager" class="about-img">
@@ -1007,13 +924,15 @@
         <div class="profile-content">
             <div class="profile-text">
                 <h3>Mon Parcours</h3>
-                <p>Paysagiste concepteur diplômé de l'École Gembloux Agro-Bio Tech - Université de Liège j'ai aussi suivi une formation BIM et modélisation sur Revit & Navisworks de Arsenio et été formé au management de projets chez ib Cegos.</p>
+                <p>Paysagiste-concepteur diplômé du Ministère de la transition écologique et solidaire - ENSP Gembloux, j'ai aussi suivi une formation BIM Manager et modélisation sur Revit & Navisworks et été formé au management à la Cegos Paris Sorbonne.</p>
                 
                 <h3>Mes Compétences</h3>
-                <p>Je suis capable de gérer des gros projets et j'ai déjà été amené à assumer à la fois la conception, la gestion d’équipe, le suivi de chantier, et la relation avec les maîtrises d’ouvrage de mes projets.</p>
+                <p>Je suis capable de gérer des gros projets d'ingéniérie VRD, Urbanisme et Paysage et j'ai déjà été amené à assumer à la fois la conception, la gestion d'équipe, le suivi de chantier, et la relation avec les maîtrises d'ouvrage de mes projets.</p>
                 
-                <h3>Ce que je recherche</h3>
-                <p>A remplir...</p>
+            </br>
+                <a href="docs/CV_Remy.pdf" class="btn" download style="margin-top: 15px;">
+                    <i class="fas fa-download"></i> Télécharger mon CV
+                </a>
             </div>
             <div class="profile-image">
                 <div class="profile-bg"></div>
@@ -1068,7 +987,7 @@
                         </div>
                         
                         <div class="modal-download">
-                            <a href="#" class="btn" id="download-project-pdf">
+                            <a href="javascript:void(0)" class="btn" id="download-project-pdf">
                                 <i class="fas fa-download"></i> Télécharger la fiche projet
                             </a>
                         </div>
@@ -1106,14 +1025,13 @@
                 </div>
             </div>
         
-
             <div class="contact-item">
                 <div class="contact-icon">
                     <i class="fas fa-file-pdf"></i>
                 </div>
                 <div class="contact-text">
                     <h3>Documentation</h3>
-                    <a href="#" id="download-portfolio">Télécharger mon portfolio complet (PDF)</a>
+                    <a href="javascript:void(0)" id="download-portfolio">Télécharger mon portfolio complet (PDF)</a>
                 </div>
             </div>
         </div>
@@ -1130,21 +1048,22 @@
     </footer>
 
     <script>
-        // Données des projets
+        // Données des projets - Mises à jour selon le portfolio PDF
         const projectsData = [
             {
                 id: 1,
                 title: "Village Nature",
-                shortDescription: "Un espace minimaliste avec des lignes épurées et une sélection végétale soignée pour une résidence privée à Paris.",
-                tags: ["Design moderne", "Espaces privés"],
+                pdfFile: "Village_Nature.pdf",
+                shortDescription: "Conception et réalisation des infrastructures paysagères pour le complexe touristique éco-responsable Village Nature à Marne-la-Vallée.",
+                tags: ["Aménagement durable", "Géothermie", "Gestion des eaux", "Espaces récréatifs"],
                 images: [
                     "docs/VILLAGENATURE.jpg",
                     "docs/VILLAGENATURE.jpg",
                     "docs/VILLAGENATURE.jpg",
                     "docs/VILLAGENATURE.jpg"
                 ],
-                description: "Ce projet de jardin contemporain a été réalisé pour une résidence privée dans le 16ème arrondissement de Paris. Le client souhaitait un espace extérieur épuré, facile d'entretien, qui serve à la fois d'écrin de verdure en ville et d'espace de vie supplémentaire.",
-                concept: "Le design s'articule autour de lignes géométriques nettes qui structurent l'espace. Les Montant choisis (bois composite, béton ciré, acier corten) apportent une touche moderne tout en étant durables. La palette végétale a été sélectionnée pour son faible besoin en entretien et son intérêt visuel tout au long de l'année.",
+                description: "Village Nature Paris est un complexe touristique éco-responsable développé par Euro Disney S.C.A. et Center Parcs. Ce projet de 260 hectares intègre des logements, des équipements touristiques et des espaces naturels préservés. Ma mission a concerné le diagnostic du territoire et la définition des aspects urbanistiques et paysagers pour l'organisation fonctionnelle du site.",
+                concept: "L'approche a intégré une réflexion sur le 'Grand Paysage' formant la trame verte du projet, les 'jardins extraordinaires' voués à magnifier la Nature et le 'paysage sur bâti' appelé à marquer la symbiose avec le 'Village' ainsi que les jardins pédagogiques de la 'Ferme Bellevie'. J'ai participé aux phases préliminaires de diagnostic de ce nouveau territoire et proposé des analyses pertinentes pour intégrer les différentes contraintes écologiques, patrimoniales et techniques de ce projet hors norme.",
                 details: [
                     {
                         icon: "fas fa-ruler-combined",
@@ -1159,192 +1078,197 @@
                     {
                         icon: "fas fa-leaf",
                         title: "Missions",
-                        value: "Diagnostic du territoireet definition des aspect surbanistiques et paysagers pour l’organisation fonctionnelle du site."
+                        value: "Diagnostic du territoire et définition des aspects urbanistiques et paysagers"
                     },
                     {
                         icon: "fas fa-tools",
                         title: "Montant",
-                        value: " 54.000.000 €"
+                        value: "54.000.000 €"
                     }
                 ]
             },
             {
                 id: 2,
                 title: "Quartier de l'église St Germain",
-                shortDescription: "Aménagement d'un espace vert public de 2 hectares intégrant des solutions de gestion des eaux pluviales.",
-                tags: ["Espaces publics", "Développement durable"],
+                pdfFile: "Eglise_Pantin.pdf",
+                shortDescription: "Réaménagement complet des voiries et espaces publics du quartier historique de l'église St Germain à Pantin.",
+                tags: ["Voirie urbaine", "Réaménagement", "Mobilités douces", "Éclairage public"],
                 images: [
                     "docs/EGLISE.jpg",
                     "docs/EGLISE.jpg",
                     "docs/EGLISE.jpg",
                     "docs/EGLISE.jpg"
                 ],
-                description: "Ce parc urbain de 2 hectares situé en périphérie de Lyon a été conçu comme un espace multifonctionnel intégrant des solutions innovantes de gestion des eaux pluviales tout en offrant aux habitants un lieu de détente et de loisirs.",
-                concept: "Le parc s'articule autour d'un système de noues végétalisées et de bassins de rétention qui permettent de gérer naturellement les eaux de pluie tout en créant des écosystèmes riches en biodiversité. Les circulations douces (chemins piétons, pistes cyclables) relient les différents quartiers adjacents.",
+                description: "Ce projet de rénovation urbaine concernait la requalification des espaces publics autour de l'Église de Pantin et de la place du marché. Le programme incluait l'arrivée du BHNS Tzen3, la restructuration du marché et l'intégration avec la station de métro existante.",
+                concept: "Ma mission a consisté à gérer le projet de rénovation urbaine en plusieurs étapes : état des lieux et diagnostics (analyse des infrastructures, réseaux et usages), esquisse (croquis de l'aménagement des espaces publics), présentation du projet via maquette 3D et animation Lumion, estimation budgétaire selon l'accord-cadre moyen, et établissement du calendrier et phasage du chantier.",
                 details: [
                     {
                         icon: "fas fa-ruler-combined",
                         title: "Surface",
-                        value: "20,000 m²"
+                        value: "3 ha"
                     },
                     {
                         icon: "fas fa-calendar-alt",
                         title: "Dates",
-                        value: "18 mois"
+                        value: "2024-2025"
                     },
                     {
                         icon: "fas fa-leaf",
                         title: "Missions",
-                        value: "Espèces locales, plantes de zones humides"
+                        value: "Maîtrise d'ouvrage pour la rénovation du quartier église de Pantin"
                     },
                     {
                         icon: "fas fa-tools",
                         title: "Montant",
-                        value: "Système de noues et bassins de rétention"
+                        value: "4.460.000 €"
                     }
                 ]
             },
             {
                 id: 3,
                 title: "Village Olympique des athlètes",
-                shortDescription: "Conception et réalisation d'un toit jardin pour un complexe commercial, intégrant biodiversité et isolation naturelle.",
-                tags: ["Architecture verte", "Innovation"],
+                pdfFile: "Athlete.pdf",
+                shortDescription: "Conception des infrastructures paysagères pour le village olympique et paralympique Paris 2024.",
+                tags: ["Infrastructures sportives", "Biodiversité", "Éco-quartier", "Techno-sols"],
                 images: [
                     "docs/ATHLETES.jpg",
                     "docs/ATHLETES.jpg",
                     "docs/ATHLETES.jpg",
                     "docs/ATHLETES.jpg"
                 ],
-                description: "Ce projet de toiture végétalisée intensive couvre 800 m² d'un complexe commercial en centre-ville. Il sert à la fois d'espace de détente pour les employés, d'îlot de fraîcheur urbain et de refuge pour la biodiversité.",
-                concept: "Le toit-jardin est divisé en plusieurs zones thématiques : un jardin aromatique, une prairie fleurie, une zone de détente avec mobilier en bois et une mare écologique. Un système d'irrigation intelligent permet une gestion optimale de l'eau.",
+                description: "Le Village Olympique et Paralympique de Paris 2024 accueillera environ 14.000 athlètes et officiels durant les Jeux, avant de se transformer en éco-quartier. La stratégie urbaine pensée pour ce village offre une grande flexibilité et permet la réversibilité des installations après les jeux 2024.",
+                concept: "J'ai participé aux choix des matériaux (sol à faible albédo, mobiliers innovants, luminaire en réemploi, plantations et substrats techno-sol) et assuré la maîtrise d'œuvre d'exécution du jardin des prototypes VRD et paysage. Différents niveaux de naturalité ont été établis en fonction des usages et bénéfices écosystémiques. Les 9000 arbres et cépées offriront une qualité écologique très forte et favoriseront la régénération des techno-sols issus de la déconstruction.",
                 details: [
                     {
                         icon: "fas fa-ruler-combined",
                         title: "Surface",
-                        value: "800 m²"
+                        value: "52 ha"
                     },
                     {
                         icon: "fas fa-calendar-alt",
                         title: "Dates",
-                        value: "6 mois"
+                        value: "2022-2023"
                     },
                     {
                         icon: "fas fa-leaf",
                         title: "Missions",
-                        value: "Sédums, plantes aromatiques, graminées"
+                        value: "Chargé de projet, conception-exécution"
                     },
                     {
                         icon: "fas fa-tools",
-                        title: "Montant",
-                        value: "Toiture intensive (substrat de 30 cm)"
+                        title: "Montant paysage",
+                        value: "22.000.000 € (sur 140 M€ total)"
                     }
                 ]
             },
             {
                 id: 4,
                 title: "Aménagement du quartier Masséna",
-                shortDescription: "Restructuration des berges d'une rivière urbaine avec création d'un corridor écologique et d'espaces publics.",
-                tags: ["Écologie urbaine", "Espaces publics", "Biodiversité"],
+                pdfFile: "Massena.pdf",
+                shortDescription: "Aménagement des espaces publics du secteur Masséna Paris Rive Gauche (13ème arrondissement).",
+                tags: ["Quartier durable", "Renaturation", "Éclairage urbain", "Espaces publics"],
                 images: [
                     "docs/MASSENA.jpg",
                     "docs/MASSENA.jpg",
                     "docs/MASSENA.jpg",
                     "docs/MASSENA.jpg"
                 ],
-                description: "Ce projet de réaménagement des berges de la Seine sur un linéaire de 1,2 km visait à concilier protection contre les crues, restauration écologique et création d'espaces publics qualitatifs. Le site, anciennement industrialisé, présentait un fort potentiel de renaturation.",
-                concept: "Notre approche a consisté à créer une trame bleue-verte connectée aux corridors écologiques existants, tout en intégrant des usages récréatifs (promenades, aires de pique-nique, belvédères). Les ouvrages hydrauliques ont été repensés pour favoriser la libre circulation des espèces aquatiques.",
+                description: "Le quartier Masséna Paris Rive Gauche est un exemple de renouvellement urbain sur friche industrielle. Dans le cadre de la réhabilitation de ce secteur, la création d'un quartier a été l'opportunité d'une re-naturalisation à l'échelle d'un territoire.",
+                concept: "J'ai réalisé les documents découlant de la programmation destinée aux architectes et aux maîtres d'ouvrage pour guider l'aménagement et les plantations des îlots. J'ai également participé à l'élaboration du schéma directeur des ambiances lumineuses avec R. Narboni scénographe initiateur de l'urbanisme lumière. Cette collaboration m'a apporté une connaissance artistique et technique des besoins sécuritaires d'éclairage et une sensibilité à la perception nocturne du paysage.",
                 details: [
                     {
                         icon: "fas fa-ruler-combined",
-                        title: "Linéaire",
-                        value: "1,2 km"
+                        title: "Surface",
+                        value: "13 ha"
                     },
                     {
                         icon: "fas fa-calendar-alt",
                         title: "Dates",
-                        value: "2018-2021"
+                        value: "2004-2016"
                     },
                     {
                         icon: "fas fa-leaf",
                         title: "Missions",
-                        value: "Saules, aulnes, plantes de berges"
+                        value: "Assistance paysagère, conception-exécution (contrat cadre)"
                     },
                     {
                         icon: "fas fa-tools",
-                        title: "Montant",
-                        value: "25 000 habitants"
+                        title: "Honoraires",
+                        value: "285.000 €"
                     }
                 ]
             },
             {
                 id: 5,
                 title: "Plateau Mayenne et Parc Terra Botanica",
-                shortDescription: "Conception d'un jardin sensoriel pour un centre hospitalier, favorisant le bien-être des patients et du personnel.",
-                tags: ["Santé", "Design sensoriel", "Accessibilité"],
+                pdfFile: "Terra_Botanica.pdf",
+                shortDescription: "Aménagement du quartier Plateau Mayenne et du parc d'attractions Terra Botanica à Angers.",
+                tags: ["Éco-quartier", "Parc à thème", "Aménagement touristique", "Gestion des flux"],
                 images: [
                     "docs/TERRABOTANICA.jpg",
                     "docs/TERRABOTANICA.jpg",
                     "docs/TERRABOTANICA.jpg",
                     "docs/TERRABOTANICA.jpg"
                 ],
-                description: "Ce jardin de 600 m² intégré au centre hospitalier régional a été conçu pour offrir un espace de ressourcement aux patients, visiteurs et personnel soignant. Les principes de l'hortithérapie ont guidé chaque choix de conception.",
-                concept: "Le jardin est organisé en plusieurs zones thématiques stimulant les différents sens : un jardin aromatique (odorat), un parcours tactile (toucher), des jeux d'eau (ouïe), des massifs colorés (vue). Tous les cheminements sont accessibles aux personnes à mobilité réduite et aux malvoyants.",
+                description: "Le programme du projet 'Plateau Mayenne' se situe dans le cadre d'un développement urbain entre Avrillé et Angers. Ma mission a couvert l'ensemble des travaux nécessaires à la viabilisation et à la végétalisation de l'ensemble du site ainsi que la réalisation du parc de loisirs sur 15 hectares.",
+                concept: "Terra Botanica a été conçu dans tous ses différents aspects, des paysages, aux jardins thématiques, aux parcours nature jusqu'aux attractions des 5 univers du parc à thème sur la découverte du végétal à travers le monde. J'ai assuré le suivi du chantier en lien direct avec les bureaux d'études d'architecture et voirie réseaux divers (VRD), en intégrant les modes de liaison douce, pistes cyclables, sentes piétonnes...",
                 details: [
                     {
                         icon: "fas fa-ruler-combined",
                         title: "Surface",
-                        value: "600 m²"
+                        value: "150 ha"
                     },
                     {
                         icon: "fas fa-calendar-alt",
                         title: "Dates",
-                        value: "9 mois"
+                        value: "2003-2020"
                     },
                     {
                         icon: "fas fa-leaf",
                         title: "Missions",
-                        value: "Réduction du stress, stimulation cognitive"
+                        value: "Maîtrise d'œuvre pour la réalisation du quartier plateau Mayenne"
                     },
                     {
                         icon: "fas fa-tools",
                         title: "Montant",
-                        value: "Normes PMR et malvoyants"
+                        value: "24.400.000 €"
                     }
                 ]
             },
             {
                 id: 6,
                 title: "La Ria, Pornic",
-                shortDescription: "Masterplan pour un grand parc périurbain de 50 hectares intégrant agriculture urbaine et loisirs.",
-                tags: ["Plan directeur", "Agriculture urbaine", "Grande échelle"],
+                pdfFile: "Pornic.pdf",
+                shortDescription: "Réaménagement du site de la Ria à Pornic, avec requalification des berges et création d'un parc.",
+                tags: ["Régénération urbaine", "Dépollution", "Espaces publics", "Concertation"],
                 images: [
                     "docs/PORNIC.jpg",
                     "docs/PORNIC.jpg",
                     "docs/PORNIC.jpg",
                     "docs/PORNIC.jpg"
                 ],
-                description: "Ce plan directeur pour un parc métropolitain de 50 hectares vise à transformer une friche périurbaine en un espace multifonctionnel combinant production agricole, loisirs et protection de la biodiversité. Le projet s'inscrit dans une stratégie territoriale à 20 ans.",
-                concept: "Le parc est structuré en trois grandes zones : une ceinture agricole productive (maraîchage, vergers), un cœur naturel préservé (zones humides, boisements) et des espaces récréatifs connectés (sentiers, aires de jeux, équipements sportifs). Des circulations douces relient ces zones entre elles et aux quartiers avoisinants.",
+                description: "Le projet concernait la reconversion des 37 hectares partiellement inondables et à dépolluer de la zone de la Ria pour créer un parc au pied de la gare dans le prolongement du vieux port de Pornic.",
+                concept: "J'ai établi les documents de présentation du projet et son argumentation avec animation de réunions de concertation. J'ai réalisé des carnets d'ambiances pour permettre à chacun de se construire une représentation juste du projet. Tout au long de ma mission j'ai assisté le maître d'ouvrage dans la communication du projet. Cette médiation a été reconnue et primée par le prix d'aménagement de ville décernée par le Sénat.",
                 details: [
                     {
                         icon: "fas fa-ruler-combined",
                         title: "Surface",
-                        value: "50 hectares"
+                        value: "37 ha"
                     },
                     {
                         icon: "fas fa-calendar-alt",
-                        title: "Échéance",
-                        value: "2020-2040"
+                        title: "Dates",
+                        value: "2008-2020"
                     },
                     {
                         icon: "fas fa-leaf",
                         title: "Missions",
-                        value: "5 ha maraîchage, 8 ha vergers"
+                        value: "MOEX Ria et Centre ville"
                     },
                     {
                         icon: "fas fa-tools",
-                        title: "Montant",
-                        value: "10 000 arbres et arbustes"
+                        title: "Honoraires",
+                        value: "186.400 €"
                     }
                 ]
             }
@@ -1464,8 +1388,6 @@
             
             // Gestion de la modal
             const modal = document.getElementById('project-modal');
-            const modalImagesContainer = document.getElementById('modal-images');
-            const modalInfoContainer = document.getElementById('modal-info');
             const modalClose = document.querySelector('.modal-close');
             
             // Variable pour stocker le projet actuellement affiché
@@ -1476,23 +1398,10 @@
                 const project = projectsData.find(p => p.id === projectId);
                 currentProject = project;
                 
-                // Texte d'approche générale
-                const generalApproach = `
-                    <p>Dans ce projet comme dans tous mes travaux, j'ai appliqué une méthodologie rigoureuse :</p>
-                    <ul>
-                        <li>Analyse approfondie du site et de son contexte</li>
-                        <li>Conception en harmonie avec l'environnement existant</li>
-                        <li>Sélection de matériaux durables et locaux</li>
-                        <li>Intégration des besoins des utilisateurs finaux</li>
-                        <li>Respect des principes de développement durable</li>
-                    </ul>
-                    <p>Cette approche garantit des résultats à la fois esthétiques, fonctionnels et pérennes.</p>
-                `;
-                
                 // Mettre à jour le contenu de la modal
                 document.getElementById('modal-project-title').textContent = project.title;
                 document.getElementById('modal-project-description').textContent = project.description;
-                document.getElementById('modal-project-approach').innerHTML = generalApproach;
+                document.getElementById('modal-project-approach').innerHTML = `<p>${project.concept}</p>`;
                 
                 // Mettre à jour les tags
                 const tagsContainer = document.getElementById('modal-project-tags');
@@ -1519,101 +1428,91 @@
                 document.getElementById('modal-main-img').alt = project.title;
                 
                 // Ouvrir la modal
-                const modal = document.getElementById('project-modal');
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
                 
-                // Ouvrir la modal avec les données du projet sélectionné
-                projectCards.forEach(card => {
-                    card.addEventListener('click', () => {
-                        const projectId = parseInt(card.getAttribute('data-project'));
-                        loadProjectIntoModal(projectId);
-                        
-                        // Ouvrir la modal
-                        modal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    });
-                });
-                
-                // Fermer la modal
-                modalClose.addEventListener('click', () => {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-                
-                // Fermer la modal en cliquant à l'extérieur
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    }
-                });
-                
-                // Fermer la modal avec la touche ESC
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape') {
-                        modal.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    }
-                });
-                
-                // Animation de la photo de profil qui suit la souris
-                const profilePhoto = document.getElementById('profile-photo');
-                
-                document.addEventListener('mousemove', (e) => {
-                    if (!profilePhoto) return;
-                    
-                    // Calculer la position de la souris par rapport au centre de l'écran
-                    const x = e.clientX - window.innerWidth / 2;
-                    const y = e.clientY - window.innerHeight / 2;
-                    
-                    // Calculer l'angle de rotation (max 15 degrés)
-                    const angle = Math.atan2(y, x) * (180 / Math.PI);
-                    const rotateX = (y / window.innerHeight) * 10;
-                    const rotateY = -(x / window.innerWidth) * 10;
-                    
-                    // Appliquer la transformation
-                    profilePhoto.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
-                });
-                
-                // Réinitialiser la position quand la souris quitte la photo
-                profilePhoto.addEventListener('mouseleave', () => {
-                    profilePhoto.style.transform = 'rotateY(0) rotateX(0)';
+            // Ouvrir la modal avec les données du projet sélectionné
+            projectCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const projectId = parseInt(card.getAttribute('data-project'));
+                    loadProjectIntoModal(projectId);
                 });
             });
-
-
-        // Fonction pour simuler le téléchargement
-        function downloadFile(filename) {
-            // Ici tu devras mettre le chemin réel vers ton fichier PDF
-            const fileUrl = `docs/${filename}`;
             
-            // Créer un lien temporaire pour le téléchargement
-            const link = document.createElement('a');
-            link.href = fileUrl;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+            // Fermer la modal
+            modalClose.addEventListener('click', () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Fermer la modal en cliquant à l'extérieur
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Fermer la modal avec la touche ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Animation de la photo de profil qui suit la souris
+            const profilePhoto = document.getElementById('profile-photo');
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!profilePhoto) return;
+                
+                // Calculer la position de la souris par rapport au centre de l'écran
+                const x = e.clientX - window.innerWidth / 2;
+                const y = e.clientY - window.innerHeight / 2;
+                
+                // Calculer l'angle de rotation (max 15 degrés)
+                const rotateX = (y / window.innerHeight) * 10;
+                const rotateY = -(x / window.innerWidth) * 10;
+                
+                // Appliquer la transformation
+                profilePhoto.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+            });
+            
+            // Réinitialiser la position quand la souris quitte la photo
+            profilePhoto.addEventListener('mouseleave', () => {
+                profilePhoto.style.transform = 'rotateY(0) rotateX(0)';
+            });
 
-        // Téléchargement du portfolio complet
-        document.getElementById('download-portfolio').addEventListener('click', (e) => {
-            e.preventDefault();
-            downloadFile('Portfolio_Projets_Paysagistes.pdf');
-        });
+            // Fonction pour simuler le téléchargement
+            function downloadFile(filename) {
+                // Ici tu devras mettre le chemin réel vers ton fichier PDF
+                const fileUrl = `docs/${filename}`;
+                
+                // Créer un lien temporaire pour le téléchargement
+                const link = document.createElement('a');
+                link.href = fileUrl;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
 
-        // Téléchargement de la fiche projet spécifique
-        document.addEventListener('click', (e) => {
-            if (e.target && e.target.id === 'download-project-pdf') {
+            // Téléchargement du portfolio complet
+            document.getElementById('download-portfolio').addEventListener('click', (e) => {
+                e.preventDefault();
+                downloadFile('Portfolio_Projets_Paysagistes.pdf');
+            });
+
+            // Téléchargement de la fiche projet spécifique
+            document.getElementById('download-project-pdf').addEventListener('click', (e) => {
                 e.preventDefault();
                 if (currentProject) {
-                    downloadFile(`Projet_${currentProject.id}_${currentProject.title.replace(/\s+/g, '_')}.pdf`);
+                    downloadFile(currentProject.pdfFile);
                 }
-            }
+            });
         });
-        
     </script>
 </body>
 </html>
