@@ -859,6 +859,25 @@
             margin-bottom: 5px;
             color: var(--primary-color);
         }
+
+        /* Nouveau style pour l'image de profil unifiée */
+        .single-profile-image {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .single-profile-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .single-profile-image img:hover {
+            transform: scale(1.03);
+        }
     </style>
 </head>
 <body>
@@ -930,13 +949,14 @@
                 <p>Je suis capable de gérer des gros projets d'ingéniérie VRD, Urbanisme et Paysage et j'ai déjà été amené à assumer à la fois la conception, la gestion d'équipe, le suivi de chantier, et la relation avec les maîtrises d'ouvrage de mes projets.</p>
                 
             </br>
-                <a href="docs/CV_Remy.pdf" class="btn" download style="margin-top: 15px;">
+                <a href="docs/CV_REMY_MAHE.pdf" class="btn" download style="margin-top: 15px;">
                     <i class="fas fa-download"></i> Télécharger mon CV
                 </a>
             </div>
             <div class="profile-image">
-                <div class="profile-bg"></div>
-                <img src="docs/REMY.jpeg" alt="Photo de profil" class="profile-photo" id="profile-photo">
+                <div class="single-profile-image">
+                    <img src="docs/REMY.jpeg" alt="Photo de Rémy Mahé">
+                </div>
             </div>
         </div>
     </section>
@@ -1053,7 +1073,7 @@
             {
                 id: 1,
                 title: "Village Nature",
-                pdfFile: "village_nature.pdf",
+                pdfFile: "Village_Nature.pdf",
                 shortDescription: "Conception et réalisation des infrastructures paysagères pour le complexe touristique éco-responsable Village Nature à Marne-la-Vallée.",
                 tags: ["Aménagement durable", "Géothermie", "Gestion des eaux", "Espaces récréatifs"],
                 images: [
@@ -1090,7 +1110,7 @@
             {
                 id: 2,
                 title: "Quartier de l'église St Germain",
-                pdfFile: "eglise_pantin.pdf",
+                pdfFile: "Quartier_Eglise_St_Germain.pdf",
                 shortDescription: "Réaménagement complet des voiries et espaces publics du quartier historique de l'église St Germain à Pantin.",
                 tags: ["Voirie urbaine", "Réaménagement", "Mobilités douces", "Éclairage public"],
                 images: [
@@ -1127,7 +1147,7 @@
             {
                 id: 3,
                 title: "Village Olympique des athlètes",
-                pdfFile: "athlete.pdf",
+                pdfFile: "Village_Olympique_Athletes.pdf",
                 shortDescription: "Conception des infrastructures paysagères pour le village olympique et paralympique Paris 2024.",
                 tags: ["Infrastructures sportives", "Biodiversité", "Éco-quartier", "Techno-sols"],
                 images: [
@@ -1164,7 +1184,7 @@
             {
                 id: 4,
                 title: "Aménagement du quartier Masséna",
-                pdfFile: "massena.pdf",
+                pdfFile: "Quartier_Massena.pdf",
                 shortDescription: "Aménagement des espaces publics du secteur Masséna Paris Rive Gauche (13ème arrondissement).",
                 tags: ["Quartier durable", "Renaturation", "Éclairage urbain", "Espaces publics"],
                 images: [
@@ -1201,7 +1221,7 @@
             {
                 id: 5,
                 title: "Plateau Mayenne et Parc Terra Botanica",
-                pdfFile: "terra_botanica.pdf",
+                pdfFile: "Plateau_Mayenne_Terra_Botanica.pdf",
                 shortDescription: "Aménagement du quartier Plateau Mayenne et du parc d'attractions Terra Botanica à Angers.",
                 tags: ["Éco-quartier", "Parc à thème", "Aménagement touristique", "Gestion des flux"],
                 images: [
@@ -1238,7 +1258,7 @@
             {
                 id: 6,
                 title: "La Ria, Pornic",
-                pdfFile: "pornic.pdf",
+                pdfFile: "La_Ria_Pornic.pdf",
                 shortDescription: "Réaménagement du site de la Ria à Pornic, avec requalification des berges et création d'un parc.",
                 tags: ["Régénération urbaine", "Dépollution", "Espaces publics", "Concertation"],
                 images: [
@@ -1460,29 +1480,6 @@
                     modal.classList.remove('active');
                     document.body.style.overflow = 'auto';
                 }
-            });
-            
-            // Animation de la photo de profil qui suit la souris
-            const profilePhoto = document.getElementById('profile-photo');
-            
-            document.addEventListener('mousemove', (e) => {
-                if (!profilePhoto) return;
-                
-                // Calculer la position de la souris par rapport au centre de l'écran
-                const x = e.clientX - window.innerWidth / 2;
-                const y = e.clientY - window.innerHeight / 2;
-                
-                // Calculer l'angle de rotation (max 15 degrés)
-                const rotateX = (y / window.innerHeight) * 10;
-                const rotateY = -(x / window.innerWidth) * 10;
-                
-                // Appliquer la transformation
-                profilePhoto.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
-            });
-            
-            // Réinitialiser la position quand la souris quitte la photo
-            profilePhoto.addEventListener('mouseleave', () => {
-                profilePhoto.style.transform = 'rotateY(0) rotateX(0)';
             });
 
             // Fonction pour simuler le téléchargement
