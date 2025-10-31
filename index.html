@@ -3,193 +3,155 @@
 <head>
   <meta charset="UTF-8">
   <title>Baptiste's dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Roboto'>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
-  <meta name="viewport" content="user-scalable=no">
 </head>
 
-<body>
-
-
-
+<body class="mobile-optimized">
   <div class="animated-background">
-	<div class="glow-effect"></div>
-	<div class="particles-container"></div>
+    <div class="glow-effect"></div>
+    <div class="particles-container"></div>
   </div>
+  
   <div class="hero-section">
     <div class="hero-content">
       <h1>Baptiste's dashboard website</h1>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-	  <div class="profile-and-social-row">
+      
+      <div class="profile-and-social-row">
         <!-- LinkedIn -->
         <a href="https://www.linkedin.com/in/baptiste-mahé-84199a2a6/" class="social-icon-link linkedin" target="_blank" rel="noopener">
-            <div class="social-icon-wrapper">
+          <div class="social-icon-wrapper">
             <svg viewBox="0 0 24 24" class="social-icon">
-                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
             </svg>
-            </div>
+          </div>
         </a>
 
         <!-- Photo de profil -->
         <div class="profile-picture-wrapper">
-            <img src="profile.jpg" alt="profile" class="hero-round">
+          <img src="profile.jpg" alt="profile" class="hero-round">
         </div>
 
         <!-- GitHub -->
         <a href="https://github.com/mbaptistem" class="social-icon-link github" target="_blank" rel="noopener">
-            <div class="social-icon-wrapper">
+          <div class="social-icon-wrapper">
             <svg viewBox="0 0 24 24" class="social-icon">
-                <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+              <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
             </svg>
-            </div>
+          </div>
         </a>
-        </div>
-       <br/>
+      </div>
+      
       <div class="info-section">
         <div class="tab-buttons">
-            <button class="tab-btn active" data-tab="about">
+          <button class="tab-btn active" data-tab="about">
             <span class="emoji">👨‍💻</span> À propos
-            </button>
-            <button class="tab-btn" data-tab="project">
+          </button>
+          <button class="tab-btn" data-tab="project">
             <span class="emoji">🚀</span> Projet actuel
-            </button>
-            <button class="tab-btn" data-tab="contact">
+          </button>
+          <button class="tab-btn" data-tab="contact">
             <span class="emoji">📧</span> Contact
-            </button>
+          </button>
         </div>
         
         <div class="tab-content active" id="about">
-            <p>Je suis Baptiste Mahé, élève à l'EPITA, et j'ai pour ambition de devenir ingénieur en informatique. Je suis passionné par ce domaine et cela fait plusieurs années que j'enchaine les projets personnels.</p>
-            <div class="icons">
-                <i class="fas fa-graduation-cap"></i>
-                <i class="fas fa-laptop-code"></i>
-            </div>
+          <p>Je suis Baptiste Mahé, élève à l'EPITA, et j'ai pour ambition de devenir ingénieur en informatique. Je suis passionné par ce domaine et cela fait plusieurs années que j'enchaine les projets personnels.</p>
+          <div class="icons">
+            <i class="fas fa-graduation-cap"></i>
+            <i class="fas fa-laptop-code"></i>
+          </div>
         </div>
         
         <div class="tab-content" id="project">
-            <p>Je suis actuellement en train de travailler sur mon jeu vidéo mobile que j'ai commencé il y a 1 an, Idle Kingdom. Ce projet est un défi car j'ai eu à apprendre comment fonctionne un moteur de jeu ainsi que le code en C# en autodidacte.</p>
-            <div class="icons">
-                <i class="fas fa-cogs"></i>
-                <i class="fas fa-rocket"></i>
-            </div>
+          <p>Je suis actuellement en train de travailler sur mon jeu vidéo mobile que j'ai commencé il y a 1 an, Idle Kingdom. Ce projet est un défi car j'ai eu à apprendre comment fonctionne un moteur de jeu ainsi que le code en C# en autodidacte.</p>
+          <div class="icons">
+            <i class="fas fa-cogs"></i>
+            <i class="fas fa-rocket"></i>
+          </div>
         </div>
         
         <div class="tab-content" id="contact">
-            <p>Vous pouvez me contacter via :<br>
-            Email: <a href="mailto:votre@email.com">mahebaptiste.99@gmail.com</a><br>
-            <div class="icons">
-                <i class="fas fa-envelope"></i>
-                <i class="fas fa-user-tie"></i>
-            </div>
+          <p>Vous pouvez me contacter via :<br>
+          Email: <a href="mailto:mahebaptiste.99@gmail.com">mahebaptiste.99@gmail.com</a></p>
+          <div class="icons">
+            <i class="fas fa-envelope"></i>
+            <i class="fas fa-user-tie"></i>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  
   <div id="app" class="container">
-    <div class="carousel-container"> <!-- Nouveau conteneur -->
-        <div class="carousel">
-            <!--
-            <div class="carousel-item">
-                <a href="indexRemy.html" class="carousel-link">
-                    <div class="carousel-box">
-                    <div class="title">Site Remy</div>
-                    <div class="num">--</div>
-                    <img src="logo_remy.JPG" alt="Remy" />
-                    </div>
-                </a>
+    <div class="carousel-container">
+      <div class="carousel">
+        <div class="carousel-item">
+          <a href="Vindicta/indexVindicta.html" class="carousel-link">
+            <div class="carousel-box">
+              <div class="title">Vindicta</div>
+              <div class="num">2025</div>
+              <img src="Vindicta.jpg" alt="Vindicta" />
             </div>
-            -->
-            <div class="carousel-item">
-                <a href="Vindicta/indexVindicta.html" class="carousel-link">
-                    <div class="carousel-box">
-                    <div class="title">Vindicta</div>
-                    <div class="num">2025</div>
-                    <img src="Vindicta.jpg" alt="Vindicta" />
-                    </div>
-                </a>
-            </div>
-
-            <div class="carousel-item">
-                <a href="https://github.com/MBaptisteM/Idle-Kingdom" class="carousel-link">
-                    <div class="carousel-box">
-                    <div class="title">Idle Kingdom</div>
-                    <div class="num">2024-5</div>
-                    <img src="Idle.jpg" alt="Idle" />
-                    </div>
-                </a>
-            </div>
-
-            <div class="carousel-item">
-                <a href="https://github.com/MBaptisteM/NDC-Python-Game-2" class="carousel-link">
-                    <div class="carousel-box">
-                    <div class="title">Night Of Code</div>
-                    <div class="num">2024</div>
-                    <img src="NightOfCode.jpg" alt="Night" />
-                    </div>
-                </a>
-            </div>
-
-
-            <div class="carousel-item">
-                <a href="https://github.com/MBaptisteM/Python-Game-1" class="carousel-link">
-                    <div class="carousel-box">
-                    <div class="title">Procedurally Generated Game</div>
-                    <div class="num">2023</div>
-                    <img src="Procedural.jpg" alt="Procedural" />
-                    </div>
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="https://github.com/MBaptisteM/Python-Chess-project" class="carousel-link">
-                    <div class="carousel-box">
-                    <div class="title">Chess</div>
-                    <div class="num">2022</div>
-                    <img src="Chess.jpg" alt="Chess" />
-                    </div>
-                </a>
-            </div>
-            </div>
-        </div>
+          </a>
         </div>
 
-<svg style="display: none">
-	<symbol id="ico-instagram" viewBox="0 0 35 35">
-		<circle opacity=".2" cx="17.5" cy="17.5" r="17" stroke="var(--fill)" fill="none"></circle>
-		<path
-			fill-rule="evenodd"
-			clip-rule="evenodd"
-			d="M24.944 20.476c.028-.457.042-1.282.042-2.476s-.014-2.019-.042-2.476c-.056-1.09-.378-1.93-.965-2.517s-1.422-.91-2.503-.965C21.018 12.014 20.194 12 19 12s-2.019.014-2.476.042c-1.081.047-1.92.368-2.517.965s-.918 1.436-.965 2.518C13.014 15.98 13 16.805 13 18c0 1.194.014 2.019.042 2.476.047 1.09.368 1.93.965 2.517s1.436.91 2.518.965c.466.028 1.29.042 2.475.042 1.184 0 2.01-.014 2.476-.042 1.072-.047 1.906-.368 2.503-.965.597-.597.918-1.436.965-2.517ZM19 13.075h-1.427c-.186 0-.438.01-.755.029a11.61 11.61 0 0 0-.797.07c-.215.028-.401.08-.56.154-.26.102-.489.251-.685.447-.196.196-.35.425-.461.685-.056.15-.103.336-.14.56a7.843 7.843 0 0 0-.084.811 7.113 7.113 0 0 0-.014.741c.01.178.01.453 0 .826-.01.373-.01.573 0 .601.01.028.01.228 0 .601s-.01.648 0 .826c.01.177.014.424.014.74 0 .318.028.588.084.812l.14.56c.112.26.265.489.461.685.196.196.425.345.685.447.15.056.336.108.56.154.224.047.49.07.797.07.308 0 .56.01.755.028.196.019.471.019.826 0 .354-.019.554-.019.601 0 .047.019.242.019.587 0s.62-.019.826 0c.205.019.456.01.755-.028.298-.037.569-.06.811-.07.242-.01.424-.06.546-.154.26-.102.494-.251.699-.447a1.75 1.75 0 0 0 .447-.686c.056-.149.103-.335.14-.559.038-.224.066-.494.084-.811.019-.317.023-.564.014-.741a11.82 11.82 0 0 1 0-.826c.01-.373.01-.573 0-.601-.01-.028-.01-.228 0-.601s.01-.648 0-.826c-.01-.177-.014-.424-.014-.74 0-.318-.028-.588-.084-.812l-.14-.56a1.956 1.956 0 0 0-1.147-1.133 3.979 3.979 0 0 0-.545-.153 3.915 3.915 0 0 0-.811-.07c-.326 0-.578-.01-.755-.028a5.916 5.916 0 0 0-.826 0c-.372.019-.568.019-.587 0Zm3.706 2.225c.14-.14.21-.308.21-.504a.57.57 0 0 0-.21-.503.767.767 0 0 0-.517-.21.718.718 0 0 0-.504.21.622.622 0 0 0-.21.503c.01.196.08.364.21.504s.299.21.504.21c.205 0 .377-.07.517-.21ZM22.063 18c0 .849-.298 1.576-.895 2.182a2.882 2.882 0 0 1-2.168.895 3.075 3.075 0 0 1-2.182-.895c-.606-.588-.904-1.315-.895-2.182.01-.867.308-1.594.895-2.182.588-.587 1.315-.886 2.182-.895.867-.01 1.59.29 2.168.895.578.606.876 1.333.895 2.182Zm-1.077 0a1.95 1.95 0 0 0-.573-1.413A1.897 1.897 0 0 0 19 16c-.56 0-1.03.196-1.413.587A2.001 2.001 0 0 0 17 18c-.01.55.186 1.021.587 1.413.401.391.872.587 1.413.587.54 0 1.012-.196 1.413-.587.4-.392.592-.863.573-1.413Z"
-			transform="translate(-1.5 -0.5)"
-			fill="var(--fill)"
-		></path>
-	</symbol>
+        <div class="carousel-item">
+          <a href="https://github.com/MBaptisteM/Idle-Kingdom" class="carousel-link">
+            <div class="carousel-box">
+              <div class="title">Idle Kingdom</div>
+              <div class="num">2024-5</div>
+              <img src="Idle.jpg" alt="Idle" />
+            </div>
+          </a>
+        </div>
 
-	<symbol id="ico-linkedin" viewBox="0 0 35 35">
-		<circle opacity=".2" cx="17.5" cy="17.5" r="17" stroke="var(--fill)" fill="none"></circle>
-		<path
-			fill-rule="evenodd"
-			clip-rule="evenodd"
-			d="M15.3025 14.0835C15.3025 14.3845 15.1934 14.6403 14.9752 14.851C14.757 15.0617 14.4786 15.167 14.14 15.167C13.8014 15.167 13.5267 15.0617 13.316 14.851C13.1053 14.6403 13 14.3807 13 14.0722C13 13.7637 13.1053 13.5079 13.316 13.3047C13.5267 13.1016 13.8051 13 14.1512 13C14.4974 13 14.772 13.1016 14.9752 13.3047C15.1783 13.5079 15.2874 13.7675 15.3025 14.0835ZM13.0677 23V16.0248H15.2348V23H13.0677ZM16.4763 16.0248C16.5064 16.8676 16.5214 17.6125 16.5214 18.2596V23H18.7111V18.9819C18.7111 18.7111 18.7336 18.5305 18.7788 18.4402C18.9895 17.8984 19.3582 17.6275 19.8849 17.6275C20.6223 17.6275 20.991 18.1317 20.991 19.14V23H23.158V18.8691C23.158 17.8758 22.9285 17.1272 22.4695 16.623C22.0105 16.1189 21.4048 15.8668 20.6524 15.8668C19.6742 15.8668 18.9594 16.243 18.5079 16.9955H18.4628L18.3499 16.0248H16.4763Z"
-			transform="translate(0 -1)"
-			fill="var(--fill)"
-		></path>
-	</symbol>
-</svg>
+        <div class="carousel-item">
+          <a href="https://github.com/MBaptisteM/NDC-Python-Game-2" class="carousel-link">
+            <div class="carousel-box">
+              <div class="title">Night Of Code</div>
+              <div class="num">2024</div>
+              <img src="NightOfCode.jpg" alt="Night" />
+            </div>
+          </a>
+        </div>
 
-<div class="cursor"></div>
-<div class="cursor cursor2"></div>
-  <script  src="./script.js"></script>
+        <div class="carousel-item">
+          <a href="https://github.com/MBaptisteM/Python-Game-1" class="carousel-link">
+            <div class="carousel-box">
+              <div class="title">Procedurally Generated Game</div>
+              <div class="num">2023</div>
+              <img src="Procedural.jpg" alt="Procedural" />
+            </div>
+          </a>
+        </div>
+        
+        <div class="carousel-item">
+          <a href="https://github.com/MBaptisteM/Python-Chess-project" class="carousel-link">
+            <div class="carousel-box">
+              <div class="title">Chess</div>
+              <div class="num">2022</div>
+              <img src="Chess.jpg" alt="Chess" />
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="cursor"></div>
+  <div class="cursor cursor2"></div>
+  
   <div class="galaxy-edges">
     <div class="left-galaxy"></div>
     <div class="right-galaxy"></div>
   </div>
   <div class="stars-container"></div>
+  
+  <script src="./script.js"></script>
 </body>
 </html>

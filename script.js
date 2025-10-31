@@ -928,12 +928,25 @@ window.addEventListener('resize', () => {
 });
 
 
+
+// Dans la condition IsMobileView, ajoutez ceci :
 if (IsMobileView) {
+  // Ajustement plus agressif pour mobile
   $items.forEach(item => {
-    item.style.setProperty('--width', '80vh');
-    item.style.setProperty('--height', '60vh');
+    item.style.setProperty('--width', '50vh');
+    item.style.setProperty('--height', '35vh');
   });
+  
+  // Optionnel: ajustement supplémentaire de l'espacement
+  const profileRow = document.querySelector('.profile-and-social-row');
+  if (profileRow) {
+    profileRow.style.gap = '50px';
+    profileRow.style.margin = '40px 0 30px 0';
+  }
+  
+  // Ajustement de la photo
+  const profilePic = document.querySelector('.profile-picture-wrapper');
+  if (profilePic) {
+    profilePic.style.margin = '20px 0';
+  }
 }
-
-
-

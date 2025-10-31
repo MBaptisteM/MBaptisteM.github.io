@@ -1802,31 +1802,6 @@ body:hover .right-galaxy {
 
 
 
-@media (max-width: 768px) {
-  .carousel {
-    min-height: 400px !important;
-    padding: 20px 0 !important;
-  }
-  
-  .carousel-item {
-    --width: clamp(120px, 50vw, 200px) !important;
-    --height: clamp(160px, 60vw, 300px) !important;
-  }
-  
-  /* Désactive certains effets gourmands sur mobile */
-  .carousel-item::before,
-  .carousel-item::after,
-  .carousel-item.active-center::before {
-    display: none;
-  }
-  
-  /* Optimise les performances */
-  .particle-star {
-    animation: none !important;
-    opacity: 0.7 !important;
-  }
-}
-
 
 
 
@@ -1906,4 +1881,213 @@ body:hover .right-galaxy {
 .tap-effect {
   transform: scale(0.95) !important;
   transition: transform 0.3s;
+}
+
+
+
+
+
+/* Amélioration du scroll sur mobile */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .carousel-container {
+    touch-action: pan-y;
+  }
+  
+  /* Indicateur visuel pour le tap */
+  .carousel-item:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.1s;
+  }
+  
+  .tab-btn:active {
+    background: rgba(255, 255, 255, 0.3) !important;
+    transform: scale(0.98);
+  }
+}
+
+/* Correction pour les tablettes */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .carousel-item {
+    --width: 40vw !important;
+    --height: 50vh !important;
+  }
+  
+  .profile-picture-wrapper {
+    width: 200px !important;
+    padding-bottom: 200px !important;
+  }
+}
+
+
+
+
+/* Ajoutez cette classe */
+.mobile-optimized .profile-and-social-row {
+  gap: 40px;
+}
+
+.mobile-optimized .carousel-item {
+  --width: 60vw;
+  --height: 45vh;
+}
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  /* Tête plus petite et plus basse */
+  .profile-picture-wrapper {
+    width: 130px !important;
+    padding-bottom: 130px !important;
+    margin: 20px 0 !important; /* Ajoute de l'espace en haut */
+    order: 0;
+  }
+
+  /* Plus d'espace entre la tête et les icônes */
+  .profile-and-social-row {
+    gap: 50px !important;
+    margin: 40px 0 30px 0 !important; /* Plus d'espace en haut et en bas */
+    padding: 20px 0 !important;
+  }
+
+  /* Icônes sociales plus petites */
+  .social-icon-wrapper {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  /* Carrousel encore plus petit */
+  .carousel {
+    min-height: 300px !important;
+    padding: 30px 0 !important;
+  }
+
+  .carousel-item {
+    --width: 40vw !important;  /* Réduit de 70vw à 50vw */
+    --height: 35vh !important; /* Réduit de 50vh à 35vh */
+    --x: calc(var(--active) * 650%) !important;
+    --y: calc(var(--active) * 60%) !important;
+  }
+
+  .tab-btn {
+    font-size: 0.7em !important;
+  }
+
+  /* Ajustement du texte dans le carrousel */
+  .carousel-item .title {
+    font-size: 0.9em !important;
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .carousel-item .num {
+    font-size: 1.2em !important;
+    top: 5px;
+    left: 10px;
+  }
+
+  /* Ajustement de la section hero */
+  .hero-section {
+    padding: 10px 15px 0px 15px !important;
+    min-height: auto;
+  }
+
+  .hero-section h1 {
+    font-size: 1.6em !important;
+    margin-bottom: 15px !important;
+  }
+
+  .hero-section p {
+    font-size: 0.9em !important;
+    line-height: 1.4 !important;
+    margin: 10px auto 20px !important;
+    max-width: 90% !important;
+  }
+}
+
+/* Pour les très petits écrans */
+@media (max-width: 480px) {
+  /* Tête encore plus petite */
+  .profile-picture-wrapper {
+    width: 120px !important;
+    padding-bottom: 120px !important;
+    margin: 15px 0 !important;
+  }
+
+  /* Encore plus d'espace */
+  .profile-and-social-row {
+    gap: 40px !important;
+    margin: 30px 0 20px 0 !important;
+  }
+
+  /* Icônes encore plus petites */
+  .social-icon-wrapper {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  /* Carrousel encore plus compact */
+  .carousel-item {
+    --width: 55vw !important;
+    --height: 30vh !important;
+    --x: calc(var(--active) * 200%) !important;
+    --y: calc(var(--active) * 50%) !important;
+    margin: calc(var(--height) * -0.4) 0 0 calc(var(--width) * -0.4) !important;
+  }
+
+  .carousel {
+    min-height: 250px !important;
+    padding: 20px 0 !important;
+  }
+
+  /* Texte plus petit */
+  .hero-section h1 {
+    font-size: 1.4em !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-section p {
+    font-size: 0.85em !important;
+    margin: 8px auto 15px !important;
+  }
+
+  /* Boutons des onglets plus compacts */
+  .tab-btn {
+    padding: 6px 12px !important;
+    font-size: 0.8em !important;
+  }
+
+  .tab-btn .emoji {
+    font-size: 1em !important;
+  }
+}
+
+/* Pour les écrans très étroits (orientation portrait) */
+@media (max-width: 360px) {
+  .profile-picture-wrapper {
+    width: 100px !important;
+    padding-bottom: 100px !important;
+  }
+
+  .profile-and-social-row {
+    gap: 30px !important;
+  }
+
+  .social-icon-wrapper {
+    width: 45px !important;
+    height: 45px !important;
+  }
+
+  .carousel-item {
+    --width: 60vw !important;
+    --height: 28vh !important;
+  }
 }
