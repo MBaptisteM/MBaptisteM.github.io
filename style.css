@@ -846,10 +846,13 @@ body:hover .right-galaxy {
 }
 
 @media (max-width: 768px) {
+  .stars-container {
+    display: none !important;
+  }
   .profile-picture-wrapper {
     width: 130px !important;
     height: 130px !important;
-    margin: 20px 0 !important;
+    margin: 30px 0 20px 0 !important;
     order: 0;
   }
   .profile-and-social-row {
@@ -866,8 +869,8 @@ body:hover .right-galaxy {
     padding: 30px 0 !important;
   }
   .carousel-item {
-    --width: 50vw !important;
-    --height: 55vh !important;
+    --width: 45vw !important;
+    --height: 50vh !important;
     --x: calc(var(--active) * 650%) !important;
     --y: calc(var(--active) * 60%) !important;
   }
@@ -904,10 +907,13 @@ body:hover .right-galaxy {
 }
 
 @media (max-width: 480px) {
+  .stars-container {
+    display: none !important;
+  }
   .profile-picture-wrapper {
     width: 120px !important;
     height: 120px !important;
-    margin: 15px 0 !important;
+    margin: 30px 0 15px 0 !important;
   }
   .profile-and-social-row {
     gap: 40px !important;
@@ -918,8 +924,8 @@ body:hover .right-galaxy {
     height: 50px !important;
   }
   .carousel-item {
-    --width: 65vw !important;
-    --height: 60vh !important;
+    --width: 55vw !important;
+    --height: 50vh !important;
     --x: calc(var(--active) * 200%) !important;
     --y: calc(var(--active) * 50%) !important;
     margin: calc(var(--height) * -0.4) 0 0 calc(var(--width) * -0.4) !important;
@@ -955,9 +961,13 @@ body:hover .right-galaxy {
 }
 
 @media (max-width: 360px) {
+  .stars-container {
+    display: none !important;
+  }
   .profile-picture-wrapper {
     width: 100px !important;
     height: 100px !important;
+    margin: 30px 0 15px 0 !important;
   }
   .profile-and-social-row { gap: 30px !important; }
   .social-icon-wrapper {
@@ -965,8 +975,8 @@ body:hover .right-galaxy {
     height: 45px !important;
   }
   .carousel-item {
-    --width: 60vw !important;
-    --height: 55vh !important;
+    --width: 50vw !important;
+    --height: 45vh !important;
   }
   .tab-buttons {
     display: flex !important;
