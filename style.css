@@ -867,11 +867,16 @@ body:hover .right-galaxy {
   }
   .carousel-item {
     --width: 50vw !important;
-    --height: 40vh !important;
+    --height: 55vh !important;
     --x: calc(var(--active) * 650%) !important;
     --y: calc(var(--active) * 60%) !important;
   }
-  .tab-btn { font-size: 0.7em !important; }
+  .tab-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .tab-btn { font-size: 0.9em !important; width: 100% !important; padding: 10px 20px !important; }
   .carousel-item .title {
     font-size: 0.9em !important;
     bottom: 10px;
@@ -914,7 +919,7 @@ body:hover .right-galaxy {
   }
   .carousel-item {
     --width: 65vw !important;
-    --height: 35vh !important;
+    --height: 60vh !important;
     --x: calc(var(--active) * 200%) !important;
     --y: calc(var(--active) * 50%) !important;
     margin: calc(var(--height) * -0.4) 0 0 calc(var(--width) * -0.4) !important;
@@ -931,11 +936,22 @@ body:hover .right-galaxy {
     font-size: 0.85em !important;
     margin: 8px auto 15px !important;
   }
+  .tab-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 90% !important;
+    margin: 0 auto 20px auto !important;
+  }
   .tab-btn {
-    padding: 6px 12px !important;
-    font-size: 0.8em !important;
+    padding: 12px 20px !important;
+    font-size: 0.9em !important;
+    width: 100% !important;
+    justify-content: center !important;
   }
   .tab-btn .emoji { font-size: 1em !important; }
+  .tab-content.active p { animation: none !important; }
+  .tab-content.active .icons { animation: none !important; }
 }
 
 @media (max-width: 360px) {
@@ -950,6 +966,20 @@ body:hover .right-galaxy {
   }
   .carousel-item {
     --width: 60vw !important;
-    --height: 28vh !important;
+    --height: 55vh !important;
   }
+  .tab-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 90% !important;
+    margin: 0 auto 20px auto !important;
+  }
+  .tab-btn {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    justify-content: center !important;
+  }
+  .tab-content.active p { animation: none !important; }
+  .tab-content.active .icons { animation: none !important; }
 }
