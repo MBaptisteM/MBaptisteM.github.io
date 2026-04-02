@@ -445,7 +445,7 @@ tabButtons.forEach(button => {
   button.addEventListener('click', () => {
     const tabId = button.getAttribute('data-tab');
     changeTab(tabId);
-    resetAutoRotation();
+    //resetAutoRotation();
     triggerShockwave();
   });
 });
@@ -457,7 +457,7 @@ if (infoSection) {
   });
 
   infoSection.addEventListener('mouseleave', () => {
-    resetAutoRotation();
+    //resetAutoRotation();
   });
 }
 
@@ -521,7 +521,7 @@ window.addEventListener('load', () => {
     createStars();
   }, 30000);
 
-  resetAutoRotation();
+  //resetAutoRotation();
 });
 
 /* ===== RESPONSIVE ADJUSTMENTS ===== */
