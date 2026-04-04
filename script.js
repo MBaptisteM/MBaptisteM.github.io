@@ -548,3 +548,26 @@ window.addEventListener('resize', () => {
     item.style.setProperty('--height', `${heightRatio * 40}px`);
   });
 });
+
+
+
+
+
+/*
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+      entry.target.classList.add('visible');
+    } else{
+      entry.target.classList.remove('visible');
+    }
+  });
+}, {
+  threshold: 0.6
+});
+
+document.querySelectorAll('.about-step').forEach(el => {
+  el.classList.add('fade-in');
+  observer.observe(el);
+});
+*/
