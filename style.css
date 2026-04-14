@@ -1109,7 +1109,7 @@ a:not(.social-icon-link):not(.carousel-link):hover {
   .profile-picture-wrapper {
     width: 110px !important;
     height: 110px !important;
-    margin: 80px 0 20px !important;
+    margin: 100px 0 20px !important;
   }
   .profile-and-social-row {
     gap: 40px !important;
@@ -1163,11 +1163,9 @@ a:not(.social-icon-link):not(.carousel-link):hover {
     display: none !important;
   }
   .profile-picture-wrapper {
-    width: 100px !important;
-    height: 100px !important;
-    margin: 30px 0 20px 0 !important;
-    order: -1 !important;
-    flex-basis: 100% !important;
+    width: 75px !important;
+    height: 75px !important;
+    margin: 110px 0 20px 0 !important;
   }
   .profile-and-social-row { 
     gap: 30px !important;
@@ -1198,7 +1196,7 @@ a:not(.social-icon-link):not(.carousel-link):hover {
   .tab-content.active .icons { animation: none !important; }
 }
 
-/* ===== PC VERSION: WIDER TAB BUTTONS ===== */
+
 @media (min-width: 1025px) {
   .tab-buttons {
     display: grid;
@@ -1211,8 +1209,8 @@ a:not(.social-icon-link):not(.carousel-link):hover {
     padding: 18px 20px;
     font-size: 1.3em;
 
-    justify-content: center; /* centre horizontalement */
-    text-align: center;      /* centre le texte */
+    justify-content: center; 
+    text-align: center;      
   }
 }
 
