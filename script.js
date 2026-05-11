@@ -6,9 +6,9 @@ let startX = 0;
 let active = 0;
 let isDown = false;
 
-const speedWheel = 0.02;
-const speedDrag = -0.1;
-const scrollPercentageThreshold = 0.8;
+const SPEED_WHEEL = 0.02;
+const SPEED_DRAG = -0.1;
+const SCROLL_THRESHOLD = 0.8;
 
 /* ===== CAROUSEL SETUP ===== */
 const $items = document.querySelectorAll('.carousel-item');
@@ -92,10 +92,10 @@ function toggleClassicScroll(allow) {
 
 const handleWheel = (e) => {
   const currentScrollPercentage = getScrollPercentage();
-  if (currentScrollPercentage < scrollPercentageThreshold) {
+  if (currentScrollPercentage < SCROLL_THRESHOLD) {
     toggleClassicScroll(true);
   } else {
-    const wheelProgress = e.deltaY * speedWheel;
+    const wheelProgress = e.deltaY * SPEED_WHEEL;
     if (wheelProgress < 0 && progress === 0) {
       toggleClassicScroll(true);
     } else {
@@ -118,7 +118,7 @@ const handleMouseMove = (e) => {
 
   if (!isDown) return;
   const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-  const mouseProgress = (x - startX) * speedDrag;
+  const mouseProgress = (x - startX) * SPEED_DRAG;
   progress += mouseProgress;
   startX = x;
   animate();
@@ -400,10 +400,6 @@ document.addEventListener('mousemove', (e) => {
 /* ===== TABS SYSTEM ===== */
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
-const tabs = ['about', 'project', 'contact'];
-let currentTabIndex = 0;
-const ROTATION_DELAY = 5000;
-let rotationTimeout;
 
 function changeTab(tabId) {
   tabContents.forEach(content => {
@@ -425,40 +421,18 @@ function changeTab(tabId) {
   document.querySelector(`.tab-btn[data-tab="${tabId}"]`)?.classList.add('active');
 }
 
-function rotateTabs() {
-  currentTabIndex = (currentTabIndex + 1) % tabs.length;
-  changeTab(tabs[currentTabIndex]);
-  triggerShockwave();
-}
-
-function resetRotationTimeout() {
-  if (rotationTimeout) clearTimeout(rotationTimeout);
-  rotationTimeout = setTimeout(() => rotateTabs(), ROTATION_DELAY);
-}
-
-function resetAutoRotation() {
-  resetRotationTimeout();
-  currentTabIndex = tabs.indexOf(document.querySelector('.tab-content.active')?.id || 'about');
-}
-
 tabButtons.forEach(button => {
   button.addEventListener('click', () => {
     const tabId = button.getAttribute('data-tab');
     changeTab(tabId);
-    //resetAutoRotation();
     triggerShockwave();
   });
 });
 
 const infoSection = document.querySelector('.info-section');
 if (infoSection) {
-  infoSection.addEventListener('mouseenter', () => {
-    if (rotationTimeout) clearTimeout(rotationTimeout);
-  });
-
-  infoSection.addEventListener('mouseleave', () => {
-    //resetAutoRotation();
-  });
+  infoSection.addEventListener('mouseenter', () => {});
+  infoSection.addEventListener('mouseleave', () => {});
 }
 
 /* ===== SHOCKWAVE EFFECT ===== */
@@ -507,6 +481,8 @@ window.addEventListener('load', () => {
     if (img) img.style.opacity = 1;
   });
 
+  updateCarouselSize();
+  initMobileLayout();
   animate();
   createParticles();
   createStars();
@@ -520,16 +496,27 @@ window.addEventListener('load', () => {
   setInterval(() => {
     createStars();
   }, 30000);
-
-  //resetAutoRotation();
 });
 
-/* ===== RESPONSIVE ADJUSTMENTS ===== */
-if (IsMobileView) {
-  $items.forEach(item => {
-    item.style.setProperty('--width', '50vh');
-    item.style.setProperty('--height', '35vh');
-  });
+window.addEventListener('resize', updateCarouselSize);
+
+function updateCarouselSize() {
+  if (IsMobileView) {
+    $items.forEach(item => {
+      item.style.setProperty('--width', '60vw');
+      item.style.setProperty('--height', '50vh');
+    });
+  } else {
+    const heightRatio = window.innerHeight / 100;
+    $items.forEach(item => {
+      item.style.setProperty('--width', `${heightRatio * 46}px`);
+      item.style.setProperty('--height', `${heightRatio * 63}px`);
+    });
+  }
+}
+
+function initMobileLayout() {
+  if (!IsMobileView) return;
 
   const profileRow = document.querySelector('.profile-and-social-row');
   if (profileRow) {
@@ -540,14 +527,6 @@ if (IsMobileView) {
   const profilePic = document.querySelector('.profile-picture-wrapper');
   if (profilePic) profilePic.style.margin = '20px 0';
 }
-
-window.addEventListener('resize', () => {
-  const heightRatio = window.innerHeight / 100;
-  $items.forEach(item => {
-    item.style.setProperty('--width', `${heightRatio * 30}px`);
-    item.style.setProperty('--height', `${heightRatio * 40}px`);
-  });
-});
 
 
 
