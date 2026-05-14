@@ -10,6 +10,10 @@ const SPEED_WHEEL = 0.02;
 const SPEED_DRAG = -0.1;
 const SCROLL_THRESHOLD = 0.8;
 
+let particlesCreated = false;
+let starsCreated = false;
+let nebulasCreated = false;
+
 /* ===== LANGUAGE SYSTEM ===== */
 let currentLanguage = localStorage.getItem('language') || 'fr';
 
@@ -68,10 +72,10 @@ function setLanguage(lang) {
     }
   });
   
-  // Update button text
   const langBtn = document.getElementById('lang-toggle');
   if (langBtn) {
-    langBtn.querySelector('.lang-text').textContent = lang === 'fr' ? 'EN' : 'FR';
+    langBtn.classList.toggle('lang-fr', lang === 'fr');
+    langBtn.classList.toggle('lang-en', lang === 'en');
   }
 }
 
@@ -338,6 +342,7 @@ $items.forEach(item => {
 
 /* ===== PARTICLES & ANIMATIONS ===== */
 function createParticles() {
+  if (particlesCreated) return;
   const container = document.querySelector('.particles-container');
   if (!container) return;
   container.innerHTML = '';
@@ -359,9 +364,12 @@ function createParticles() {
 
     container.appendChild(particle);
   }
+
+  particlesCreated = true;
 }
 
 function createNebulas() {
+  if (nebulasCreated) return;
   const colors = ['#9c27b0', '#3f51b5', '#2196f3'];
   const container = document.querySelector('.galaxy-edges');
   if (!container) return;
@@ -375,6 +383,8 @@ function createNebulas() {
     nebula.style.animationDuration = `${20 + Math.random() * 40}s`;
     container.appendChild(nebula);
   });
+
+  nebulasCreated = true;
 }
 
 /* ===== STARS SYSTEM ===== */
@@ -385,6 +395,7 @@ let mouseX2 = window.innerWidth / 2;
 let mouseY2 = window.innerHeight / 2;
 
 function createStars() {
+  if (starsCreated) return;
   const container = document.querySelector('.stars-container');
   if (!container) return;
   container.innerHTML = '';
@@ -412,6 +423,8 @@ function createStars() {
     container.appendChild(star);
     stars.push(star);
   }
+
+  starsCreated = true;
 }
 
 function animateStars() {
@@ -454,8 +467,6 @@ document.addEventListener('mousemove', (e) => {
   mouseX2 = e.clientX;
   mouseY2 = e.clientY;
 });
-
-window.addEventListener('resize', createStars);
 
 /* ===== GALAXY INTERACTION ===== */
 document.addEventListener('mousemove', (e) => {
@@ -567,14 +578,6 @@ window.addEventListener('load', () => {
   createStars();
   createNebulas();
   animateStars();
-
-  setInterval(() => {
-    document.querySelector('.particles-container')?.innerHTML === '' && createParticles();
-  }, 20000);
-
-  setInterval(() => {
-    createStars();
-  }, 30000);
 });
 
 window.addEventListener('resize', updateCarouselSize);

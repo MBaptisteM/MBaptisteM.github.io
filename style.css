@@ -180,8 +180,8 @@ body:hover .right-galaxy {
 /* ===== LANGUAGE SWITCHER ===== */
 .language-switcher {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 40px;
+  right: 60px;
   z-index: 1000;
   animation: slideInRight 0.6s ease-out;
 }
@@ -198,58 +198,72 @@ body:hover .right-galaxy {
 }
 
 .lang-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 10px 16px;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-size: 0.9em;
-  font-weight: 600;
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 110px;
+  min-width: 110px;
+  height: 44px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  cursor: pointer;
   overflow: hidden;
+  font-size: 0.95em;
+  font-weight: 700;
   font-family: 'Roboto', serif;
+  transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
 .lang-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .lang-btn:active {
   transform: scale(0.95);
 }
 
-.lang-btn::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 55%);
-  transform: rotate(30deg);
-  animation: langShine 4s infinite;
+.lang-option {
+  flex: 1;
+  z-index: 2;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.75);
+  transition: color 0.3s ease;
   pointer-events: none;
 }
 
-@keyframes langShine {
-  0% { transform: rotate(30deg) translate(-30%, -30%); }
-  100% { transform: rotate(30deg) translate(30%, 30%); }
+.lang-selector {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: calc(50% - 8px);
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  transition: left 0.4s ease, background-color 0.4s ease;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+  left: 4px;
 }
 
-.lang-text {
-  position: relative;
-  z-index: 2;
-  transition: transform 0.3s ease;
+.lang-btn.lang-en .lang-selector {
+  left: calc(50% + 4px);
 }
 
-.lang-btn:hover .lang-text {
-  transform: scale(1.1);
-  text-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
+.lang-btn.lang-fr .lang-option:nth-child(1),
+.lang-btn.lang-en .lang-option:nth-child(2) {
+  color: #ffffff;
+}
+
+.lang-btn.lang-fr .lang-option:nth-child(2),
+.lang-btn.lang-en .lang-option:nth-child(1) {
+  color: rgba(255, 255, 255, 0.55);
 }
 
 /* ===== CURSOR ===== */
