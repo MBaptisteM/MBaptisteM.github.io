@@ -14,6 +14,7 @@ let particlesCreated = false;
 let starsCreated = false;
 let nebulasCreated = false;
 
+
 /* ===== LANGUAGE SYSTEM ===== */
 let currentLanguage = localStorage.getItem('language') || 'fr';
 
