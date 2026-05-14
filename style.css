@@ -177,6 +177,81 @@ body:hover .right-galaxy {
 .star.small::after { --trail-scale: 7; }
 .star.medium::after { --trail-scale: 8; }
 
+/* ===== LANGUAGE SWITCHER ===== */
+.language-switcher {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  animation: slideInRight 0.6s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.lang-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 0.9em;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Roboto', serif;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+  transform: scale(1.05);
+}
+
+.lang-btn:active {
+  transform: scale(0.95);
+}
+
+.lang-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 55%);
+  transform: rotate(30deg);
+  animation: langShine 4s infinite;
+  pointer-events: none;
+}
+
+@keyframes langShine {
+  0% { transform: rotate(30deg) translate(-30%, -30%); }
+  100% { transform: rotate(30deg) translate(30%, 30%); }
+}
+
+.lang-text {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.lang-btn:hover .lang-text {
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
+}
+
 /* ===== CURSOR ===== */
 .cursor {
   position: fixed;
@@ -1252,5 +1327,17 @@ a:not(.social-icon-link):not(.carousel-link):hover img {
     height: auto;
     margin: 0 auto;     
     display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .language-switcher {
+    top: 15px;
+    right: 15px;
+  }
+  
+  .lang-btn {
+    padding: 8px 12px;
+    font-size: 0.8em;
   }
 }

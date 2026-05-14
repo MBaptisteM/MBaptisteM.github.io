@@ -10,6 +10,85 @@ const SPEED_WHEEL = 0.02;
 const SPEED_DRAG = -0.1;
 const SCROLL_THRESHOLD = 0.8;
 
+/* ===== LANGUAGE SYSTEM ===== */
+let currentLanguage = localStorage.getItem('language') || 'fr';
+
+const translations = {
+  "en": {
+    "page_title": "Baptiste's Dashboard",
+    "portfolio_title": "Baptiste Mahe's Portfolio",
+    "journey": "Journey",
+    "skills": "Skills",
+    "hire_me": "Hire Me",
+    "hackathon1": "In late 2025, I had the opportunity to participate in my first hackathon at the Grand Palais - <a href='https://www.agorize.com/fr/challenges/drone-defense-hackathon' target='_blank'>Drone Defense Hackathon</a> - where I coded in C an algorithm calculating optimized paths for batch drone deliveries.",
+    "vinci_stage": "In 2025, I completed a two-month internship in the AI department of <a href='https://www.vinci-energies.com/' target='_blank'>Vinci Energies</a>, where I developed my AI agent and traveled to Nantes and Austria to participate in internal Vinci conferences on AI.",
+    "epita": "After obtaining my high school diploma, I joined <a href='https://www.epita.fr/' target='_blank'>EPITA</a> to become a computer engineer through a 5-year training program at this computer science school.",
+    "bac": "In 2024 I obtained my high school diploma with honors in Mathematics, Computer Science, and Physics-Chemistry. It was also the year I participated in my first international programming competition with over 12,000 participants - the <a href='https://www.nuitducode.net/' target='_blank'>Night of Code</a> 2024 in Python, which I won.",
+    "languages": "I speak English fluently. I completed an exchange semester in Japan where I followed an English-language curriculum. I also passed the TOEIC and TOEFL with a score of 90 certified C1 in oral and written comprehension as well as written expression.",
+    "presentation": "I am comfortable speaking in front of an audience and giving presentations, and I particularly master the Office suite. I also participated in an internship and an eloquence competition. I am also a teacher at my school and give computer science lessons to younger students.",
+    "teamwork": "During my internships and various projects, I learned to work as a team to successfully complete projects. During my personal projects, I also learned to find solutions to problems on my own, as was the case during the development of my game to be able to publish it without major flaws and ensure its maintenance.",
+    "contact_text": "You can contact me via:<br>Email: <a href='mailto:mahebaptiste.99@gmail.com'>mahebaptiste.99@gmail.com</a><br><br>You can also click on the <a href='https://www.linkedin.com/in/baptiste-mahé-84199a2a6/' target='_blank'>LinkedIn</a> or <a href='https://github.com/mbaptistem' target='_blank'>Github</a> icons to access my various networks.",
+    "cv_text": "For more information, you can consult my <a href='CV.pdf' target='_blank'>CV</a> most recent.<br>(Last CV update: 04/14/2026)"
+  },
+  "fr": {
+    "page_title": "Baptiste's Dashboard",
+    "portfolio_title": "Portfolio de Baptiste Mahé",
+    "journey": "Parcours",
+    "skills": "Compétences",
+    "hire_me": "Me recruter",
+    "hackathon1": "En fin 2025 j'ai eu l'occasion de faire mon premier hackaton au grand palais <a href='https://www.agorize.com/fr/challenges/drone-defense-hackathon' target='_blank'>Drone défense hackaton</a> durant lequel j'ai codé en C un algorithme calculant les chemins les plus optimisés lors de livraisons groupées par des drones.",
+    "vinci_stage": "En 2025 j'ai fait un stage de deux mois dans le pôle IA de <a href='https://www.vinci-energies.com/' target='_blank'>Vinci Energies</a> durant lequel j'ai développé mon agent IA et voyagé à Nantes et en Autriche afin de participer à des conférences internes à Vinci concernant l'IA.",
+    "epita": "Une fois mon bac obtenu j'ai intégré l'<a href='https://www.epita.fr/' target='_blank'>EPITA</a> afin de devenir ingénieur en informatique à la suite d'une formation de 5 ans dans cette école d'informatique.",
+    "bac": "En 2024 j'ai obtenu mon bac avec mention Très bien en spécialité Maths, NSI, Physique Chimie. C'est aussi l'année durant laquelle j'ai fait mon premier concours de programmation international avec plus de 12000 participants la <a href='https://www.nuitducode.net/' target='_blank'>Nuit du code</a> édition 2024 en python que j'ai remporté.",
+    "languages": "Je parle couramment anglais, j'ai fais un échange durant un semestre au Japon durant lequel j'ai suivi un cursus anglophone. J'ai également passé le TOEIC et le TOEFL avec un score de 90 certifié C1 en compréhension orale et écrite ainsi qu'en expression écrite.",
+    "presentation": "J'ai l'habitude de parler devant un public et de faire des présentation, de plus je maîtrise particulièrement bien la suite Office. Aussi j'ai participé à un stage et un concours d'éloquence. Je suis également professeur pour mon école et je donne cours d'informatique à des élèves plus jeunes que moi.",
+    "teamwork": "Durant mes stages et durant les différents projets que j'ai réalisé j'ai appris à travailler en équipe afin de mener un projet à bien. Durant mes projets personnels j'ai également appris à trouver des solutions aux problèmes que je rencontre par moi même comme cela a été le cas lors du développement de mon jeu afin de pouvoir le publier sans faille majeure et assurer sa maintenance.",
+    "contact_text": "Vous pouvez me contacter via :<br>Email: <a href='mailto:mahebaptiste.99@gmail.com'>mahebaptiste.99@gmail.com</a><br><br>Vous pouvez également cliquer sur les icones <a href='https://www.linkedin.com/in/baptiste-mahé-84199a2a6/' target='_blank'>Linkedin</a> ou <a href='https://github.com/mbaptistem' target='_blank'>Github</a> afin d'accéder à mes différents réseaux.",
+    "cv_text": "Pour plus d'informations vous pouvez consulter mon <a href='CV.pdf' target='_blank'>CV</a> le plus récent.<br>(Dernière mise à jour du CV : 14/04/2026)"
+  }
+};
+
+function setLanguage(lang) {
+  if (!translations[lang]) return;
+  
+  currentLanguage = lang;
+  localStorage.setItem('language', lang);
+  
+  // Update document language
+  document.documentElement.lang = lang;
+  
+  // Update page title
+  document.title = translations[lang].page_title;
+  
+  // Update all elements with data-translate attribute
+  document.querySelectorAll('[data-translate]').forEach(element => {
+    const key = element.getAttribute('data-translate');
+    if (translations[lang][key]) {
+      element.innerHTML = translations[lang][key];
+    }
+  });
+  
+  // Update button text
+  const langBtn = document.getElementById('lang-toggle');
+  if (langBtn) {
+    langBtn.querySelector('.lang-text').textContent = lang === 'fr' ? 'EN' : 'FR';
+  }
+}
+
+// Initialize language on page load
+document.addEventListener('DOMContentLoaded', async function() {
+  setLanguage(currentLanguage);
+  
+  // Add language toggle button event listener
+  const langToggle = document.getElementById('lang-toggle');
+  if (langToggle) {
+    langToggle.addEventListener('click', function() {
+      const newLang = currentLanguage === 'fr' ? 'en' : 'fr';
+      setLanguage(newLang);
+    });
+  }
+});
+
 /* ===== CAROUSEL SETUP ===== */
 const $items = document.querySelectorAll('.carousel-item');
 const $cursors = document.querySelectorAll('.cursor');
