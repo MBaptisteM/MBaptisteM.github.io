@@ -21,7 +21,7 @@ const translations = {
   "en": {
     "page_title": "Baptiste's Dashboard",
     "portfolio_title": "Baptiste Mahe's Portfolio",
-    "journey": "Journey",
+    "journey": "My experience",
     "skills": "Skills",
     "hire_me": "Hire Me",
     "hackathon1": "In late 2025, I had the opportunity to participate in my first hackathon at the Grand Palais - <a href='https://www.agorize.com/fr/challenges/drone-defense-hackathon' target='_blank'>Drone Defense Hackathon</a> - where I coded in C an algorithm calculating optimized paths for batch drone deliveries.",
