@@ -479,8 +479,44 @@ function clearCookie() {
 // ─── BOOT ─────────────────────────────────────────────────────────────────────
 
 window.onload = () => {
-  
+  const saved = loadCookie();
+
+  if (saved && saved.players && saved.players.length) {
+    G = saved;
+
+    if (!G.gameOver && G.assignments && G.assignments.length) {
+      document.getElementById('resume-wrap').style.display = 'block';
+    }
+
+    renderPlayerChips();
+  }
+
+  const savedSpecials = localStorage.getItem('uc_specials');
+  if (savedSpecials) {
+    try {
+      G.specials = JSON.parse(savedSpecials);
+    } catch(e) {}
+  }
+
+  document.getElementById('cb-fantome').checked = G.specials.fantome;
+  document.getElementById('cb-deesse').checked = G.specials.deesse;
+  document.getElementById('cb-mime').checked = G.specials.mime;
 };
+
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'cb-fantome') {
+    G.specials.fantome = e.target.checked;
+    saveCookie();
+  }
+  if (e.target.id === 'cb-deesse') {
+    G.specials.deesse = e.target.checked;
+    saveCookie();
+  }
+  if (e.target.id === 'cb-mime') {
+    G.specials.mime = e.target.checked;
+    saveCookie();
+  }
+});
 
 
 function resumeGame() {
