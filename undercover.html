@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Undercover</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0a0f; --bg2:#12121a; --bg3:#1a1a26; --card:#1e1e2e;
+  --border:rgba(255,255,255,0.08); --accent:#c8a96e; --accent2:#e8c98e;
+  --red:#e05252; --green:#52c07a; --blue:#5294e0; --purple:#9b72cf; --ghost:#7eb8d4;
+  --text:#f0ece4; --muted:rgba(240,236,228,0.5); --radius:16px; --radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+body{min-height:100dvh}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6}
+#app{position:relative;z-index:1;min-height:100dvh;display:flex;flex-direction:column}
+
+/* SCREENS */
+.screen{display:none;flex-direction:column;min-height:100dvh;padding:env(safe-area-inset-top,20px) 0 env(safe-area-inset-bottom,20px);animation:fadeUp .4s ease}
+.screen.active{display:flex}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.screen-inner{flex:1;padding:0 20px 20px;overflow-y:auto}
+
+/* TOPBAR */
+.topbar{padding:20px 20px 0;display:flex;align-items:center;gap:12px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--accent)}
+.logo span{color:var(--text)}
+
+/* HERO */
+.hero{padding:40px 20px 20px;text-align:center}
+.hero-badge{display:inline-block;background:rgba(200,169,110,.12);border:1px solid rgba(200,169,110,.3);border-radius:100px;padding:6px 16px;font-size:11px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:20px}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,16vw,80px);line-height:.9;letter-spacing:3px;color:var(--text);margin-bottom:12px}
+.hero h1 em{color:var(--accent);font-style:normal}
+.hero p{color:var(--muted);font-size:14px;line-height:1.6;max-width:280px;margin:0 auto}
+
+/* BUTTONS — width:auto by default, full width via .btn-full */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:transform .15s,opacity .15s;letter-spacing:.4px;white-space:nowrap}
+.btn:active{transform:scale(.97);opacity:.9}
+.btn-full{width:100%;display:flex}
+.btn-primary{background:var(--accent);color:#0a0a0f}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);font-size:13px;padding:11px 20px}
+.btn-sm{padding:9px 16px;font-size:13px}
+.btn-danger{background:rgba(224,82,82,.15);color:var(--red);border:1px solid rgba(224,82,82,.3)}
+
+/* SECTION */
+.section{margin-bottom:24px}
+.section-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:600}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px}
+
+/* INPUT */
+.input-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+input[type=text],input[type=number]{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 14px;outline:none;transition:border-color .2s}
+input:focus{border-color:rgba(200,169,110,.5)}
+input::placeholder{color:var(--muted)}
+
+/* PLAYER CHIP — draggable */
+.player-chip{display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:8px;animation:chipIn .25s ease;touch-action:none;cursor:grab;user-select:none}
+.player-chip:active{cursor:grabbing}
+.player-chip.dragging{opacity:.4;border-style:dashed}
+.player-chip.drag-over{border-color:var(--accent);background:rgba(200,169,110,.06)}
+@keyframes chipIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.player-chip .drag-handle{color:var(--muted);font-size:16px;line-height:1;flex-shrink:0}
+.player-chip .avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.player-chip .name{flex:1;font-size:14px;font-weight:500}
+.player-chip .remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:2px 4px;transition:color .2s}
+.player-chip .remove:active{color:var(--red)}
+
+/* COUNTER */
+.counter-row{display:flex;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:8px}
+.counter-row label{flex:1;padding:12px 14px;font-size:14px;font-weight:500}
+.counter-btn{background:none;border:none;color:var(--accent);font-size:22px;padding:10px 18px;cursor:pointer;line-height:1;transition:background .15s}
+.counter-btn:active{background:rgba(200,169,110,.1)}
+.counter-val{font-size:16px;font-weight:700;min-width:32px;text-align:center}
+
+/* TOGGLE */
+.toggle-row{display:flex;align-items:flex-start;justify-content:space-between;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;gap:12px}
+.toggle-row-text{flex:1}
+.toggle-row-text .label{font-size:14px;font-weight:500}
+.toggle-row-text .sub{font-size:11px;color:var(--muted);margin-top:2px}
+.toggle{position:relative;width:44px;height:26px;flex-shrink:0;margin-top:2px}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:var(--bg);border:1px solid var(--border);border-radius:100px;cursor:pointer;transition:.3s}
+.toggle-slider::before{content:'';position:absolute;width:20px;height:20px;left:2px;top:2px;background:var(--muted);border-radius:50%;transition:.3s}
+.toggle input:checked + .toggle-slider{background:rgba(200,169,110,.2);border-color:var(--accent)}
+.toggle input:checked + .toggle-slider::before{transform:translateX(18px);background:var(--accent)}
+
+/* WORD REVEAL CARD */
+.word-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px 24px;text-align:center;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative;overflow:hidden}
+.word-card::before{content:'';position:absolute;inset:-40%;background:radial-gradient(circle at 50% 50%,rgba(200,169,110,.04) 0%,transparent 70%);pointer-events:none}
+.word-card .player-num{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.word-card .player-name{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;color:var(--text)}
+.hidden-word{filter:blur(20px);transition:filter .4s;font-size:52px;font-family:'Bebas Neue',sans-serif;letter-spacing:3px;color:var(--accent)}
+.hidden-word.revealed{filter:blur(0);animation:wordPop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes wordPop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* GAME LIST */
+.player-list-game{list-style:none;display:flex;flex-direction:column;gap:8px}
+.player-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;transition:all .3s}
+.player-item.eliminated{opacity:.3;filter:grayscale(1)}
+.player-item .avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.player-item .pname{flex:1;font-size:15px;font-weight:500}
+.special-badge{font-size:11px;padding:3px 8px;border-radius:100px}
+.sp-fantome{background:rgba(126,184,212,.15);color:var(--ghost);border:1px solid rgba(126,184,212,.3)}
+.sp-deesse{background:rgba(155,114,207,.15);color:var(--purple);border:1px solid rgba(155,114,207,.3)}
+.sp-mime{background:rgba(200,169,110,.15);color:var(--accent);border:1px solid rgba(200,169,110,.3)}
+.current-player-badge{font-size:11px;padding:3px 8px;border-radius:100px;background:rgba(200,169,110,.15);color:var(--accent);border:1px solid rgba(200,169,110,.3)}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:100;display:flex;align-items:flex-end;justify-content:center;animation:bgFade .25s ease}
+.modal-bg.hidden{display:none}
+@keyframes bgFade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--bg2);border-radius:24px 24px 0 0;padding:24px 20px calc(env(safe-area-inset-bottom,20px) + 24px);width:100%;max-width:480px;animation:slideUp .35s cubic-bezier(.34,1.3,.64,1)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:100px;margin:0 auto 20px}
+.modal h3{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:8px}
+
+/* ROLE REVEAL */
+.role-reveal-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);margin-bottom:8px;animation:chipIn .3s ease both}
+.role-reveal-item .avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+
+/* RESULT */
+.result-icon{font-size:80px;text-align:center;padding:40px 0 20px;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.result-title{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:3px;text-align:center;line-height:1;color:var(--accent)}
+
+/* MISC */
+.divider{height:1px;background:var(--border);margin:20px 0}
+.info-box{background:rgba(200,169,110,.06);border:1px solid rgba(200,169,110,.2);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:16px}
+.info-box strong{color:var(--accent)}
+.peek-word{filter:blur(16px);transition:filter .3s;font-size:22px;font-weight:700;color:var(--accent)}
+.peek-word.show{filter:none}
+.bottom-actions{padding:16px 20px calc(env(safe-area-inset-bottom,16px) + 16px);display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.btn-row{display:flex;gap:8px;justify-content:center}
+.white-input-wrap{margin-top:12px}
+.white-input-wrap input{width:100%;font-size:18px;text-align:center;letter-spacing:2px}
+
+/* AVATARS */
+.av0{background:rgba(200,169,110,.2);color:var(--accent)}
+.av1{background:rgba(82,192,122,.2);color:var(--green)}
+.av2{background:rgba(82,148,224,.2);color:var(--blue)}
+.av3{background:rgba(224,82,82,.2);color:var(--red)}
+.av4{background:rgba(155,114,207,.2);color:var(--purple)}
+.av5{background:rgba(126,184,212,.2);color:var(--ghost)}
+.av6{background:rgba(200,169,110,.15);color:var(--accent2)}
+.av7{background:rgba(82,192,122,.15);color:#8fe0a8}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HOME -->
+<div class="screen active" id="screen-home">
+  <div class="hero">
+    <div class="hero-badge">Jeu de déduction</div>
+    <h1>UNDER<br><em>COVER</em></h1>
+    <p>Trouvez l'imposteur avant qu'il ne révèle son identité.</p>
+  </div>
+  <div class="screen-inner" style="flex:0"></div>
+  <div class="bottom-actions">
+    <div id="resume-wrap" style="display:none">
+      <button class="btn btn-secondary btn-full" onclick="resumeGame()">▶ Reprendre la partie en cours</button>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="goSetup()">Nouvelle partie</button>
+    <button class="btn btn-ghost btn-full" onclick="openModal('modal-rules')">Comment jouer ?</button>
+  </div>
+</div>
+
+<!-- SETUP PLAYERS -->
+<div class="screen" id="screen-setup">
+  <div class="topbar"><div class="logo">UNDER<span>COVER</span></div></div>
+  <div class="screen-inner" style="padding-top:20px">
+    <div class="section">
+      <div class="section-title">Joueurs <span style="color:var(--muted);font-size:10px">(glisser pour réordonner)</span></div>
+      <div class="input-row">
+        <input type="text" id="player-input" placeholder="Nom du joueur…" maxlength="20" onkeydown="if(event.key==='Enter')addPlayer()">
+        <button class="btn btn-primary btn-sm" onclick="addPlayer()">+</button>
+      </div>
+      <div id="player-chips"></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Rôles spéciaux</div>
+      <div class="toggle-row">
+        <div class="toggle-row-text"><div class="label">👻 Fantôme</div><div class="sub">Peut voter après élimination</div></div>
+        <label class="toggle"><input type="checkbox" id="cb-fantome"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-row-text"><div class="label">⚖️ Déesse de la Justice</div><div class="sub">Peut bloquer une élimination</div></div>
+        <label class="toggle"><input type="checkbox" id="cb-deesse"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-row-text"><div class="label">🎭 Mr. Mime</div><div class="sub">Doit répondre sans parler</div></div>
+        <label class="toggle"><input type="checkbox" id="cb-mime"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-actions">
+    <button class="btn btn-primary btn-full" onclick="goRolesConfig()">Suivant →</button>
+    <button class="btn btn-ghost btn-full" onclick="showScreen('screen-home')">← Retour</button>
+  </div>
+</div>
+
+<!-- ROLES CONFIG -->
+<div class="screen" id="screen-roles">
+  <div class="topbar"><div class="logo">UNDER<span>COVER</span></div></div>
+  <div class="screen-inner" style="padding-top:20px">
+    <div class="section">
+      <div class="section-title">Répartition des rôles</div>
+      <div class="info-box">Total : <strong id="total-display">0</strong> joueurs</div>
+      <div class="counter-row">
+        <label>🕵️ Undercover</label>
+        <button class="counter-btn" onclick="adjustRole('under',-1)">−</button>
+        <span class="counter-val" id="val-under">1</span>
+        <button class="counter-btn" onclick="adjustRole('under',1)">+</button>
+      </div>
+      <div class="counter-row">
+        <label>⬜ Mr. White</label>
+        <button class="counter-btn" onclick="adjustRole('white',-1)">−</button>
+        <span class="counter-val" id="val-white">0</span>
+        <button class="counter-btn" onclick="adjustRole('white',1)">+</button>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:8px">
+      🎲 Le theme et les mots seront choisis automatiquement a chaque partie.
+    </div>
+
+  </div>
+  <div class="bottom-actions">
+    <button class="btn btn-primary btn-full" onclick="startReveal()">Lancer la distribution →</button>
+    <button class="btn btn-ghost btn-full" onclick="showScreen('screen-setup')">← Retour</button>
+  </div>
+</div>
+
+<!-- WORD REVEAL -->
+<div class="screen" id="screen-reveal">
+  <div class="topbar">
+    <div class="logo">UNDER<span>COVER</span></div>
+    <div style="flex:1"></div>
+    <span style="font-size:13px;color:var(--muted)" id="reveal-counter"></span>
+  </div>
+  <div class="screen-inner" style="padding-top:20px;display:flex;flex-direction:column;gap:16px">
+    <div class="word-card" id="reveal-card">
+      <div class="player-num" id="rc-num"></div>
+      <div class="player-name" id="rc-name"></div>
+      <div id="rc-word" class="hidden-word">??????</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px" id="rc-hint">Appuyez pour révéler</div>
+    </div>
+    <button class="btn btn-secondary btn-full" id="reveal-tap-btn" onclick="tapReveal()">👁 Voir mon mot</button>
+  </div>
+  <div class="bottom-actions">
+    <button class="btn btn-primary btn-full" id="reveal-next-btn" onclick="nextReveal()" style="display:none">Joueur suivant →</button>
+  </div>
+</div>
+
+<!-- SPECIALS ANNOUNCE -->
+<div class="screen" id="screen-specials">
+  <div class="topbar"><div class="logo">UNDER<span>COVER</span></div></div>
+  <div class="screen-inner" style="padding-top:20px">
+    <div class="section-title">Rôles spéciaux attribués</div>
+    <div class="info-box">Ces rôles sont publics — tout le monde peut les voir.</div>
+    <div id="specials-list"></div>
+    <div style="color:var(--muted);font-size:13px;line-height:1.7;margin-top:12px" id="specials-rules-text"></div>
+  </div>
+  <div class="bottom-actions">
+    <button class="btn btn-primary btn-full" onclick="startGame()">La partie commence ! 🎮</button>
+  </div>
+</div>
+
+<!-- GAME -->
+<div class="screen" id="screen-game">
+  <div class="topbar">
+    <div class="logo">UNDER<span>COVER</span></div>
+    <div style="flex:1"></div>
+    <button class="btn btn-ghost btn-sm" onclick="showPeekModal()" style="padding:8px 14px;font-size:12px">👁 Mon mot</button>
+  </div>
+  <div class="screen-inner" style="padding-top:16px">
+    <div class="info-box" id="game-status-box"></div>
+    <div class="section-title">Tour de parole</div>
+    <ul class="player-list-game" id="game-player-list"></ul>
+  </div>
+  <div class="bottom-actions">
+    <button class="btn btn-danger btn-full" onclick="showEliminateModal()">⚡ Éliminer un joueur</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="screen" id="screen-result">
+  <div class="screen-inner" style="padding-top:30px">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div style="text-align:center;color:var(--muted);font-size:14px;margin-top:12px;line-height:1.6" id="result-desc"></div>
+    <div class="divider"></div>
+    <div class="section-title">Révélations</div>
+    <div id="result-reveals"></div>
+  </div>
+  <div class="bottom-actions">
+    <button class="btn btn-primary btn-full" onclick="replayGame()">🔄 Rejouer (même groupe)</button>
+    <button class="btn btn-ghost btn-full" onclick="showScreen('screen-home')">← Accueil</button>
+  </div>
+</div>
+
+<!-- MODAL: RULES -->
+<div class="modal-bg hidden" id="modal-rules">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>Comment jouer</h3>
+    <div style="font-size:13px;color:var(--muted);line-height:1.8;margin-top:12px">
+      <p style="margin-bottom:8px">Chaque joueur reçoit <strong style="color:var(--text)">un mot secret</strong>. Les <strong style="color:var(--green)">Crewmates</strong> partagent le même mot, les <strong style="color:var(--red)">Undercovers</strong> un mot similaire, les <strong style="color:var(--text)">Mr. White</strong> n'ont aucun mot.</p>
+      <p style="margin-bottom:8px">À chaque tour, chacun décrit son mot subtilement. Le groupe vote pour éliminer quelqu'un. Le rôle est révélé à l'élimination.</p>
+      <p style="margin-bottom:8px">Un <strong style="color:var(--text)">Mr. White</strong> éliminé peut tenter de deviner le mot des crewmates pour gagner.</p>
+      <p>🏆 Crewmates : il ne doit rester que des crewmates. Undercover : etre aussi nombreux que les crewmates.</p>
+    </div>
+    <div style="margin-top:20px">
+      <button class="btn btn-primary btn-full" onclick="closeModal('modal-rules')">Compris !</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ELIMINATE -->
+<div class="modal-bg hidden" id="modal-elim">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>Éliminer un joueur</h3>
+    <div style="margin-top:16px" id="elim-choices"></div>
+    <div style="margin-top:8px">
+      <button class="btn btn-ghost btn-full" onclick="closeModal('modal-elim')">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: WHITE GUESS -->
+<div class="modal-bg hidden" id="modal-white">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3 id="white-modal-title">Mr. White éliminé !</h3>
+    <div style="font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6" id="white-modal-desc"></div>
+    <div class="white-input-wrap">
+      <input type="text" id="white-guess-input" placeholder="Votre devinette…" maxlength="30">
+    </div>
+    <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+      <button class="btn btn-primary btn-full" onclick="submitWhiteGuess()">Valider</button>
+      <button class="btn btn-ghost btn-full" onclick="skipWhiteGuess()">Passer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PEEK WORD -->
+<div class="modal-bg hidden" id="modal-peek">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>Revoir mon mot</h3>
+    <div style="margin-top:12px" id="peek-player-select"></div>
+    <div id="peek-word-display" style="text-align:center;padding:20px 0;display:none">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:8px" id="peek-name-label"></div>
+      <div class="peek-word" id="peek-word-val"></div>
+      <div style="margin-top:12px">
+        <button class="btn btn-ghost btn-sm" onclick="togglePeek()">Afficher / Masquer</button>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <button class="btn btn-ghost btn-full" onclick="closeModal('modal-peek')">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ROLE REVEALED ON ELIM -->
+<div class="modal-bg hidden" id="modal-role-reveal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3 id="rrm-title">Rôle révélé !</h3>
+    <div style="text-align:center;padding:24px 0">
+      <div style="font-size:52px" id="rrm-icon"></div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:2px;margin-top:8px" id="rrm-role"></div>
+      <div style="font-size:13px;color:var(--muted);margin-top:6px" id="rrm-desc"></div>
+    </div>
+    <button class="btn btn-primary btn-full" id="rrm-btn" onclick="closeRoleReveal()">Continuer</button>
+  </div>
+</div>
+
+</div><!-- #app -->
+
+<script>
+
+// ─── THEMES ───────────────────────────────────────────────────────────────────
+
+const THEMES = {
+  theme1:["chine","france","algerie","coree","japon","bresil","canada","espagne"],
+  theme2:["telephone","television","tablette","ordinateur","console","camera","clavier","souris"],
+  theme3:["netflix","youtube","spotify","twitch","deezer","primevideo","tiktok","disney"],
+  theme4:["voiture","moto","train","avion","velo","bus","bateau","tramway"],
+  theme5:["pizza","burger","sushi","tacos","salade","lasagnes","omelette","pates"],
+  theme6:["football","basket","tennis","rugby","volley","natation","baseball","handball"],
+  theme7:["tigre","requin","panda","dauphin","girafe","elephant","zebre","kangourou"],
+  theme8:["guitare","piano","violon","batterie","flute","saxophone","trompette","ukulele"],
+  theme9:["montagne","desert","foret","volcan","cascade","jungle","plage","riviere"],
+  theme10:["acteur","camera","scenario","animation","costume","cascade","studio","realisateur"],
+
+  theme11:["nike","adidas","puma","reebok","fila","asics","vans","converse"],
+  theme12:["facebook","instagram","snapchat","whatsapp","telegram","discord","reddit","linkedin"],
+  theme13:["lion","ours","loup","renard","cheval","singe","koala","crocodile"],
+  theme14:["fraise","banane","pomme","orange","kiwi","mangue","ananas","pasteque"],
+  theme15:["paris","tokyo","londres","madrid","rome","berlin","dakar","seoul"],
+  theme16:["minecraft","fortnite","roblox","valorant","fifa","zelda","mario","pokemon"],
+  theme17:["stylo","crayon","feutre","gomme","cahier","regle","colle","agenda"],
+  theme18:["cafe","the","jus","limonade","smoothie","milkshake","soda","eau"],
+  theme19:["chemise","pantalon","short","veste","manteau","pull","chaussette","casquette"],
+  theme20:["soleil","lune","etoile","nuage","orage","pluie","neige","vent"],
+
+  theme21:["doctor","professeur","boulanger","coiffeur","pompier","policier","cuisinier","pilote"],
+  theme22:["canape","table","chaise","armoire","lit","bureau","etagere","miroir"],
+  theme23:["iphone","samsung","xiaomi","huawei","nokia","google","oneplus","oppo"],
+  theme24:["harrypotter","batman","spiderman","superman","hulk","thor","shrek","pikachu"],
+  theme25:["croissant","baguette","pain","biscuit","gateau","crepe","donut","muffin"],
+  theme26:["amazon","ebay","vinted","zalando","etsy","aliexpress","shein","rakuten"],
+  theme27:["orange","bleu","rouge","vert","violet","rose","gris","jaune"],
+  theme28:["horreur","comedie","action","romance","fantastique","thriller","animation","documentaire"],
+  theme29:["clavier","ecran","imprimante","casque","micro","webcam","chargeur","routeur"],
+  theme30:["parfum","savon","shampoing","dentifrice","deodorant","creme","gel","maquillage"],
+
+  theme31:["mars","venus","jupiter","saturne","mercure","neptune","uranus","terre"],
+  theme32:["ecureuil","lapin","hibou","aigle","perroquet","poule","canard","pingouin"],
+  theme33:["cinema","musee","zoo","aquarium","parc","stade","theatre","bibliotheque"],
+  theme34:["drake","rihanna","eminem","beyonce","adele","jul","gims","nekfeu"],
+  theme35:["sabre","arc","bouclier","lance","armure","casque","fleche","dague"],
+  theme36:["virus","bacterie","cellule","muscle","cerveau","coeur","os","squelette"],
+  theme37:["tapis","rideau","lampe","coussin","cadre","plante","horloge","bougie"],
+  theme38:["volcan","tsunami","seisme","tornade","ouragan","inondation","avalanche","eruption"],
+  theme39:["sandwich","kebab","panini","hotdog","burrito","ramen","couscous","tajine"],
+  theme40:["diamant","or","argent","rubis","saphir","emeraude","bronze","cuivre"],
+
+  theme41:["ski","surf","patin","escalade","kayak","golf","boxe","judo"],
+  theme42:["dragon","licorne","fantome","zombie","vampire","sorcier","ogre","elfe"],
+  theme43:["camion","tracteur","scooter","helicoptere","fusée","sousmarin","yacht","ambulance"],
+  theme44:["youtubeur","streamer","acteur","danseur","rappeur","influenceur","photographe","humoriste"],
+  theme45:["burgerking","mcdonalds","kfc","subway","dominos","starbucks","quick","tacobell"],
+  theme46:["python","java","html","css","javascript","swift","kotlin","php"],
+  theme47:["desert","savane","banquise","prairie","marais","grotte","ocean","lagon"],
+  theme48:["magie","illusion","potion","sortilege","grimoire","baguette","cristal","amulette"],
+  theme49:["robot","android","cyborg","drone","satellite","laser","hologramme","ia"],
+  theme50:["noel","halloween","paques","ramadan","anniversaire","mariage","festival","carnaval"],
+
+  theme51:["burger","pizza","tacos","sushi","ramen","wok","paella","lasagnes"],
+  theme52:["ferrari","tesla","audi","bmw","mercedes","toyota","honda","renault"],
+  theme53:["airpods","ecouteurs","enceinte","microphone","telecommande","projecteur","chargeur","batterie"],
+  theme54:["lait","fromage","beurre","yaourt","creme","glace","milkshake","chantilly"],
+  theme55:["pirate","chevalier","samourai","ninja","viking","gladiateur","cowboy","pharaon"],
+  theme56:["email","sms","appel","visio","podcast","radio","journal","magazine"],
+  theme57:["diamant","collier","bracelet","bague","montre","lunettes","sac","portefeuille"],
+  theme58:["piscine","jacuzzi","sauna","hammam","spa","douche","baignoire","fontaine"],
+  theme59:["banque","hopital","ecole","mairie","prison","casino","restaurant","hotel"],
+  theme60:["clown","magicien","acrobate","jongleur","mime","danseur","comedien","illusionniste"]
+};
+
+const THEME_KEYS = Object.keys(THEMES);
+
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let G = {
+  players: [],           // ordered list of names
+  underCount: 1,
+  whiteCount: 0,
+  specials: {fantome:false, deesse:false, mime:false},
+  wordGroup: null,       // {pair, cat} — chosen randomly at distribution
+  assignments: [],       // [{name, role, word, special}] ordered by player order, non-MrWhite first for turns
+  revealIdx: 0,
+  eliminated: [],
+  gameOver: false,
+  gameStarted: false,    // true once specials screen passed
+};
+let elimPending = null;
+let rrmCallback = null;
+
+
+// ─── SAVE ─────────────────────────────────────────────────────────────────────
+function saveCookie() {
+  try {
+    localStorage.setItem('uc_save', JSON.stringify(G));
+    localStorage.setItem('uc_specials', JSON.stringify(G.specials));
+  } catch(e) {}
+}
+function loadCookie() {
+  try {
+    const data = localStorage.getItem('uc_save');
+    if (data) return JSON.parse(data);
+  } catch(e) {}
+  return null;
+}
+function clearCookie() {
+  localStorage.removeItem('uc_save');
+}
+
+// ─── BOOT ─────────────────────────────────────────────────────────────────────
+
+window.onload = () => {
+  
+};
+
+
+function resumeGame() {
+  if (G.gameStarted) {
+    startGame();
+  } else if (G.revealIdx > 0 && G.revealIdx <= G.assignments.length) {
+    startRevealScreen();
+  } else {
+    startGame();
+  }
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function openModal(id) {
+  document.getElementById(id).classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.add('hidden');
+  document.body.style.overflow='';
+}
+
+function goSetup() {
+  showScreen('screen-setup');
+  renderPlayerChips();
+}
+
+// ─── PLAYERS + DRAG-REORDER ───────────────────────────────────────────────────
+function addPlayer() {
+  const inp = document.getElementById('player-input');
+  const name = inp.value.trim();
+  if (!name || G.players.includes(name)) { inp.value=''; return; }
+  G.players.push(name);
+  inp.value='';
+  inp.focus();
+  saveCookie();
+  renderPlayerChips();
+}
+
+function removePlayer(i) {
+  G.players.splice(i,1);
+  saveCookie();
+  renderPlayerChips();
+}
+
+const AVCLS = ['av0','av1','av2','av3','av4','av5','av6','av7'];
+function avc(i) { return AVCLS[i % AVCLS.length]; }
+function ini(n) { return n.slice(0,2).toUpperCase(); }
+
+let dragSrcIdx = null;
+
+function renderPlayerChips() {
+  const c = document.getElementById('player-chips');
+  c.innerHTML = G.players.map((p,i) => `
+    <div class="player-chip" draggable="true" data-idx="${i}"
+         ondragstart="dStart(event,${i})" ondragover="dOver(event,${i})"
+         ondrop="dDrop(event,${i})" ondragend="dEnd()"
+         ontouchstart="tStart(event,${i})" ontouchmove="tMove(event)" ontouchend="tEnd(event,${i})">
+      <span class="drag-handle">⠿</span>
+      <div class="avatar ${avc(i)}">${ini(p)}</div>
+      <span class="name">${p}</span>
+      <button class="remove" onclick="removePlayer(${i})">×</button>
+    </div>`).join('');
+}
+
+// Mouse drag
+function dStart(e,i) { dragSrcIdx=i; e.currentTarget.classList.add('dragging'); }
+function dOver(e,i) {
+  e.preventDefault();
+  document.querySelectorAll('.player-chip').forEach(el=>el.classList.remove('drag-over'));
+  e.currentTarget.classList.add('drag-over');
+}
+function dDrop(e,i) {
+  e.preventDefault();
+  if (dragSrcIdx===null||dragSrcIdx===i) return;
+  const tmp=G.players[dragSrcIdx]; G.players[dragSrcIdx]=G.players[i]; G.players[i]=tmp;
+  saveCookie(); renderPlayerChips();
+}
+function dEnd() {
+  dragSrcIdx=null;
+  document.querySelectorAll('.player-chip').forEach(el=>{el.classList.remove('dragging');el.classList.remove('drag-over');});
+}
+
+// Touch drag
+let touchSrcIdx=null, touchClone=null, touchOffsetY=0;
+function tStart(e,i) {
+  touchSrcIdx=i;
+  const chip=e.currentTarget;
+  const rect=chip.getBoundingClientRect();
+  touchOffsetY=e.touches[0].clientY-rect.top;
+  touchClone=chip.cloneNode(true);
+  touchClone.style.cssText=`position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;opacity:.7;pointer-events:none;z-index:999;border:1px solid var(--accent)`;
+  document.body.appendChild(touchClone);
+  chip.classList.add('dragging');
+}
+function tMove(e) {
+  if (touchClone===null) return;
+  e.preventDefault();
+  const y=e.touches[0].clientY;
+  touchClone.style.top=(y-touchOffsetY)+'px';
+}
+function tEnd(e,i) {
+  if (touchClone) { document.body.removeChild(touchClone); touchClone=null; }
+  document.querySelectorAll('.player-chip').forEach(el=>el.classList.remove('dragging','drag-over'));
+  if (touchSrcIdx===null) return;
+  // Find which chip we're over
+  const y=e.changedTouches[0].clientY;
+  let dropIdx=touchSrcIdx;
+  document.querySelectorAll('.player-chip').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if (y>=r.top && y<=r.bottom) dropIdx=parseInt(el.dataset.idx);
+  });
+  if (dropIdx!==touchSrcIdx) {
+    const tmp=G.players[touchSrcIdx]; G.players[touchSrcIdx]=G.players[dropIdx]; G.players[dropIdx]=tmp;
+    saveCookie(); renderPlayerChips();
+  }
+  touchSrcIdx=null;
+}
+
+// ─── ROLES CONFIG ─────────────────────────────────────────────────────────────
+function goRolesConfig() {
+  if (G.players.length < 3) { alert('Il faut au moins 3 joueurs.'); return; }
+  G.specials.fantome = document.getElementById('cb-fantome').checked;
+  G.specials.deesse  = document.getElementById('cb-deesse').checked;
+  G.specials.mime    = document.getElementById('cb-mime').checked;
+  document.getElementById('total-display').textContent = G.players.length;
+  clampRoles();
+  updateCounterDisplay();
+  saveCookie();
+  showScreen('screen-roles');
+}
+
+function clampRoles() {
+  const max = Math.floor((G.players.length-1)/2);
+  G.underCount = Math.max(0, Math.min(G.underCount, max-G.whiteCount));
+  G.whiteCount = Math.max(0, Math.min(G.whiteCount, max-G.underCount));
+}
+function adjustRole(type, delta) {
+  const max = Math.floor((G.players.length-1)/2);
+  if (type==='under') G.underCount = Math.max(0, Math.min(G.underCount+delta, max-G.whiteCount));
+  else G.whiteCount = Math.max(0, Math.min(G.whiteCount+delta, max-G.underCount));
+  updateCounterDisplay();
+}
+function updateCounterDisplay() {
+  document.getElementById('val-under').textContent = G.underCount;
+  document.getElementById('val-white').textContent = G.whiteCount;
+}
+
+// ─── ASSIGN ROLES & REVEAL ────────────────────────────────────────────────────
+function startReveal() {
+  if (G.underCount + G.whiteCount >= G.players.length)
+    { alert('Trop d\'imposteurs pour le nombre de joueurs.'); return; }
+
+  // Pick random theme automatically each game
+  const randomTheme = THEME_KEYS[Math.floor(Math.random() * THEME_KEYS.length)];
+  const themeWords = [...THEMES[randomTheme]];
+
+  themeWords.sort(() => Math.random() - 0.5);
+
+  const crewWord = themeWords[0];
+  const underWord = themeWords[1];
+
+  G.wordGroup = {
+    theme: randomTheme,
+    pair:[crewWord, underWord]
+  };
+
+  // Assign roles: shuffle a role pool
+  const rolePool = [];
+  for (let i=0;i<G.underCount;i++) rolePool.push({role:'undercover',word:underWord});
+  for (let i=0;i<G.whiteCount;i++) rolePool.push({role:'mrwhite',word:null});
+  const crewCount = G.players.length - G.underCount - G.whiteCount;
+  for (let i=0;i<crewCount;i++) rolePool.push({role:'crewmate',word:crewWord});
+  // shuffle role pool
+  for (let i=rolePool.length-1;i>0;i--) {
+    const j=Math.floor(Math.random()*(i+1));
+    [rolePool[i],rolePool[j]]=[rolePool[j],rolePool[i]];
+  }
+
+  // Map to players in their defined order
+  G.assignments = G.players.map((name,i) => ({
+    name,
+    role: rolePool[i].role,
+    word: rolePool[i].word,
+    special: null,
+  }));
+
+  // Turn order: same as player order but Mr. White never goes first
+  // If first player is Mr. White, swap with first non-MrWhite
+  if (G.assignments.length > 0 && G.assignments[0].role === 'mrwhite') {
+    const swapIdx = G.assignments.findIndex((a,i)=>i>0&&a.role!=='mrwhite');
+    if (swapIdx > 0) {
+      [G.assignments[0],G.assignments[swapIdx]]=[G.assignments[swapIdx],G.assignments[0]];
+    }
+  }
+
+  G.revealIdx = 0;
+  G.eliminated = [];
+  G.gameOver = false;
+  G.gameStarted = false;
+  saveCookie();
+  startRevealScreen();
+}
+
+function startRevealScreen() {
+  showScreen('screen-reveal');
+  showRevealCard();
+}
+
+function showRevealCard() {
+  const a = G.assignments[G.revealIdx];
+  document.getElementById('rc-num').textContent = `Joueur ${G.revealIdx+1} / ${G.assignments.length}`;
+  document.getElementById('rc-name').textContent = a.name;
+  document.getElementById('reveal-counter').textContent = `${G.revealIdx+1} / ${G.assignments.length}`;
+
+  const wordEl = document.getElementById('rc-word');
+  wordEl.className = 'hidden-word';
+  // Show a blurred placeholder — Mr. White sees "???" too until tap
+  wordEl.textContent = '??????';
+
+  document.getElementById('rc-hint').style.display = '';
+  document.getElementById('reveal-tap-btn').style.display = '';
+  document.getElementById('reveal-next-btn').style.display = 'none';
+}
+
+function tapReveal() {
+  const a = G.assignments[G.revealIdx];
+  const wordEl = document.getElementById('rc-word');
+  // Mr. White: show "MR. WHITE" (no word, no role label → player only knows they are special)
+  // Crewmate / Undercover: show their word only — no role label
+  wordEl.textContent = a.role==='mrwhite' ? 'MR. WHITE' : a.word;
+  wordEl.classList.add('revealed');
+  document.getElementById('rc-hint').style.display = 'none';
+  document.getElementById('reveal-tap-btn').style.display = 'none';
+  document.getElementById('reveal-next-btn').style.display = '';
+}
+
+function nextReveal() {
+  G.revealIdx++;
+  saveCookie();
+  if (G.revealIdx >= G.assignments.length) {
+    assignSpecials();
+  } else {
+    showRevealCard();
+  }
+}
+
+// ─── SPECIALS ─────────────────────────────────────────────────────────────────
+function assignSpecials() {
+  const activeSpecials = [];
+  if (G.specials.fantome) activeSpecials.push({key:'fantome',label:'Fantôme',icon:'👻'});
+  if (G.specials.deesse)  activeSpecials.push({key:'deesse', label:'Déesse de la Justice',icon:'⚖️'});
+  if (G.specials.mime)    activeSpecials.push({key:'mime',   label:'Mr. Mime',icon:'🎭'});
+
+  if (!activeSpecials.length) { startGame(); return; }
+
+  const pool = [...G.assignments].sort(()=>Math.random()-.5);
+  activeSpecials.forEach((sp,i) => { if (i<pool.length) pool[i].special=sp.key; });
+
+  showScreen('screen-specials');
+  const list = document.getElementById('specials-list');
+  list.innerHTML = G.assignments.filter(a=>a.special).map((a,i)=>{
+    const sp = activeSpecials.find(s=>s.key===a.special);
+    return `<div class="role-reveal-item" style="background:var(--card);border:1px solid var(--border);animation-delay:${i*.1}s">
+      <div class="avatar ${avc(G.players.indexOf(a.name))}">${ini(a.name)}</div>
+      <div><div style="font-size:14px;font-weight:500">${a.name}</div><div style="font-size:12px;color:var(--muted)">${sp.icon} ${sp.label}</div></div>
+    </div>`;
+  }).join('');
+
+  const rules=[];
+  if (G.specials.fantome) rules.push('👻 <strong>Fantôme</strong> : Peut voter même après élimination.');
+  if (G.specials.deesse)  rules.push('⚖️ <strong>Déesse</strong> : Peut bloquer une élimination une fois.');
+  if (G.specials.mime)    rules.push('🎭 <strong>Mr. Mime</strong> : Doit s\'exprimer sans parler.');
+  document.getElementById('specials-rules-text').innerHTML = rules.join('<br>');
+  saveCookie();
+}
+
+// ─── GAME ─────────────────────────────────────────────────────────────────────
+function startGame() {
+  G.gameStarted = true;
+  saveCookie();
+  showScreen('screen-game');
+  renderGameList();
+  updateGameStatus();
+}
+
+// Returns alive players in turn order
+function alivePlayers() {
+  return G.assignments.filter(a=>!G.eliminated.includes(a.name));
+}
+
+function renderGameList() {
+  const ul = document.getElementById('game-player-list');
+  const alive = alivePlayers();
+  ul.innerHTML = G.assignments.map((a,i) => {
+    const isElim = G.eliminated.includes(a.name);
+    const isCurrent = !isElim && alive[0]?.name===a.name;
+    const spBadge = a.special && !isElim
+      ? `<span class="special-badge sp-${a.special}">${{fantome:'👻',deesse:'⚖️',mime:'🎭'}[a.special]}</span>` : '';
+    const currentBadge = isCurrent ? `<span class="current-player-badge">🎤 Commence</span>` : '';
+    return `<li class="player-item${isElim?' eliminated':''}">
+      <div class="avatar ${avc(i)}">${ini(a.name)}</div>
+      <span class="pname">${a.name}</span>
+      ${spBadge}${currentBadge}
+      ${isElim?'<span style="font-size:11px;color:var(--red)">Éliminé</span>':''}
+    </li>`;
+  }).join('');
+}
+
+function updateGameStatus() {
+  const alive = alivePlayers();
+  const crews = alive.filter(a=>a.role==='crewmate').length;
+  const unders = alive.filter(a=>a.role==='undercover').length;
+  const whites = alive.filter(a=>a.role==='mrwhite').length;
+  document.getElementById('game-status-box').innerHTML =
+    `👥 <strong>${alive.length}</strong> actifs — <span style="color:var(--green)">${crews} crewmates</span> · <span style="color:var(--red)">${unders} undercovers · ${whites} Mr. White</span>`;
+}
+
+function showEliminateModal() {
+  const alive = alivePlayers();
+  const c = document.getElementById('elim-choices');
+  c.innerHTML = alive.map(a=>`
+    <button class="btn btn-secondary btn-full" style="margin-bottom:8px;justify-content:flex-start;gap:12px" onclick="eliminatePlayer('${a.name}')">
+      <div class="avatar ${avc(G.players.indexOf(a.name))}" style="width:30px;height:30px;font-size:11px;flex-shrink:0">${ini(a.name)}</div>
+      <span>${a.name}</span>
+      ${a.special?`<span class="special-badge sp-${a.special}">${{fantome:'👻',deesse:'⚖️',mime:'🎭'}[a.special]}</span>`:''}
+    </button>`).join('');
+  openModal('modal-elim');
+}
+
+function eliminatePlayer(name) {
+  closeModal('modal-elim');
+  const a = G.assignments.find(p=>p.name===name);
+  if (!a) return;
+  elimPending = a;
+
+  const labels={crewmate:'Crewmate',undercover:'Undercover',mrwhite:'Mr. White'};
+  const icons={crewmate:'✅',undercover:'🔴',mrwhite:'⬛'};
+  const colors={crewmate:'var(--green)',undercover:'var(--red)',mrwhite:'var(--text)'};
+
+  document.getElementById('rrm-title').textContent = `${name} est éliminé !`;
+  document.getElementById('rrm-icon').textContent = icons[a.role];
+  document.getElementById('rrm-role').textContent = labels[a.role];
+  document.getElementById('rrm-role').style.color = colors[a.role];
+  document.getElementById('rrm-desc').textContent = a.word ? `Son mot était : "${a.word}"` : 'Il n\'avait pas de mot.';
+
+  if (a.role==='mrwhite') {
+    document.getElementById('rrm-btn').textContent = 'Il peut deviner →';
+    rrmCallback = ()=>showWhiteGuess(a);
+  } else {
+    document.getElementById('rrm-btn').textContent = 'Continuer';
+    rrmCallback = ()=>finalizeElimination(a);
+  }
+  openModal('modal-role-reveal');
+}
+
+function closeRoleReveal() {
+  closeModal('modal-role-reveal');
+  if (rrmCallback) { const cb=rrmCallback; rrmCallback=null; cb(); }
+}
+
+function showWhiteGuess(a) {
+  document.getElementById('white-modal-title').textContent = `${a.name} — Devinez le mot !`;
+  document.getElementById('white-modal-desc').textContent = 'Si vous devinez le mot des Crewmates, vous gagnez. Sinon, la partie continue.';
+  document.getElementById('white-guess-input').value = '';
+  openModal('modal-white');
+}
+
+function submitWhiteGuess() {
+  const guess = document.getElementById('white-guess-input').value.trim().toLowerCase();
+  const a = elimPending;
+  // The crewmate word
+  const crewWord = G.assignments.find(p=>p.role==='crewmate')?.word?.toLowerCase()||'';
+  closeModal('modal-white');
+  G.eliminated.push(a.name);
+  // Exact match (or contained — flexible)
+  if (guess && crewWord && (guess===crewWord || crewWord===guess)) {
+    showResult('white_win', a);
+  } else {
+    saveCookie();
+    checkGameEnd();
+  }
+}
+
+function skipWhiteGuess() {
+  closeModal('modal-white');
+  finalizeElimination(elimPending);
+}
+
+function finalizeElimination(a) {
+  G.eliminated.push(a.name);
+  saveCookie();
+  checkGameEnd();
+}
+
+function checkGameEnd() {
+  const alive = alivePlayers();
+  const crews  = alive.filter(a=>a.role==='crewmate').length;
+  const unders = alive.filter(a=>a.role==='undercover').length;
+  const whites = alive.filter(a=>a.role==='mrwhite').length;
+
+  // Victoire crewmates : il ne reste que des crewmates
+  if (unders === 0 && whites === 0) {
+    showResult('crew_win', null);
+    return;
+  }
+
+  // Victoire undercover : autant de crewmates que de undercover
+  // Mr. White n'est pas compte
+  if (unders > 0 && unders >= crews) {
+    showResult('imp_win', null);
+    return;
+  }
+
+  renderGameList();
+  updateGameStatus();
+}
+
+// ─── RESULT ───────────────────────────────────────────────────────────────────
+function showResult(type, whitePlayer) {
+  G.gameOver = true;
+  saveCookie();
+  showScreen('screen-result');
+
+  const configs = {
+    crew_win:  {icon:'🏆',title:'VICTOIRE\nCREWMATES',desc:'Les imposteurs ont été démasqués !'},
+    imp_win:   {icon:'😈',title:'VICTOIRE\nIMPOSTEURS',desc:'Les imposteurs égalent les crewmates. Ils l\'emportent !'},
+    white_win: {icon:'⬛',title:'MR. WHITE\nA GAGNÉ !',desc:`${whitePlayer?.name} a deviné le bon mot !`},
+  };
+  const cfg=configs[type];
+  document.getElementById('result-icon').textContent=cfg.icon;
+  document.getElementById('result-title').textContent=cfg.title;
+  document.getElementById('result-desc').textContent=cfg.desc;
+
+  const crewWord  = G.assignments.find(p=>p.role==='crewmate')?.word||'?';
+  const underWord = G.assignments.find(p=>p.role==='undercover')?.word||'?';
+
+  const rev=document.getElementById('result-reveals');
+  const roleLabels={crewmate:'Crewmate',undercover:'Undercover',mrwhite:'Mr. White'};
+  const roleColors={crewmate:'var(--green)',undercover:'var(--red)',mrwhite:'var(--text)'};
+  rev.innerHTML = `<div class="info-box" style="margin-bottom:12px">
+    Mot crewmates : <strong>${crewWord}</strong> · Mot undercover : <strong>${underWord}</strong>
+  </div>` + G.assignments.map((a,i)=>{
+    const spLabel=a.special?` · ${{'fantome':'👻','deesse':'⚖️','mime':'🎭'}[a.special]}`:'';
+    return `<div class="role-reveal-item" style="background:var(--card);border:1px solid var(--border);animation-delay:${i*.07}s">
+      <div class="avatar ${avc(i)}">${ini(a.name)}</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:500">${a.name}${spLabel}</div>
+        <div style="font-size:12px;color:${roleColors[a.role]}">${roleLabels[a.role]}${a.word?` — "${a.word}"`:''}</div>
+      </div>
+      ${G.eliminated.includes(a.name)?'<span style="font-size:11px;color:var(--muted)">Éliminé</span>':''}
+    </div>`;
+  }).join('');
+}
+
+// ─── PEEK ─────────────────────────────────────────────────────────────────────
+function showPeekModal() {
+  const alive = alivePlayers();
+  document.getElementById('peek-player-select').innerHTML = alive.map(a=>`
+    <button class="btn btn-secondary btn-full" style="margin-bottom:8px;justify-content:flex-start;gap:10px" onclick="selectPeek('${a.name}')">
+      <div class="avatar ${avc(G.players.indexOf(a.name))}" style="width:28px;height:28px;font-size:11px;flex-shrink:0">${ini(a.name)}</div>
+      <span>${a.name}</span>
+    </button>`).join('');
+  document.getElementById('peek-word-display').style.display='none';
+  openModal('modal-peek');
+}
+
+function selectPeek(name) {
+  const a = G.assignments.find(p=>p.name===name);
+  if (!a) return;
+  document.getElementById('peek-name-label').textContent = name;
+  const w = document.getElementById('peek-word-val');
+  w.textContent = a.role==='mrwhite' ? 'MR. WHITE' : a.word;
+  w.className = 'peek-word';
+  document.getElementById('peek-word-display').style.display='block';
+}
+function togglePeek() {
+  document.getElementById('peek-word-val').classList.toggle('show');
+}
+
+// ─── REPLAY ───────────────────────────────────────────────────────────────────
+function replayGame() {
+  G.revealIdx=0; G.eliminated=[]; G.gameOver=false; G.gameStarted=false;
+  startReveal();
+}
+</script>
+</body>
+</html>
