@@ -709,13 +709,21 @@ function startReveal() {
     special: null,
   }));
 
-  // Turn order: same as player order but Mr. White never goes first
-  // If first player is Mr. White, swap with first non-MrWhite
-  if (G.assignments.length > 0 && G.assignments[0].role === 'mrwhite') {
-    const swapIdx = G.assignments.findIndex((a,i)=>i>0&&a.role!=='mrwhite');
-    if (swapIdx > 0) {
-      [G.assignments[0],G.assignments[swapIdx]]=[G.assignments[swapIdx],G.assignments[0]];
-    }
+  // Turn order: pick a random non-MrWhite player to go first,
+  // then the rest follow the original entry order (rotating around).
+  const nonWhiteIndices = G.assignments
+    .map((a,i) => ({a,i}))
+    .filter(({a}) => a.role !== 'mrwhite')
+    .map(({i}) => i);
+
+  if (nonWhiteIndices.length > 0) {
+    // Pick a random starting index among non-MrWhite players
+    const startIdx = nonWhiteIndices[Math.floor(Math.random() * nonWhiteIndices.length)];
+    // Rotate assignments so that startIdx comes first, keeping original order
+    G.assignments = [
+      ...G.assignments.slice(startIdx),
+      ...G.assignments.slice(0, startIdx)
+    ];
   }
 
   G.revealIdx = 0;
