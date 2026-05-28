@@ -1127,7 +1127,7 @@ a:not(.social-icon-link):not(.carousel-link):hover img {
 /* ===== PARALLAX EFFECT ===== */
 @media (hover: none) and (pointer: coarse) {
   body { -webkit-overflow-scrolling: touch; }
-  .carousel-container { touch-action: pan-y; }
+  .carousel-container { touch-action: pan-y; } 
   .carousel-item:active { transform: scale(0.95) !important; transition: transform 0.1s; }
   .tab-btn:active { background: rgba(255, 255, 255, 0.3) !important; transform: scale(0.98); }
 }

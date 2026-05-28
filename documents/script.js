@@ -6,7 +6,7 @@ let startX = 0;
 let active = 0;
 let isDown = false;
 
-const SPEED_WHEEL = 0.02;
+const SPEED_WHEEL = 0.08;
 const SPEED_DRAG = -0.1;
 const SCROLL_THRESHOLD = 0.8;
 
