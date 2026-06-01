@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jarvis — EPITA Repository Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="JarvisLogo.png">
+</head>
+<body>
+
+  <!-- SCANLINE OVERLAY -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav__logo">
+      <img src="JarvisLogo.png" alt="Jarvis Logo" class="nav__logo-img" />
+      <span class="nav__logo-text">JARVIS</span>
+    </div>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="#overview" data-nav>Overview</a></li>
+      <li><a href="#features" data-nav>Features</a></li>
+      <li><a href="#installation" data-nav>Install</a></li>
+      <li><a href="#commands" data-nav>Commands</a></li>
+    </ul>
+    <a class="btn btn--ghost nav__github" id="navGithub" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+    <button class="nav__burger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero__bg-grid" aria-hidden="true"></div>
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__content">
+      <div class="hero__badge">v1.0 · Open Source · C</div>
+      <h1 class="hero__title">
+        <span class="hero__title-line">Your personal</span>
+        <span class="hero__title-accent">EPITA</span>
+        <span class="hero__title-line">repository assistant.</span>
+      </h1>
+      <p class="hero__sub">
+        Automate repository cloning, organization, synchronization and archival.
+      </p>
+      <div class="hero__cta">
+        <a href="#installation" class="btn btn--primary">Get Started</a>
+        <a href="#commands" class="btn btn--ghost">View Commands</a>
+        <a id="heroGithub" href="https://github.com/MBaptisteM/Jarvis" target="_blank" rel="noopener" class="btn btn--github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+      <div class="hero__terminal" id="heroTerminal">
+        <div class="terminal__bar">
+          <span class="dot dot--red"></span>
+          <span class="dot dot--yellow"></span>
+          <span class="dot dot--green"></span>
+          <span class="terminal__label">~ bash</span>
+        </div>
+        <div class="terminal__body">
+          <p class="terminal__line"><span class="terminal__prompt">$</span> <span class="terminal__typed" id="typedText"></span><span class="terminal__cursor">█</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="hero__robot">
+      <img src="JarvisLogo.png" alt="Jarvis" class="hero__robot-img" />
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">// 01</span>
+        <h2 class="section__title">Overview</h2>
+      </div>
+      <div class="overview__grid">
+        <!-- Cards defined in config.js -->
+        <div class="overview__cards" id="overviewCards"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section section--dark" id="features">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">// 02</span>
+        <h2 class="section__title">Features</h2>
+      </div>
+      <div class="features__list" id="featuresList"></div>
+    </div>
+  </section>
+
+  <!-- FILE TREE SHOWCASE -->
+  <section class="section" id="tree">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">// 03</span>
+        <h2 class="section__title">Auto-Organization</h2>
+        <p class="section__desc">Jarvis keeps your workspace perfectly structured — automatically.</p>
+      </div>
+      <div class="tree__showcase">
+        <div class="tree__terminal">
+          <div class="terminal__bar">
+            <span class="dot dot--red"></span>
+            <span class="dot dot--yellow"></span>
+            <span class="dot dot--green"></span>
+            <span class="terminal__label">~/TPs/</span>
+          </div>
+          <div class="terminal__body tree__body">
+            <pre class="tree__code" id="treeCode"></pre>
+          </div>
+        </div>
+        <div class="tree__desc">
+          <p>Repositories are classified by:</p>
+          <ul class="tree__list" id="treeList"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALLATION -->
+  <section class="section section--dark" id="installation">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">// 04</span>
+        <h2 class="section__title">Installation</h2>
+      </div>
+      <div class="install__coming">
+        <div class="install__icon">⚙</div>
+        <p class="install__text">Documentation coming soon.</p>
+        <p class="install__sub">Stay tuned for the full installation guide.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMANDS -->
+  <section class="section" id="commands">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">// 05</span>
+        <h2 class="section__title">Commands</h2>
+      </div>
+      <div class="commands__list" id="commandsList"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__left">
+        <img src="JarvisLogo.png" alt="Jarvis" class="footer__logo" />
+        <div>
+          <p class="footer__name">JARVIS</p>
+          <p class="footer__copy" id="footerCopy"></p>
+        </div>
+      </div>
+      <div class="footer__links">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#commands">Commands</a>
+        <a id="footerGithub" target="_blank" rel="noopener" class="footer__github">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
