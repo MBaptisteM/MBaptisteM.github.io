@@ -4,9 +4,10 @@ Welcome to my personal website, where you can learn more about me, my projects, 
 
 You will also find:
 
-* my CV / résumé
+* my CV
 * links to my social media profiles
-* and different ways to contact me
+* a list of all my main projects
+* all my bighest soft skills
 
 🔗 Visit the website: 
 https://mbaptistem.github.io
