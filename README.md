@@ -1,5 +1,13 @@
-My personnal Website whhere you can find informations about me, my projects and my skills.
+Personal Website
 
-You can also find my CV, all my social medias and how to contact me.
+Welcome to my personal website, where you can learn more about me, my projects, and my technical skills.
 
-If you want to learn things about me go on mbaptistem.github.io
+You will also find:
+
+* my CV
+* links to my social media profiles
+* a list of all my main projects
+* all my bighest soft skills
+
+🔗 Visit the website: 
+https://mbaptistem.github.io
