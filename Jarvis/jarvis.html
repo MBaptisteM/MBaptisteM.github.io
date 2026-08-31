@@ -82,7 +82,6 @@
         <h2 class="section__title">Overview</h2>
       </div>
       <div class="overview__grid">
-        <!-- Cards defined in config.js -->
         <div class="overview__cards" id="overviewCards"></div>
       </div>
     </div>
@@ -134,11 +133,38 @@
         <span class="section__tag">// 04</span>
         <h2 class="section__title">Installation</h2>
       </div>
-      <div class="install__coming">
-        <div class="install__icon">⚙</div>
-        <p class="install__text">Documentation coming soon.</p>
-        <p class="install__sub">Stay tuned for the full installation guide.</p>
+      
+      <div class="command-card reveal" style="border-color: rgba(0, 229, 255, 0.3);">
+        <div class="command-card__header" style="background: rgba(0, 229, 255, 0.02); border-bottom-color: rgba(0, 229, 255, 0.15);">
+          <span class="command-card__name">Quick Install Script</span>
+          <code class="command-card__usage">Linux / macOS</code>
+        </div>
+        
+        <div class="command-card__body">
+          <p class="command-card__desc" style="margin-bottom: 0.4rem;">Run the following command in your terminal to download and install Jarvis:</p>
+          
+          <p style="font-size: 0.85rem; color: var(--grey); margin-bottom: 1.2rem;">
+            If you appreciate this work, consider leaving a star on the <a href="https://github.com/MBaptisteM/Jarvis" target="_blank" rel="noopener" style="color: var(--cyan); text-decoration: underline; text-decoration-color: rgba(0, 229, 255, 0.4); text-underline-offset: 3px;">GitHub repository</a>!
+          </p>
+          
+          <div class="command-card__example" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(0, 229, 255, 0.2); position: relative; padding-right: 70px;">
+            <code><span style="color: var(--cyan); margin-right: 0.5rem;">$</span>curl -fsSL https://raw.githubusercontent.com/MBaptisteM/Jarvis/main/setup.sh | bash</code>
+            <button class="copy-btn" onclick="copyCommand(this, 'curl -fsSL https://raw.githubusercontent.com/MBaptisteM/Jarvis/main/setup.sh | bash')">Copy</button>
+          </div>
+          
+          <ul class="command-card__steps" style="margin-top: 1.5rem; margin-bottom: 0;">
+            <li style="font-size: 0.85rem;">
+              <span class="command-card__step-num" style="color: var(--cyan); font-size: 1rem; margin-top: -0.05em;">▸</span>
+              Everything will be installed in the <code style="color: var(--cyan); background: rgba(0, 229, 255, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.1);">.jarvis</code> folder at your root directory.
+            </li>
+            <li style="font-size: 0.85rem; margin-top: 0.4rem;">
+              <span class="command-card__step-num" style="color: var(--cyan); font-size: 1rem; margin-top: -0.05em;">▸</span>
+              Once installed, simply write <code style="color: var(--cyan); background: rgba(0, 229, 255, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.1);">jarvis &lt;command&gt;</code> to get the result of the command.
+            </li>
+          </ul>
+        </div>
       </div>
+      
     </div>
   </section>
 
@@ -174,6 +200,20 @@
       </div>
     </div>
   </footer>
+
+  <!-- SCRIPT GLOBAL DE COPIE -->
+  <script>
+    function copyCommand(button, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        button.textContent = "Copied!";
+        button.classList.add("copied");
+        setTimeout(() => {
+          button.textContent = "Copy";
+          button.classList.remove("copied");
+        }, 2000);
+      });
+    }
+  </script>
 
   <script src="config.js"></script>
   <script src="main.js"></script>

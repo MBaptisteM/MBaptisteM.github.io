@@ -394,6 +394,38 @@ code, pre { font-family: var(--font-mono); }
   font-size: .8rem; color: var(--white);
 }
 
+.command-card__example, .terminal__example, .hero__terminal {
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--grey-light);
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--cyan);
+  border-color: var(--cyan);
+}
+
+.copy-btn.copied {
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--cyan);
+  border-color: rgba(0, 229, 255, 0.4);
+}
+
 /* ── FOOTER ──────────────────────────────────────────────── */
 .footer {
   border-top: 1px solid var(--border);

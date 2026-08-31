@@ -22,8 +22,10 @@ const JARVIS_CONFIG = {
   terminalLines: [
     "jarvis auth",
     "jarvis clone",
+    "jarvis clone current",
+    "jarvis pull",
+    "jarvis find",
     "jarvis help",
-    "jarvis uninstall",
   ],
 
   // ── OVERVIEW CARDS ────────────────────────────────────────
@@ -61,6 +63,7 @@ const JARVIS_CONFIG = {
         "Session persistence",
         "Cookie storage for future executions",
         "Automatic reuse of saved sessions",
+        "Automatically locates or clones your root repository if needed",
       ],
     },
     {
@@ -96,6 +99,17 @@ const JARVIS_CONFIG = {
         "Becomes the root archive of all work",
         "Every project synchronized automatically",
         "Long-term archival and code reuse",
+      ],
+    },
+    {
+      number: "05",
+      title: "Sync & Locate",
+      desc: "Keep every repository up to date and find any of them instantly — from a single TP to your entire workspace, submodules included.",
+      bullets: [
+        "Pull one repository, or everything at once",
+        "Submodules are initialized and pulled recursively",
+        "Stale submodule commits are automatically resynced with their remote",
+        "Locate a repository by its title, its git remote, or by keyword",
       ],
     },
   ],
@@ -135,8 +149,9 @@ const JARVIS_CONFIG = {
         "You authenticate on EPITA Forge",
         "Jarvis stores the session",
         "Future executions reuse the saved session",
+        "Your root repository is located (or cloned if it doesn't exist yet)",
       ],
-      example: null,
+      example: "jarvis auth",
     },
     {
       name: "clone",
@@ -154,6 +169,31 @@ const JARVIS_CONFIG = {
       example: "jarvis clone firstname.lastname@git.forge.epita.fr:p/example/repository.git",
     },
     {
+      name: "pull",
+      usage: "jarvis pull [all | current | <repository>]",
+      desc: "Pull the latest changes for one, several, or all of your repositories, submodules included.",
+      steps: [
+        "No argument, or 'all': pulls the root repository and every submodule",
+        "'current': pulls the repository currently marked as active",
+        "A specific repository: pulls it directly if it has already been cloned",
+        "Submodules are initialized, checked out and pulled recursively",
+        "A submodule whose pinned commit is no longer reachable is automatically resynced with its remote's default branch",
+      ],
+      example: "jarvis pull",
+    },
+    {
+      name: "find",
+      usage: "jarvis find [root | current | <repository> | <keyword>]",
+      desc: "Locate the local path of a repository without touching it.",
+      steps: [
+        "No argument, or 'root': prints the path of the root repository",
+        "'current': prints the path of the currently active repository",
+        "A known git remote: prints its local path, re-locating it automatically if it moved",
+        "Any other word: searches every repository title under the root repository and prints the matching paths",
+      ],
+      example: "jarvis find",
+    },
+    {
       name: "uninstall",
       usage: "jarvis uninstall",
       desc: "Remove Jarvis from the system.",
@@ -161,7 +201,7 @@ const JARVIS_CONFIG = {
         'Confirmation prompt: "Are you sure you want to uninstall Jarvis? [y/N]"',
         "Jarvis is removed from the system",
       ],
-      example: null,
+      example: "jarvis uninstall",
     },
 
     // ── ADD NEW COMMANDS HERE ──────────────────────────────
