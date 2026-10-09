@@ -415,27 +415,38 @@ input::placeholder{color:var(--muted)}
   // organes: ["coeur", "cerveau", "poumon", "estomac", "foie"],
   
 const THEMES = {
-  nations: ["chine", "france", "algerie"],
+  nations: ["chine", "france", "algerie", "corée", "japon"],
 
   jeux_retro: ["mario", "zelda", "pokemon", "smash bros", "overwatch"],
   jeux_multi: ["fortnite", "valorant", "overwatch", "smash bros"],
 
   consoles: ["playstation", "switch", "pc", "fortnite"],
   superheros: ["batman", "spiderman", "superman", "super nanas"],
+  jeux: ["blancmangercoco", "loupgarou", "undercover"],
 
   mathematiques: ["addition", "soustraction", "multiplication", "division", "mathematiques"],
   logiques: ["and", "or", "xor", "addition"],
+  alcools: ["biere", "vin", "champagne", "vodka", "whisky", "rhum", "cidre"],
+  fastfood_marques: ["mcdonalds", "burgerking", "kfc", "quick"],
   langages: ["C#", "C", "python", "java script"],
+  video_live: ["twitch", "youtube", "tiktok", "instagram", "snapchat"],
   langageweb: ["html", "css", "java script"],
   ecoles: ["epita", "efree", "epitech", "evoluteck"],
-  associations: ["prologin", "evoluteck", "epitanime", "epita"],
-  equipes: ["KC", "M8", "T1", "gotaga"],
+  combattants: ["ninja", "samourai", "chevalier", "viking", "pirate"],
+  boulangerie: ["croissant", "painauchocolat", "brioche", "donnut"],
+  fastfood_plats: ["burger", "pizza", "tacos", "kebab"],
+  sorcellerie: ["magie", "potion", "grimoire"],
+  fruits_exotiques: ["ananas", "mangue", "passion", "kiwi"],
+  superheros: ["batman", "spiderman", "superman", "ironman"],
+  associations: ["prologin", "evolutek", "epitanime", "epita"],
+  bas: ["pantalon", "short", "jogging", "jupe"],
+  equipes: ["KC", "M8", "T1"],
   influenceurs: ["squeezie", "etoiles", "gotaga", "superman"],
-  animes: ["hunter x hunter", "naruto", "fary tale", "MHA", "lolirock"],
+  animes: ["hunter x hunter", "naruto", "fary tale", "MHA"],
   matieres: ["mathematiques", "sciences", "informatique", "python"],
   dessinsanimes: ["lolirock", "my little pony", "super nanas", "rose"],
+  organes: ["coeur", "cerveau", "poumon", "estomac"],
   combattants: ["ninja", "samourai", "chevalier", "zelda"],
-  semaine: ["lundi", "mardi", "mercredi", "jeudi", "venddredi", "samedi", "dimanche"],
   couleurs: ["bleu", "rouge", "vert", "rose", "my little pony"],
 };
 
@@ -671,19 +682,60 @@ function updateCounterDisplay() {
   document.getElementById('val-white').textContent = G.whiteCount;
 }
 
+// ─── RANDOM HELPERS ───────────────────────────────────────────────────────────
+// Unbiased Fisher-Yates shuffle (sort(() => Math.random()-.5) is biased)
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Persistent shuffled bag of themes: no repeat until all have been used
+function nextTheme() {
+  let bag = [];
+  try { bag = JSON.parse(localStorage.getItem('uc_theme_bag') || '[]'); } catch(e) {}
+  bag = bag.filter(k => THEMES[k]);          // drop themes that no longer exist
+  if (!bag.length) {
+    let last = null;
+    try { last = localStorage.getItem('uc_last_theme'); } catch(e) {}
+    bag = shuffle(THEME_KEYS);
+    if (bag.length > 1 && bag[0] === last) {  // don't repeat across bag refills
+      const k = 1 + Math.floor(Math.random() * (bag.length - 1));
+      [bag[0], bag[k]] = [bag[k], bag[0]];
+    }
+  }
+  const theme = bag.shift();
+  try {
+    localStorage.setItem('uc_theme_bag', JSON.stringify(bag));
+    localStorage.setItem('uc_last_theme', theme);
+  } catch(e) {}
+  return theme;
+}
+
 // ─── ASSIGN ROLES & REVEAL ────────────────────────────────────────────────────
 function startReveal() {
   if (G.underCount + G.whiteCount >= G.players.length)
     { alert('Trop d\'imposteurs pour le nombre de joueurs.'); return; }
 
-  // Pick random theme automatically each game
-  const randomTheme = THEME_KEYS[Math.floor(Math.random() * THEME_KEYS.length)];
-  const themeWords = [...THEMES[randomTheme]];
+  // Pick next theme from a shuffled "bag": every theme is played once
+  // before any theme can come back (no more repeating the same groups).
+  const randomTheme = nextTheme();
+  const themeWords = shuffle(THEMES[randomTheme]);
 
-  themeWords.sort(() => Math.random() - 0.5);
+  // Avoid reusing the exact same crew word as last time within the theme
+  let lastCrew = null;
+  try { lastCrew = localStorage.getItem('uc_last_crew'); } catch(e) {}
+  if (themeWords.length > 2 && themeWords[0] === lastCrew) {
+    const k = 1 + Math.floor(Math.random() * (themeWords.length - 1));
+    [themeWords[0], themeWords[k]] = [themeWords[k], themeWords[0]];
+  }
 
   const crewWord = themeWords[0];
   const underWord = themeWords[1];
+  try { localStorage.setItem('uc_last_crew', crewWord); } catch(e) {}
 
   G.wordGroup = {
     theme: randomTheme,
@@ -748,7 +800,6 @@ function showRevealCard() {
 
   const wordEl = document.getElementById('rc-word');
   wordEl.className = 'hidden-word';
-  // Show a blurred placeholder — Mr. White sees "???" too until tap
   wordEl.textContent = '??????';
 
   document.getElementById('rc-hint').style.display = '';
@@ -759,8 +810,6 @@ function showRevealCard() {
 function tapReveal() {
   const a = G.assignments[G.revealIdx];
   const wordEl = document.getElementById('rc-word');
-  // Mr. White: show "MR. WHITE" (no word, no role label → player only knows they are special)
-  // Crewmate / Undercover: show their word only — no role label
   wordEl.textContent = a.role==='mrwhite' ? 'MR. WHITE' : a.word;
   wordEl.classList.add('revealed');
   document.getElementById('rc-hint').style.display = 'none';
@@ -787,7 +836,7 @@ function assignSpecials() {
 
   if (!activeSpecials.length) { startGame(); return; }
 
-  const pool = [...G.assignments].sort(()=>Math.random()-.5);
+  const pool = shuffle(G.assignments);
   activeSpecials.forEach((sp,i) => { if (i<pool.length) pool[i].special=sp.key; });
 
   showScreen('screen-specials');
@@ -875,7 +924,7 @@ function eliminatePlayer(name) {
   document.getElementById('rrm-icon').textContent = icons[a.role];
   document.getElementById('rrm-role').textContent = labels[a.role];
   document.getElementById('rrm-role').style.color = colors[a.role];
-  document.getElementById('rrm-desc').textContent = a.word ? `Son mot était : "${a.word}"` : 'Il n\'avait pas de mot.';
+  document.getElementById('rrm-desc').textContent = '';
 
   if (a.role==='mrwhite') {
     document.getElementById('rrm-btn').textContent = 'Il peut deviner →';
