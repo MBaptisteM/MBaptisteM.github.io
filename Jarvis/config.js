@@ -194,6 +194,20 @@ const JARVIS_CONFIG = {
       example: "jarvis find",
     },
     {
+      name: "erase",
+      usage: "jarvis erase",
+      desc: "Back up, empty and push the root repository.",
+      steps: [
+        'Confirmation prompt before anything is deleted: "Continue? [y/N]"',
+        "A backup of the root repository is pushed first (force-with-lease: remote-only commits are replaced)",
+        "All the content of the root repository is deleted, except .git",
+        "The cleaned root repository is pushed",
+        "The command to restore the backup is printed (git restore --source=<backup-hash>), then run 'jarvis push root' to publish the restored files",
+        "Ignored files are not part of the backup and cannot be restored",
+      ],
+      example: "jarvis erase",
+    },
+    {
       name: "uninstall",
       usage: "jarvis uninstall",
       desc: "Remove Jarvis from the system.",
