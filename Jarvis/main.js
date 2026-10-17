@@ -1,8 +1,3 @@
-/* ============================================================
-   JARVIS — MAIN.JS
-   Reads JARVIS_CONFIG and renders all dynamic content.
-   ============================================================ */
-
 document.addEventListener('DOMContentLoaded', () => {
 
   const C = JARVIS_CONFIG;
@@ -103,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Colorize specific parts of the tree
     const colored = C.treeDisplay
       .replace(/(TPs\/)/g, '<span class="cyan">$1</span>')
-      .replace(/(S\d\/|B\d\/)/g, '<span class="cyan">$1</span>');
+      .replace(/(Y\d\/|S\d\/|B\d\/)/g, '<span class="cyan">$1</span>');
     treeEl.innerHTML = colored;
   }
 

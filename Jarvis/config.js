@@ -1,11 +1,3 @@
-/**
- * ============================================================
- *  JARVIS — SITE CONTENT CONFIGURATION
- *  Edit this file to update all content on the site.
- *  No need to touch HTML or JS logic.
- * ============================================================
- */
-
 const JARVIS_CONFIG = {
 
   // ── META ──────────────────────────────────────────────────
@@ -24,7 +16,10 @@ const JARVIS_CONFIG = {
     "jarvis clone",
     "jarvis clone current",
     "jarvis pull",
+    "jarvis push",
     "jarvis find",
+    "jarvis go",
+    "jarvis custom",
     "jarvis help",
   ],
 
@@ -110,6 +105,18 @@ const JARVIS_CONFIG = {
         "Submodules are initialized and pulled recursively",
         "Stale submodule commits are automatically resynced with their remote",
         "Locate a repository by its title, its git remote, or by keyword",
+        "Jump straight into a repository with jarvis go",
+      ],
+    },
+    {
+      number: "06",
+      title: "Customizable Organization",
+      desc: "Choose how your workspace is laid out: add a Year layer, drop the Bimester one, rename the prefixes. When you leave the menu, Jarvis moves your existing repositories to match, and can push the result.",
+      bullets: [
+        "Enable or disable the Year, Semester and Bimester layers",
+        "Choose the prefix written before each number (S, Semester, …)",
+        "Existing repositories are moved to their new location",
+        "Save to apply the changes and push the root repository",
       ],
     },
   ],
@@ -132,6 +139,7 @@ const JARVIS_CONFIG = {
         └── E1-Name-concept1-concept2/`,
 
   treeClassifiers: [
+    "Year (Y1, Y2, …) — optional, see jarvis custom",
     "Semester (S1, S2, …)",
     "Bimester (B1, B2, …)",
     "Assignment type (E = Exam, P = Project)",
@@ -155,10 +163,12 @@ const JARVIS_CONFIG = {
     },
     {
       name: "clone",
-      usage: "jarvis clone <remote-repository>",
-      desc: "Clone and organize a repository with full analysis.",
+      usage: "jarvis clone [all | current | <remote-repository>]",
+      desc: "Clone and organize a repository with full analysis. Without argument, finds or clones your root repository.",
       steps: [
-        "Repository is cloned",
+        "No argument, or 'all': finds your root repository, or clones it if it doesn't exist yet",
+        "'current': lists your Forge projects so you can pick the one to clone",
+        "A remote repository: it is cloned",
         "Placed in the correct workspace location",
         "Tree structure is generated",
         "Given files and subject are downloaded",
@@ -182,6 +192,20 @@ const JARVIS_CONFIG = {
       example: "jarvis pull",
     },
     {
+      name: "push",
+      usage: "jarvis push [root | current | <path>] [commit name] [tag]",
+      desc: "Commit and push a repository together with the root repository.",
+      steps: [
+        "No argument: pushes the repository of the current folder",
+        "'current': pushes the repository currently marked as active",
+        "'root': pushes only the root repository",
+        "Changes are added and committed with an automatic, numbered name unless you give one",
+        "An optional tag can be added, its number is incremented automatically if it already exists",
+        "The root repository is updated and pushed at the same time",
+      ],
+      example: "jarvis push current",
+    },
+    {
       name: "find",
       usage: "jarvis find [root | current | <repository> | <keyword>]",
       desc: "Locate the local path of a repository without touching it.",
@@ -192,6 +216,33 @@ const JARVIS_CONFIG = {
         "Any other word: searches every repository title under the root repository and prints the matching paths",
       ],
       example: "jarvis find",
+    },
+    {
+      name: "go",
+      usage: "jarvis go [root | current | <repository> | <keyword>]",
+      desc: "Move into a repository. Works like find, but takes you there.",
+      steps: [
+        "No argument, or 'root': goes to the root repository",
+        "'current': goes to the currently active repository",
+        "A known git remote, or any word contained in a repository title",
+        "If several folders match, a menu lets you choose one",
+        "Your shell is opened in the chosen folder, type 'exit' to come back",
+      ],
+      example: "jarvis go current",
+    },
+    {
+      name: "custom",
+      usage: "jarvis custom",
+      desc: "Customize the tree structure of your repositories.",
+      steps: [
+        "Layers: enable or disable the Year, Semester and Bimester folders (default: Semester and Bimester)",
+        "Prefixes: choose the text written before each number (default: Y, S, B)",
+        "Reset: go back to the default organization",
+        "Save: moves your existing repositories to the new organization and pushes the root repository",
+        "Quit: moves your existing repositories to the new organization without pushing",
+        "Repositories in the Others folder are never moved",
+      ],
+      example: "jarvis custom",
     },
     {
       name: "erase",
@@ -206,6 +257,19 @@ const JARVIS_CONFIG = {
         "Ignored files are not part of the backup and cannot be restored",
       ],
       example: "jarvis erase",
+    },
+    {
+      name: "help",
+      usage: "jarvis help [command]",
+      desc: "List the commands, or explain one of them.",
+      steps: [
+        "No argument: lists every command",
+        "With a command name: shows its usage and examples",
+        "'<command> --help' works too",
+        "Shortcuts: a (auth), c (clone), pl (pull), ps (push), f (find), g (go), h (help)",
+        "'j' can be used instead of 'jarvis' (ex: j c, j g, j pl)",
+      ],
+      example: "jarvis help clone",
     },
     {
       name: "uninstall",
