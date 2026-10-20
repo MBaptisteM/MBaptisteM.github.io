@@ -18,6 +18,7 @@ const JARVIS_CONFIG = {
     "jarvis fill",
     "jarvis pull",
     "jarvis push",
+    "jarvis format",
     "jarvis find",
     "jarvis go",
     "jarvis custom",
@@ -116,14 +117,27 @@ const JARVIS_CONFIG = {
       bullets: [
         "Enable or disable the Year, Semester and Bimester layers",
         "Choose the prefix written before each number (S, Semester, …)",
-        "Existing repositories are moved to their new location",
-        "Save to apply the changes and push the root repository",
+        "Rename the Others folder",
+        "Enable the automatic code formatting before each push and choose which file extensions are formatted",
+        "Existing repositories are moved to their new location when you leave the menu",
+        "The root repository can be pushed right away",
+      ],
+    },
+    {
+      number: "07",
+      title: "Code Formatting",
+      desc: "Format your code with clang-format in one command, or automatically before every push.",
+      bullets: [
+        "jarvis format [&lt;path&gt;] formats every supported file of the current folder (or of the given folder) and its sub-folders",
+        "The automatic format before jarvis push is disabled by default, enable it in jarvis custom",
+        "The formatted extensions can be edited (add / remove / restore the default list)",
+        "A formatting problem is reported but never blocks a push",
       ],
     },
   ],
 
   // ── FILE TREE ─────────────────────────────────────────────
-  treeDisplay: `TPs/
+  treeDisplay: `EPITA-TPs/
 ├── S1/
 │   ├── B1/
 │   │   ├── E1-Name-concept1-concept2/
@@ -135,16 +149,20 @@ const JARVIS_CONFIG = {
 │       ├── E1-Name-concept1-concept2/
 │       └── P1-Name-concept1-concept2/
 │
-└── S2/
-    └── B1/
-        └── E1-Name-concept1-concept2/`,
+├── S2/
+│   └── B1/
+│       └── E1-Name-concept1-concept2/
+│
+└── Others/
+    └── repository-whose-course-cannot-be-deduced/`,
 
   treeClassifiers: [
-    "Year (Y1, Y2, …) — optional, see jarvis custom",
+    "Year (Y1, Y2, …) — optional, see jarvis custom (EPITA-TPs/Y1/S1/B2/…)",
     "Semester (S1, S2, …)",
     "Bimester (B1, B2, …)",
     "Assignment type (E = Exam, P = Project)",
     "Main concepts covered",
+    "Others — repositories whose course can't be deduced",
   ],
 
   // ── COMMANDS ──────────────────────────────────────────────
@@ -166,12 +184,13 @@ const JARVIS_CONFIG = {
     },
     {
       name: "clone",
-      usage: "jarvis clone [all | current | <remote-repository>]",
+      usage: "jarvis clone [all | current/c/cu/cur/curr | &lt;remote-repository&gt;]",
       desc: "Clone and organize a repository with full analysis. Without argument, finds or clones your root repository.",
       steps: [
         "No argument, or 'all': finds your root repository, or clones it if it doesn't exist yet",
-        "'current': lists your Forge projects so you can pick the one to clone",
+        "'current' (or 'c', 'cu', 'cur', 'curr'): lists your Forge projects so you can pick the one to clone",
         "A remote repository: it is cloned",
+        "If it is an EPITA repository:",
         "Placed in the correct workspace location",
         "Tree structure is generated",
         "Given files and subject are downloaded",
@@ -179,11 +198,11 @@ const JARVIS_CONFIG = {
         "Repository is renamed",
         "GitHub archive is updated if enabled",
       ],
-      example: "jarvis clone firstname.lastname@git.forge.epita.fr:p/example/repository.git",
+      example: "jarvis clone [all | current/c/cu/cur/curr | &lt;remote-repository&gt;]",
     },
     {
       name: "fill",
-      usage: "jarvis fill [old | all | current | <project>]",
+      usage: "jarvis fill [old | all | current/now | &lt;project&gt;]",
       desc: "Clone many repositories of the forge at once.",
       steps: [
         "No argument, 'old', 'anc', 'ancient' or 'past': every finished repository",
@@ -192,74 +211,106 @@ const JARVIS_CONFIG = {
         "A project (ex: epita-prepa-computer-science): every repository listed on the page of that project",
         "Each repository is cloned like jarvis clone does, without any question",
         "Repositories already cloned are skipped, and the content of a repository that is not empty is never changed",
-        "A repository whose course can't be deduced goes in Others/<project>/, otherwise it is placed by its semester/bimester",
+        "A repository whose course can't be deduced goes in Others/&lt;project&gt;/ (ex: Others/epita-prepa-computer-science/)",
+        "A repository whose course is known is placed by its semester/bimester, whatever its project",
         "The root repository is pushed once at the end",
       ],
-      example: "jarvis fill epita-prepa-computer-science",
+      example: "jarvis fill [old | all | current/now | &lt;project&gt;]",
     },
     {
       name: "pull",
-      usage: "jarvis pull [all | current | <repository>]",
+      usage: "jarvis pull [all | current/c/cu/cur/curr | &lt;repository&gt;]",
       desc: "Pull the latest changes for one, several, or all of your repositories, submodules included.",
       steps: [
-        "No argument, or 'all': pulls the root repository and every submodule",
-        "'current': pulls the repository currently marked as active",
+        "No argument, or 'all': pulls the root repository and every repository of the tree",
+        "'current' (or 'c', 'cu', 'cur', 'curr'): pulls the repository currently marked as active",
         "A specific repository: pulls it directly if it has already been cloned",
         "Submodules are initialized, checked out and pulled recursively",
         "A submodule whose pinned commit is no longer reachable is automatically resynced with its remote's default branch",
       ],
-      example: "jarvis pull",
+      example: "jarvis pull [all | current/c/cu/cur/curr | &lt;repository&gt;]",
     },
     {
       name: "push",
-      usage: "jarvis push [root | current | <path>] [commit name] [tag]",
+      usage: "jarvis push [root | current/c/cu/cur/curr | &lt;path&gt;] [-n &lt;name&gt;] [-t &lt;tag&gt;] [-p &lt;path&gt;]",
       desc: "Commit and push a repository together with the root repository.",
       steps: [
         "No argument: pushes the repository of the current folder",
-        "'current': pushes the repository currently marked as active",
-        "'root': pushes only the root repository",
-        "Changes are added and committed with an automatic, numbered name unless you give one",
-        "An optional tag can be added, its number is incremented automatically if it already exists",
-        "The root repository is updated and pushed at the same time",
+        "'current' (or 'c', 'cu', 'cur', 'curr'): pushes the repository currently marked as active",
+        "'root': pushes only the root repository (never formatted)",
+        "'&lt;path&gt;': pushes the repository located at this path",
+        "-n, --name &lt;name&gt;: name of the commit (an automatic, numbered name is generated otherwise, or the name of the tag if there is one)",
+        "-t, --tag &lt;name&gt;: creates and pushes a tag named &lt;name&gt;-&lt;number&gt; (ex: v1 gives v1-0, then v1-1…)",
+        "-p, --path &lt;path&gt;: same as &lt;path&gt;; 'root' and 'current' also work as values",
+        "--name=&lt;name&gt;, --tag=&lt;name&gt; and --path=&lt;path&gt; work too; an unknown option stops the command with an error",
+        "If the automatic format is enabled, the repository is formatted before it is committed",
+        "The repository is pushed first, then the root repository, which records its new state",
+        "A problem (failed git add, rejected push, unreachable remote…) is reported but doesn't stop the other steps",
+        "'Pushed' is displayed only when commits were really sent; otherwise Jarvis tells you why (and suggests jarvis pull if needed)",
+        "When there is nothing to push, Jarvis lists what git does not see: empty folders (add a .gitkeep) and ignored files",
+        "A summary of what was pushed and what was not is printed, and the exit code is not zero if something failed",
       ],
-      example: "jarvis push current",
+      example: "jarvis push [root | current/c/cu/cur/curr | &lt;path&gt;] [-n &lt;name&gt;] [-t &lt;tag&gt;] [-p &lt;path&gt;]",
+    },
+    {
+      name: "format",
+      usage: "jarvis format [&lt;path&gt; | -p &lt;path&gt;]",
+      desc: "Format the code of the current folder with clang-format.",
+      steps: [
+        "No argument: formats the current folder",
+        "'&lt;path&gt;' (or '-p', '--path &lt;path&gt;'): formats this existing folder instead",
+        "Runs clang-format -i on every file of the folder and its sub-folders having a configured extension",
+        "clang-format must be installed; the .clang-format file closest to each file is used",
+        "Extensions are compared without taking the case into account (.c, .h, .cpp, .hpp, .js, .ts, .java, .json… by default)",
+        ".git and node_modules folders are skipped",
+        "A file that can't be formatted is reported and does not stop the others",
+        "Extensions and the automatic run before each jarvis push are set in jarvis custom &gt; Format",
+      ],
+      example: "jarvis format [&lt;path&gt; | -p &lt;path&gt;]",
     },
     {
       name: "find",
-      usage: "jarvis find [root | current | <repository> | <keyword>]",
+      usage: "jarvis find [root | current/c/cu/cur/curr | &lt;repository&gt; | &lt;keyword&gt;]",
       desc: "Locate the local path of a repository without touching it.",
       steps: [
         "No argument, or 'root': prints the path of the root repository",
-        "'current': prints the path of the currently active repository",
+        "'current' (or 'c', 'cu', 'cur', 'curr'): prints the path of the currently active repository",
         "A known git remote: prints its local path, re-locating it automatically if it moved",
         "Any other word: searches every repository title under the root repository and prints the matching paths",
       ],
-      example: "jarvis find",
+      example: "jarvis find [root | current/c/cu/cur/curr | &lt;repository&gt; | &lt;keyword&gt;]",
     },
     {
       name: "go",
-      usage: "jarvis go [root | current | <repository> | <keyword>]",
+      usage: "jarvis go [root | current/c/cu/cur/curr | &lt;repository&gt; | &lt;keyword&gt;]",
       desc: "Move into a repository. Works like find, but takes you there.",
       steps: [
         "No argument, or 'root': goes to the root repository",
-        "'current': goes to the currently active repository",
+        "'current' (or 'c', 'cu', 'cur', 'curr'): goes to the currently active repository",
         "A known git remote, or any word contained in a repository title",
         "If several folders match, a menu lets you choose one",
-        "Your shell is opened in the chosen folder, type 'exit' to come back",
+        "jarvis go changes the current shell's directory, so 'cd -' returns to the previous directory",
+        "Shell integration is enabled for Bash, Zsh and Fish by the installer and takes effect in new shells",
       ],
-      example: "jarvis go current",
+      example: "jarvis go [root | current/c/cu/cur/curr | &lt;repository&gt; | &lt;keyword&gt;]",
     },
     {
       name: "custom",
       usage: "jarvis custom",
       desc: "Customize the tree structure of your repositories.",
       steps: [
+        "Menus are chosen with the arrows and enter (prefixes, names and extensions are typed)",
         "Layers: enable or disable the Year, Semester and Bimester folders (default: Semester and Bimester)",
         "Prefixes: choose the text written before each number (default: Y, S, B)",
+        "Others: rename the folder used when the course can't be deduced (default: Others)",
+        "Format: enable or disable the automatic jarvis format before each push (default: disabled)",
+        "Format &gt; add / remove: type one or several extensions separated by commas — case and spaces are ignored, the leading dot is optional",
+        "Format &gt; show the list / restore the default ones",
         "Reset: go back to the default organization",
         "Save: moves your existing repositories to the new organization and pushes the root repository",
         "Quit: moves your existing repositories to the new organization without pushing",
-        "Repositories in the Others folder are never moved",
+        "Settings are stored in the .jarvis_config file of the root repository, shared by every Jarvis using it (Format settings are saved immediately; use Save to push them)",
+        "Repositories in the Others folder are never moved (unless the folder is renamed)",
       ],
       example: "jarvis custom",
     },
@@ -272,7 +323,7 @@ const JARVIS_CONFIG = {
         "A backup of the root repository is pushed first (force-with-lease: remote-only commits are replaced)",
         "All the content of the root repository is deleted, except .git",
         "The cleaned root repository is pushed",
-        "The command to restore the backup is printed (git restore --source=<backup-hash>), then run 'jarvis push root' to publish the restored files",
+        "The command to restore the backup is printed (git restore --source=&lt;backup-hash&gt;), then run 'jarvis push root' to publish the restored files",
         "Ignored files are not part of the backup and cannot be restored",
       ],
       example: "jarvis erase",
@@ -283,12 +334,13 @@ const JARVIS_CONFIG = {
       desc: "List the commands, or explain one of them.",
       steps: [
         "No argument: lists every command",
-        "With a command name: shows its usage and examples",
-        "'<command> --help' works too",
-        "Shortcuts: a (auth), c (clone), fl (fill), pl (pull), ps (push), f (find), g (go), h (help)",
+        "With a command name: shows its usage",
+        "'&lt;command&gt; --help' works too",
+        "Shortcuts: a (auth), c (clone), fl (fill), pl (pull), ps (push), fm (format), f (find), g (go), h (help)",
+        "erase, custom and uninstall have no shortcut (erase and uninstall are destructive on purpose)",
         "'j' can be used instead of 'jarvis' (ex: j c, j g, j pl)",
       ],
-      example: "jarvis help clone",
+      example: "jarvis help [command]",
     },
     {
       name: "uninstall",
@@ -307,7 +359,7 @@ const JARVIS_CONFIG = {
     //   usage: "jarvis sync",
     //   desc: "Manually sync all repositories to GitHub.",
     //   steps: ["Scans workspace", "Pushes changes to GitHub archive"],
-    //   example: null,
+    //   example: "jarvis sync",
     // },
   ],
 
