@@ -14,7 +14,6 @@ const JARVIS_CONFIG = {
   terminalLines: [
     "jarvis auth",
     "jarvis clone",
-    "jarvis clone current",
     "jarvis fill",
     "jarvis pull",
     "jarvis push",

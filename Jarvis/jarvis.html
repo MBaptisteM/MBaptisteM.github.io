@@ -221,5 +221,40 @@
 
   <script src="config.js"></script>
   <script src="main.js"></script>
+  <!-- TREE HIGHLIGHT: keeps the root folder and Others/ in cyan -->
+  <script>
+    (function () {
+      var el = document.getElementById("treeCode");
+      if (!el) return;
+      var re = /EPITA-TPs\/|EPITA-$|Others\//g;
+      function highlight() {
+        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+        var nodes = [], n;
+        while ((n = walker.nextNode())) {
+          if (n.parentNode.closest(".cyan")) continue;
+          re.lastIndex = 0;
+          if (re.test(n.nodeValue)) nodes.push(n);
+        }
+        nodes.forEach(function (node) {
+          var text = node.nodeValue, frag = document.createDocumentFragment(), last = 0, m;
+          re.lastIndex = 0;
+          while ((m = re.exec(text))) {
+            if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+            var span = document.createElement("span");
+            span.className = "cyan";
+            span.textContent = m[0];
+            frag.appendChild(span);
+            last = m.index + m[0].length;
+          }
+          if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+          node.parentNode.replaceChild(frag, node);
+        });
+      }
+      new MutationObserver(highlight).observe(el, { childList: true, subtree: true, characterData: true });
+      highlight();
+      document.addEventListener("DOMContentLoaded", highlight);
+      window.addEventListener("load", highlight);
+    })();
+  </script>
 </body>
 </html>
