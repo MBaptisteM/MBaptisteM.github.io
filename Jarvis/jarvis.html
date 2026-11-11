@@ -165,6 +165,10 @@
               <span class="command-card__step-num" style="color: var(--cyan); font-size: 1rem; margin-top: -0.05em;">▸</span>
               The script creates a temporary workspace, downloads the latest version of Jarvis, configures and installs it, then cleans up the temporary files.
             </li>
+            <li style="font-size: 0.85rem; margin-top: 0.4rem;">
+              <span class="command-card__step-num" style="color: var(--cyan); font-size: 1rem; margin-top: -0.05em;">▸</span>
+              For browser authentication, Jarvis uses the system Chromium installed with <code style="color: var(--cyan); background: rgba(0, 229, 255, 0.08); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.1);">nix profile add nixpkgs#chromium</code> on NixOS. On other Unix systems, Chromium is installed through Playwright.
+            </li>
           </ul>
         </div>
       </div>
